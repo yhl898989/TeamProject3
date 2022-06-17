@@ -5,37 +5,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인 화면</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
-<div>
-<h1>일반 회원 로그인</h1>
-	<form action="/member/login" method="post">
-	
-		ID: <input name="id"> <br>
-		PW: <input name="pw"> <br>
-		<input type="submit" value="로그인 완료">
-	
-		
-		
-	</form>
-</div>
-
-
-<div>
-<h1>관리자 로그인</h1>
-	<form action="#" method="post">
-	
-		ID: <input name="id"> <br>
-		PW: <input name="pw"> <br>
-		<input type="submit" value="로그인 완료">
-		</form>
-</div>
+<h1>회원 정보 자세히 보기</h1>
+아이디 : ${dto.id} <br>
+비밀번호 : ${dto.pw} <br>
+이름 : ${dto.name} <br>
+번호 : ${dto.phone} <br>
+생일 : ${dto.birth} <br>
+<a href="/member/update/${dto.id}">수정</a> <a href="/member/delete/${dto.id}">삭제</a> <a href="/item/list">목록</a> 
 
 </body>
 </html>
