@@ -14,7 +14,7 @@ public interface MemberDAO {
 
 	MemberDTO updateUI(String id);
 
-	MemberDTO read(String id);
+	MemberDTO mypage(String id);
 
 	void insert(MemberDTO dto);
 
