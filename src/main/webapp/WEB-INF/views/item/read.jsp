@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상품 자세히 보기</title>
+<title>글 자세히 보기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -19,17 +19,11 @@
 </style>
 </head>
 <body>
+<jsp:include page="../common/header.jsp"/>
+
 <div class="jumbotron">
    <h1 class="text-center">상품 상세 보기</h1>
 </div>
-
-<!-- 	<div class="form-group row">
-    <label for="bno" class="col-sm-2 col-form-label col-form-label-lg">판매자</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="" value="">
-    </div>
-  </div>
-   -->
 
   <div class="form-group row">
     <label for="bno" class="col-sm-2 col-form-label col-form-label-lg">상품아이디</label>
@@ -70,10 +64,6 @@
   <label for="rcontent" class="form-label">상품평</label>
   <textarea class="form-control" id="rcontent" placeholder="내용을 입력해 주세요." rows="10"></textarea>
 </div>
-<div class="form-group row">
-   <label for="formFileMultiple" class="form-label">사진첨부</label>
-  <input class="form-control" type="file" id="formFileMultiple" multiple>
-</div>
 
      
      <div class="form-group row">
@@ -91,12 +81,59 @@
 
 <script type="text/javascript">
 
+let iId = ${item.iId};
+
+
+$("#reply_btn_submit").on("click", function() {
+	
+	
+	
+
+    
+    let rtitle = $("#rtitle").val();
+    let rcontent = $("#rcontent").val();
+
+
+    $.ajax({
+       type : 'post',
+       url : '/review',
+       headers : {
+          "Content-Type" : "application/json",
+          "X-HTTP-Method-Override" : "POST"
+       },
+       data : JSON.stringify({
+    	  rtitle : rtitle,
+          rcontent : rcontent,
+          iId : iId
+      
+       }),
+       dataType : 'text',
+       success : function(result) {
+          if(result =='SUCCESS') {
+             getAllReply3(iId, $("#review"));
+              $("#rtitle").val("");
+              $("#rcontent").val("");
+          }else {
+             alert("입력 실패했습니다.");
+          }
+         
+       }
+       
+    });
+    
+    
+ });
+ 
+
+
    $(function() {
 $(".reply").on("click", function() {
          $(".collapse").collapse("toggle");
       });
 
    });
+   
+   getAllReply3(iId, $("#review"));
 
 
 </script>

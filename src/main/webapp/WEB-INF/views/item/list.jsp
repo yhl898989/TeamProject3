@@ -14,17 +14,12 @@
 </style>
 </head>
 <body>
-<c:choose>
-    	<c:when test="${empty login}">
-    	<a href="/member/insert">회원가입</a>
-    	  <a href="/member/login">Login</a>
-    	</c:when>
-    	<c:otherwise>
-    		${login.id}님, 환영합니다.
-    		<a href="/member/logout">로그아웃</a>
-    		<a style="float: right;" class="btn btn-primary" href="/item/insert">물품 등록</a>
-    	</c:otherwise>
-    </c:choose>
+
+
+<jsp:include page="../common/header.jsp"/>
+
+
+
     <center>
     <h1>쇼핑몰</h1>
     </center>
