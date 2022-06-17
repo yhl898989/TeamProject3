@@ -1,9 +1,0 @@
-# Compiled class file
-*.classpath
-*.project
-
-# Log file
-*.log
-
-target/
-workspace/
