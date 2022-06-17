@@ -16,3 +16,23 @@ CONSTRAINT fk_upload_iId FOREIGN KEY (iId) REFERENCES tbl_item(iId)
 )
 
 drop table tbl_item
+
+CREATE TABLE itemfileupload(
+filename VARCHAR2(300),
+iId NUMBER,
+CONSTRAINT fk_upload_iId FOREIGN KEY (iId) REFERENCES tbl_item(iId)
+)
+
+drop table tbl_itemCREATE TABLE itemfileupload(
+filename VARCHAR2(300),
+iId NUMBER,
+CONSTRAINT fk_upload_iId FOREIGN KEY (iId) REFERENCES tbl_item(iId)
+)
+
+drop table tbl_itemCREATE TABLE itemfileupload(
+filename VARCHAR2(300),
+iId NUMBER,
+CONSTRAINT fk_upload_iId FOREIGN KEY (iId) REFERENCES tbl_item(iId)
+)
+
+drop table tbl_item
