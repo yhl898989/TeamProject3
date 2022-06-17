@@ -22,7 +22,7 @@
 
 </head>
 
-
+<jsp:include page="../common/header.jsp"/>
 
 <body>
 <h1>상품등록</h1>

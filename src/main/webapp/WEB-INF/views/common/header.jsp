@@ -5,20 +5,29 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
   <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
   <nav class="my-2 my-md-0 mr-md-3">
-    <a class="p-2 text-dark" href="#">Features</a>
-    <a class="p-2 text-dark" href="#">Enterprise</a>
+    <a class="p-2 text-dark" href="/item/list">상품목록</a>
+    <a class="p-2 text-dark" href="/item/insert">상품등록</a>
     <a class="p-2 text-dark" href="#">Support</a>
-    <c:choose>
+    
+   
+
+    	
+    	<c:choose>
     	<c:when test="${empty login}">
-    	  <a class="p-2 text-dark a" href="/member/loginget">Login</a>
-    	   </nav>
-  		  <a class="btn btn-outline-primary" href="#">Sign up</a>
+    	<a class="p-2 text-dark a" href="/member/insert">회원가입</a>
+    	  <a class="btn btn-outline-primary" href="/member/login">로그인</a>
     	</c:when>
     	<c:otherwise>
-    		${login.id}님, 환영합니다.<a class="p-2 text-dark a" href="/member/logout">로그아웃</a>
-    		</nav>
+    		${login.id}님, 환영합니다.
+    		<a class="p-2 text-dark a" href="/member/logout">로그아웃</a>
+    		
     	</c:otherwise>
-    </c:choose>
+  		  </c:choose>
+    	
+    
+    
+    
+
  
   
 </div>

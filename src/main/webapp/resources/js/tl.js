@@ -1,6 +1,51 @@
 /** 
  *
  */
+ 
+ 
+  
+ function getAllReply3(iId, el){
+	el.html("");
+	
+	$.getJSON("/review/"+iId+"/all", function(result){
+
+		for(let i = 0 ; i <result.length; i++){
+			let item = result[i];
+			let str = makeItemTag2(item);
+			el.append(str);
+		}
+	})
+};
+
+
+
+
+
+function makeItemTag2(item){
+	
+	
+	let str = `
+	
+<div class="card item my-5">
+  <div class="card-header">
+    <span>댓글 번호 : ${item.rno}</span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">${item.rtitle}</h5>
+    <p class="card-text">${item.rcontent}</p>
+    <a data-rno ="${item.rno}" href="#" class="btn btn-primary item_btn_update">수정</a>
+    <a data-rno ="${item.rno}" href="#" class="btn btn-primary item_btn_delete">삭제</a>
+  </div>
+</div>
+
+	
+	`;
+	return str;
+
+}v
+ 
+ 
+ 
 
 function test2(result, filename, filekey){
    
