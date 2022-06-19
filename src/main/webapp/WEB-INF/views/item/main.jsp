@@ -12,41 +12,46 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
 <style type="text/css">
-	.mainbanner img{
-	height : 300px;
-	width : 100%;
-	}
-	*{padding:0;margin:0}
-	li{list-style:none}
-	a{text-decoration:none;font-size:14px}
-	.menu {
-	  width: 100%;
-	  overflow: hidden;
-	  
-	}
-	
-	.menu > li {
-	  width: 20%; /*20*5=100%*/
-	  float: left;
-	  text-align: center;
-	  line-height: 40px;
-	  background-color: #5778ff;
-	}
-	
-	.menu a {
-	  color: #fff;
-	  width: 100%;
-	}
-	
-	</style>
+.mainbanner img{
+height : 300px;
+width : 100%;
+}
+*{padding:0;margin:0}
+li{list-style:none}
+a{text-decoration:none;font-size:14px}
+.menu {
+  width: 100%;
+  overflow: hidden;
+  
+}
+
+.menu > li {
+  width: 20%; /*20*5=100%*/
+  float: left;
+  text-align: center;
+  line-height: 40px;
+  background-color: #5778ff;
+}
+
+.menu a {
+  color: #fff;
+  width: 100%;
+}
+
+</style>
+
+
+
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
 
-    <center>
-    <h1>쇼핑몰</h1>
+ 	<center>
+    	<h1>쇼핑몰</h1>
     </center>
- <div class="bd-example">
+
+
+<div class="bd-example">
   <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -106,23 +111,23 @@
 </div>
 <ul class="menu">
       <li>
-        <a href="#">clothes</a>
+        <a href="/item/list">clothes</a>
        
       </li>
       <li>
-        <a href="#">shoes</a>
+        <a href="/item/list">shoes</a>
        
       </li>
       <li>
-        <a href="#">bag</a>
+        <a href="/item/list">bag</a>
         
       </li>
       <li>
-        <a href="#">cap</a>
+        <a href="/item/list">cap</a>
        
       </li>
       <li>
-        <a href="#">onepiece</a>
+        <a href="/item/list">onepiece</a>
        
       </li>
     </ul>
@@ -130,12 +135,15 @@
 <div id = "itemlist">
 <c:forEach items="${list}" var = "list">
 <div class="card " style="width: 18rem;">
-	<a href="/item/read/${list.iId}">
-			<img src="/displayfile?filename=${list.ifilename}" class="card-img-top" alt="..." width="100px" height="200px">
-	</a>
-	<div class="card-body">
-	    <p class="card-text">상품이름:${list.iName} </p>
-	    <p class="card-price">상품가격:${list.iPrice} </p>
+ <a href = "/item/read/${list.iId}">
+ 
+ <div>
+  <img src="/displayfile?filename=${list.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
+  </div>
+  </a>
+  <div class="card-body">
+    <p class="card-text">상품이름:${list.iName} </p>
+    <p class="card-price">상품가격:${list.iPrice} </p>
   </div>
 </div>
 </c:forEach>
@@ -144,19 +152,15 @@
 
 <script type="text/javascript" src = "/resources/js/tl.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-		gocategoryitem(localStorage.getItem("category"), $("#itemlist"),$("#categorylist"));
 
+$(document).ready(function() {
 	$(".menu").on("click","a", function() {
 		let category = $(this).text();
 		localStorage.setItem("category",category);
-		gocategoryitem(category, $("#itemlist"),$("#categorylist"));
+		
 		
 	})
-	
 })
-
 
 
 </script>

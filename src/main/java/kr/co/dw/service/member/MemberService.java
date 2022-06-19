@@ -12,7 +12,7 @@ public interface MemberService {
 
 	List<MemberDTO> list();
 
-	MemberDTO read(String id);
+	MemberDTO mypage(String id);
 
 	MemberDTO updateUI(String id);
 

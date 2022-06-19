@@ -34,9 +34,17 @@
 상품 가격 : <input id = "iPrice" name = "iPrice"><br>
 상품 할인율 : <input id = "iDc" name = "iDc"><br>
 상품 수량 : <input id = "iCount" name = "iCount"><br>
+카테고리 : 
+<select id = "category" onchange = "changecategory()">
+<option value = "clothes">옷</option>
+<option value = "shoes">신발</option>
+<option value = "bag">가방</option>
+<option value = "cap">모자</option>
+<option value = "onepiece">원피스</option>
+</select>
 </form>
-
-<input id = "item_btn_submit" type="submit", value = "상품 등록">
+<input id = "input" type = "hidden" value = "clothes">
+<input id = "item_btn_submit" type="submit" value = "상품 등록">
 
 <div class ="form-group">
 <div id = "uploadFile" class ="form-control text-center"></div>
@@ -86,12 +94,14 @@ $(document).ready(function() {
 	      let iPrice = $("#iPrice").val();
 	      let iDc = $("#iDc").val();
 	      let iCount = $("#iCount").val();
+	      let icategory = $("#input").val();
 	      
 	      formData.append("iId", iId);
 	      formData.append("iName", iName);
 	      formData.append("iPrice", iPrice);
 	      formData.append("iDc", iDc);
 	      formData.append("iCount", iCount);
+	      formData.append("icategory",icategory);
 	      
 	      $.ajax({
 	         
@@ -103,7 +113,7 @@ $(document).ready(function() {
 	         dataType : "text",
 	         success : function(result) {
 	            if(result == "SUCCESS"){
-	               location.assign("/item/list");
+	               location.assign("/item/main");
 	            }
 	         
 	         }

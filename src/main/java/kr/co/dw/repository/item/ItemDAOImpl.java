@@ -21,13 +21,15 @@ public class ItemDAOImpl implements ItemDAO{
 	@Override
 	public void insert(ItemDTO iDto) {
 		// TODO Auto-generated method stub
-		sqlSession.insert(NAMESPACE+".insert", iDto);
+		sqlSession.insert(NAMESPACE+".insert",iDto);
 	}
+	
+	
 	@Override
-	public void upload(int iId, String filename) {
+	public void upload(int iId, String ifilename) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("iId", iId);
-		map.put("filename", filename);
+		map.put("ifilename", ifilename);
 		sqlSession.insert(NAMESPACE+".upload", map);
 		// TODO Auto-generated method stub
 		
@@ -48,4 +50,16 @@ public class ItemDAOImpl implements ItemDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE+".read", iId);
 	}
+	
+	@Override
+	public List<ItemDTO> adminlist() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".adminlist");
+	}
+	@Override
+	public List<ItemDTO> categoryList(String category) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".categoryList",category);
+	}
+	
 }

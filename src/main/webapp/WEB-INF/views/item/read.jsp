@@ -77,7 +77,7 @@
 </div>
 
 
-<script type="text/javascript" src="/resources/js/tl.js"></script>
+<script type="text/javascript" src="/resources/js/tl3.js"></script>
 
 <script type="text/javascript">
 

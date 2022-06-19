@@ -14,4 +14,10 @@ public interface itemService {
 
 	ItemDTO read(int iId);
 
+	List<ItemDTO> adminlist();
+
+	List<ItemDTO> categoryList(String category);
+
+	
+
 }
