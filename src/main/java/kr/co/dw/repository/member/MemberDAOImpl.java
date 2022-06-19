@@ -36,9 +36,9 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public MemberDTO read(String id) {
+	public MemberDTO mypage(String id) {
 		// TODO Auto-generated method stub
-		return sqlsession.selectOne(NAMESPACE+".read", id);
+		return sqlsession.selectOne(NAMESPACE+".mypage", id);
 	}
 
 	@Override

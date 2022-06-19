@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,11 +54,13 @@ public class MemberController {
 	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(MemberDTO dto) {
-		
+	public String delete(MemberDTO dto, HttpSession session) {
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		session.invalidate();
 		mService.delete(dto);
+	
 		
-		return "redirect:/member/list";
+		return "redirect:/item/list";
 	}
 	
 	
@@ -75,7 +79,7 @@ public class MemberController {
 		
 		mService.update(dto);
 		
-		return "redirect:/member/read/"+dto.getId();
+		return "redirect:/member/mypage/"+dto.getId();
 	}
 	
 	
@@ -89,22 +93,15 @@ public class MemberController {
 	}
 	
 	
-	
-	@RequestMapping(value = "/read/{id}") 
-	public String read(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value = "/mypage/{id}") 
+	public String mypage(@PathVariable("id") String id, Model model) {
 		
-		MemberDTO dto = mService.read(id);
+		MemberDTO dto = mService.mypage(id);
 		
 		model.addAttribute("dto", dto);
-		return "/member/read";
+		return "/member/mypage";
 	}
 	
-	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public void read(Model model, String id) {
-		MemberDTO dto = new MemberDTO("m001", "111", "kim", "010-0000-0000", "2000-01-01");
-		model.addAttribute("dto", dto);
-	}
 	
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -124,7 +121,7 @@ public class MemberController {
 		
 		mService.insert(dto);
 		
-		return "redirect:/member/list";
+		return "redirect:/item/list";
 	}
 	
 	

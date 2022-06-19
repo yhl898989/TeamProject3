@@ -32,9 +32,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberDTO read(String id) {
+	public MemberDTO mypage(String id) {
 		// TODO Auto-generated method stub
-		return mDao.read(id);
+		return mDao.mypage(id);
 	}
 
 	@Override

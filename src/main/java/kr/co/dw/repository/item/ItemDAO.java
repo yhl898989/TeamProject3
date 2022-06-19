@@ -16,4 +16,12 @@ public interface ItemDAO {
 
 	ItemDTO read(int iId);
 
+	List<ItemDTO> adminlist();
+
+	List<ItemDTO> categoryList(String category);
+
+	
+
+	
+
 }

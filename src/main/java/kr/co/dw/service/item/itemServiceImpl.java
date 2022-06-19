@@ -16,15 +16,21 @@ public class itemServiceImpl implements itemService{
 	private ItemDAO iDao;
 
 	@Override
+	public List<ItemDTO> adminlist() {
+		// TODO Auto-generated method stub
+		return iDao.adminlist();
+	}
+	
+	@Override
 	@Transactional
 	public void insert(ItemDTO iDto) {
 		// TODO Auto-generated method stub
 		iDao.insert(iDto);
-		List<String> list = iDto.getIfilename();
+		List<String> list = iDto.getIfilenameList();
 		for(int i = 0 ; i < list.size();i++) {
-			String filename = list.get(i);
+			String ifilename = list.get(i);
 			int iId = iDto.getiId();
-			iDao.upload(iId,filename);
+			iDao.upload(iId,ifilename);
 		}
 	}
 
@@ -43,6 +49,11 @@ public class itemServiceImpl implements itemService{
 	public ItemDTO read(int iId) {
 		// TODO Auto-generated method stub
 		return iDao.read(iId);
+	}
+	@Override
+	public List<ItemDTO> categoryList(String category) {
+		// TODO Auto-generated method stub
+		return iDao.categoryList(category);
 	}
 	
 }
