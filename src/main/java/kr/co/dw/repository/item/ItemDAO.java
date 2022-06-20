@@ -12,13 +12,19 @@ public interface ItemDAO {
 
 	List<ItemDTO> select();
 
-	List<String> getfile(int iId);
-
 	ItemDTO read(int iId);
 
 	List<ItemDTO> adminlist();
 
 	List<ItemDTO> categoryList(String category);
+
+	List<ItemDTO> categoryListitemsequence(String category);
+
+	List<ItemDTO> categoryListiPricedesc(String category);
+
+	List<ItemDTO> categoryListiPriceasc(String category);
+
+	
 
 	
 

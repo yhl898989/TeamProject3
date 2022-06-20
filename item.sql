@@ -8,16 +8,25 @@ ifilename VARCHAR2(100),
 i_CATEGORY VARCHAR2(100),
 CONSTRAINT pk_item_iId PRIMARY KEY(iId)
 )
-
-
 CREATE TABLE itemfileupload(
 ifilename VARCHAR2(300),
 iId NUMBER,
 CONSTRAINT fk_upload_iId FOREIGN KEY (iId) REFERENCES tbl_item(iId)
 )
 
-SELECT * FROM tbl_item
+create sequence seq_item_iId 
 
 drop table tbl_item
 
+drop table itemfileupload
+
+drop table tbl_member
+
+
+
+
+delete from itemfileupload
+delete from tbl_item
+select * from tbl_item
+select * from itemfileupload
 

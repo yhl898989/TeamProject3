@@ -17,7 +17,7 @@
     	  <a href="/member/login">Login</a>
     	</c:when>
     	<c:otherwise>
-    		${login.id}님, 환영합니다.
+    		${login.mid}님, 환영합니다.
     		<a href="/member/logout">로그아웃</a>
     		<a href="/item/list">쇼핑몰가기</a> 
     	</c:otherwise>
@@ -30,7 +30,9 @@
 		<tr>
 			<th>아이디</th>
 			<th>이름</th>
+			<th>이메일</th>
 			<th>번호</th>
+			<th>주소</th>
 			<th>생일</th>
 		</tr>
 	</thead>
@@ -38,10 +40,12 @@
 	<tbody>
 	<c:forEach items="${list}" var="dto">
 		<tr>
-			<td><a href="/member/read/${dto.id}">${dto.id}</a></td>
-			<td>${dto.name}</td>
-			<td>${dto.phone}</td>
-			<td>${dto.birth}</td>
+			<td><a href="/member/read/${dto.mid}">${dto.mid}</a></td>
+			<td>${dto.mname}</td>
+			<td>${dto.memail}</td>
+			<td>${dto.mphone}</td>
+			<td>${dto.maddress}</td>
+			<td>${dto.mbirth}</td>
 		</tr>
 		</c:forEach>
 	</tbody>

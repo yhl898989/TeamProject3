@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <style type="text/css">
-#uploadFile{
+#itemimguploadFile{
 	width : 100%;
 	height : 250px;
 	border: 1px solid red;
@@ -22,107 +22,113 @@
 
 </head>
 
-<jsp:include page="../common/header.jsp"/>
+
 
 <body>
+<jsp:include page="../common/header.jsp"></jsp:include>
+<center>
+<h1>쇼핑몰</h1>
+</center>
 <h1>상품등록</h1>
 <form action="" method="post">
-<%-- <input type="hidden" name="id" value="${mDto.id}">
-판매자 : <input value = "${login.id}" name = "id" readonly="readonly"><br> --%>
-상품 아이디 : <input id = "iId" name = "iId"><br>
 상품 이름 : <input id ="iName" name = "iName"><br>
 상품 가격 : <input id = "iPrice" name = "iPrice"><br>
 상품 할인율 : <input id = "iDc" name = "iDc"><br>
 상품 수량 : <input id = "iCount" name = "iCount"><br>
 카테고리 : 
 <select id = "category" onchange = "changecategory()">
-<option value = "clothes">옷</option>
-<option value = "shoes">신발</option>
-<option value = "bag">가방</option>
-<option value = "cap">모자</option>
-<option value = "onepiece">원피스</option>
+<option value = "옷">옷</option>
+<option value = "신발">신발</option>
+<option value = "가방">가방</option>
+<option value = "모자">모자</option>
+<option value = "원피스">원피스</option>
 </select>
 </form>
-<input id = "input" type = "hidden" value = "clothes">
+<input id = "cateogoryname" type = "hidden" value = "옷">
 <input id = "item_btn_submit" type="submit" value = "상품 등록">
 
 <div class ="form-group">
-<div id = "uploadFile" class ="form-control text-center"></div>
+<div id = "itemimguploadFile" class ="form-control text-center"></div>
 	</div>
-<div id = "uploadedItems" class ="row row-cols-3">
+<div id = "itemimguploadedItems" class ="row row-cols-3">
 
 </div>	
-<script type="text/javascript" src ="/resources/js/tl.js"></script>
+<script type="text/javascript" src ="/resources/js/item.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	   let formData = new FormData();
-	   let idx = 0;
-	   $("#uploadFile").on("dragenter dragover", function(event) {
-	      event.preventDefault();
-	   });
-	   
-	   $("#uploadFile").on("drop", function(event) {
-	      event.preventDefault();
-	      let files = event.originalEvent.dataTransfer.files;
-	      let file = files[0];
-	      
-	      formData.append("file"+idx,file);
-	      
-	      let reader = new FileReader();
-	      
-	      reader.readAsDataURL(file);
-	      
-	      reader.onload = function(event) {
-	         
-	         let str = test(event.target.result, file["name"],"file"+idx++);
-	         
-	         $("#uploadedItems").append(str);
-	         
-	      }
-	   
-	      
-	   });
-	   $("#uploadedItems").on("click",".btn_del_item", function() {
-	      let filekey = $(this).attr("data-filekey");
-	      formData.delete(filekey);
-	      $(this).parent().parent().parent().remove();
-	   })   
-	   
-	   $("#item_btn_submit").click(function() {
-	      let iId = $("#iId").val();
-	      let iName = $("#iName").val();
-	      let iPrice = $("#iPrice").val();
-	      let iDc = $("#iDc").val();
-	      let iCount = $("#iCount").val();
-	      let icategory = $("#input").val();
-	      
-	      formData.append("iId", iId);
-	      formData.append("iName", iName);
-	      formData.append("iPrice", iPrice);
-	      formData.append("iDc", iDc);
-	      formData.append("iCount", iCount);
-	      formData.append("icategory",icategory);
-	      
-	      $.ajax({
-	         
-	         type : "post",
-	         url : "/item/insert",
-	         data : formData,
-	         processData : false,
-	         contentType : false,
-	         dataType : "text",
-	         success : function(result) {
-	            if(result == "SUCCESS"){
-	               location.assign("/item/main");
-	            }
-	         
-	         }
-	         
-	      })
-	   })
-	   
-	   
+	let formData = new FormData();
+	let idx = 0;
+	
+	
+	
+	$("#itemimguploadFile").on("dragenter dragover", function(event) {
+		event.preventDefault();
+	});
+	
+	$("#itemimguploadFile").on("drop", function(event) {
+		event.preventDefault();
+		let itemimgfiles = event.originalEvent.dataTransfer.files;
+		let itemimgfile = itemimgfiles[0];
+		
+		formData.append("itemimgfile"+idx,itemimgfile);
+		
+		let reader = new FileReader();
+		
+		reader.readAsDataURL(itemimgfile);
+		
+		reader.onload = function(event) {
+			
+			let str = insertitemimgfile(event.target.result, itemimgfile["name"],"itemimgfile"+idx++);
+			
+			$("#itemimguploadedItems").append(str);
+			
+		}
+	
+		
+	});
+	$("#itemimguploadedItems").on("click",".btn_del_item", function() {
+		let itemimgfilekey = $(this).attr("data-itemimgfilekey");
+		formData.delete(itemimgfilekey);
+		$(this).parent().parent().parent().remove();
+	})	
+	
+	$("#item_btn_submit").click(function() {
+		let iName = $("#iName").val();
+		let iPrice = $("#iPrice").val();
+		let iDc = $("#iDc").val();
+		let iCount = $("#iCount").val();
+		let icategory = $("#cateogoryname").val();
+		
+		formData.append("iName", iName);
+		formData.append("iPrice", iPrice);
+		formData.append("iDc", iDc);
+		formData.append("iCount", iCount);
+		formData.append("icategory",icategory);
+		$.ajax({
+			
+			type : "post",
+			url : "/item/insert",
+			data : formData,
+			processData : false,
+			contentType : false,
+			dataType : "text",
+			success : function(result) {
+				if(result == "SUCCESS"){
+					location.assign("/item/main");
+				}
+			
+			}
+			
+		})
 	})
+	
+	
+})
+
+
+
+
+
 
 </script>
 </body>

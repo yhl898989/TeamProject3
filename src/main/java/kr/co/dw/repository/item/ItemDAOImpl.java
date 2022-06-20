@@ -40,11 +40,7 @@ public class ItemDAOImpl implements ItemDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".list");
 	}
-	@Override
-	public List<String> getfile(int iId) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(NAMESPACE+".getfile", iId);
-	}
+
 	@Override
 	public ItemDTO read(int iId) {
 		// TODO Auto-generated method stub
@@ -60,6 +56,21 @@ public class ItemDAOImpl implements ItemDAO{
 	public List<ItemDTO> categoryList(String category) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".categoryList",category);
+	}
+	@Override
+	public List<ItemDTO> categoryListiPriceasc(String category) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".categoryListiPriceasc", category);
+	}
+	@Override
+	public List<ItemDTO> categoryListiPricedesc(String category) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".categoryListiPricedesc",category);
+	}
+	@Override
+	public List<ItemDTO> categoryListitemsequence(String category) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".categoryListitemsequence",category);
 	}
 	
 }

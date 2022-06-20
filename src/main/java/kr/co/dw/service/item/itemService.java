@@ -10,13 +10,13 @@ public interface itemService {
 
 	List<ItemDTO> select();
 
-	List<String> getfile(int iId);
-
 	ItemDTO read(int iId);
 
 	List<ItemDTO> adminlist();
 
 	List<ItemDTO> categoryList(String category);
+
+	List<ItemDTO> categoryList(String category, String showhowitemlist);
 
 	
 

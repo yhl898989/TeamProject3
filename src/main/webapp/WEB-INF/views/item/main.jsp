@@ -44,99 +44,60 @@ a{text-decoration:none;font-size:14px}
 
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="../common/header.jsp"></jsp:include>
+<center>
+<h1>쇼핑몰</h1>
+</center>
+ 
+</div>
 
- 	<center>
-    	<h1>쇼핑몰</h1>
-    </center>
-
-
-<div class="bd-example">
-  <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-      <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-      <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
-      <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>   
-    </ol>
-    
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="../resources/img/img1.png" class="d-block w-100" width="100px" height="350px" alt="그림1">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <img src="../resources/img/img2.png" class="d-block w-100" width="100px" height="350px" alt="그림2">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <img src="../resources/img/img3.png" class="d-block w-100" width="100px" height="350px" alt="그림3">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-        </div>
-      </div>
-      
-       <div class="carousel-item">
-        <img src="../resources/img/img4.png" class="d-block w-100" width="100px" height="350px" alt="그림4">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Four slide label</h5>
-        </div>
-      </div>
-      
-       <div class="carousel-item">
-        <img src="../resources/img/img5.png" class="d-block w-100" width="100px" height="350px" alt="그림5">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Five slide label</h5>
-        </div>
-      </div>
-      
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/resources/img/1.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
     </div>
-    
-    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+    <div class="carousel-item">
+      <img src="/resources/img/2.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
+    </div>
+    <div class="carousel-item">
+      <img src="/resources/img/3.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
+    </div>
   </div>
+ <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </button>
 </div>
 <ul class="menu">
       <li>
-        <a href="/item/list">clothes</a>
+        <a href="/item/list" id = "옷">옷</a>
        
       </li>
       <li>
-        <a href="/item/list">shoes</a>
+        <a href="/item/list" id = "신발">신발</a>
        
       </li>
       <li>
-        <a href="/item/list">bag</a>
+        <a href="/item/list" id = "가방">가방</a>
         
       </li>
       <li>
-        <a href="/item/list">cap</a>
+        <a href="/item/list" id = "모자">모자</a>
        
       </li>
       <li>
-        <a href="/item/list">onepiece</a>
+        <a href="/item/list" id = "원피스">원피스</a>
        
       </li>
     </ul>
-<div id = "categorylist"></div>
-<div id = "itemlist">
+
 <c:forEach items="${list}" var = "list">
 <div class="card " style="width: 18rem;">
  <a href = "/item/read/${list.iId}">
- 
  <div>
   <img src="/displayfile?filename=${list.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
   </div>
@@ -147,17 +108,18 @@ a{text-decoration:none;font-size:14px}
   </div>
 </div>
 </c:forEach>
-</div>
 
 
-<script type="text/javascript" src = "/resources/js/tl.js"></script>
+
+<script type="text/javascript" src = "/resources/js/item.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
 	$(".menu").on("click","a", function() {
-		let category = $(this).text();
+		let category = $(this).attr("id");
+		let showhowitemlist = "itemsequence";
 		localStorage.setItem("category",category);
-		
+		localStorage.setItem("showhowitemlist",showhowitemlist);
 		
 	})
 })

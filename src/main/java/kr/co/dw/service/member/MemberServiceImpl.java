@@ -32,18 +32,18 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberDTO mypage(String id) {
+	public MemberDTO mypage(String mid) {
 		// TODO Auto-generated method stub
-		return mDao.mypage(id);
+		return mDao.mypage(mid);
 	}
 
 	@Override
-	public MemberDTO updateUI(String id) {
+	public MemberDTO updateUI(String mid) {
 		
-		MemberDTO dto = mDao.updateUI(id);
+		MemberDTO dto = mDao.updateUI(mid);
 		
-		String birth = dto.getBirth().substring(0, 10);
-		dto.setBirth(birth);
+		String mbirth = dto.getMbirth().substring(0, 10);
+		dto.setMbirth(mbirth);
 		
 		return dto;
 	}

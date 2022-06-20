@@ -1,33 +1,18 @@
 CREATE TABLE tbl_member(
-id VARCHAR2(6),
-pw VARCHAR2(600),
-name VARCHAR2(15),
-phone VARCHAR2(15),
-birth DATE,
-CONSTRAINT pk_member_id PRIMARY KEY(id)
+mid VARCHAR2(150),
+mpw VARCHAR2(600),
+mname VARCHAR2(15),
+memail VARCHAR2(300),
+mphone VARCHAR2(15),
+maddress VARCHAR2(300),
+mbirth DATE,
+macount VARCHAR2(3000),
+mpoint VARCHAR2(3000),
+CONSTRAINT pk_member_mid PRIMARY KEY(mid)
 )
 
-SELECT * FROM tbl_review
 
-drop table tbl_member
-drop table tbl_readcnt
-drop table tbl_upload
-drop table tbl_board
-
-SELECT * FROM tabs
-SELECT A.UNIQUENESS
-
-SELECT * FROM ALL_CONSTRAINTS WHERE TABLE_NAME = tbl_member;
-
-CREATE TABLE tbl_review(
-rno NUMBER,
-iId NUMBER,
-rtitle VARCHAR2(600),
-rcontent VARCHAR2(3000),
-regDay DATE DEFAULT SYSDATE,
-updateDay DATE DEFAULT SYSDATE,
-CONSTRAINT pk_review_rno PRIMARY KEY(rno),
-CONSTRAINT fk_review_iid FOREIGN KEY (iId) REFERENCES tbl_item(iId)
-)
-
-CREATE SEQUENCE seq_review_rno
+INSERT INTO tbl_member
+		(mid, mpw, mname, memail, mphone, maddress, mbirth)
+		VALUES
+		('12', '12', '12', '12@12', '010-0000-0000', '중랑구', '2002-02-02')
