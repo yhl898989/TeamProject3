@@ -12,8 +12,8 @@
 <h1>회원 정보 삭제</h1>
 
 <form action="/member/delete" method="post">
-	<input name="id" value="${id}" type="hidden">
-	PW : <input type="password" name="pw">
+	<input name="mid" value="${mid}" type="hidden">
+	PW : <input type="password" name="mpw">
 	<button>삭제 완료</button> 
 
 

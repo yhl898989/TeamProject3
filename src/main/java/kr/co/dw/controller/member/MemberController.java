@@ -64,12 +64,12 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String deleteUI(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value = "/delete/{mid}", method = RequestMethod.GET)
+	public String deleteUI(@PathVariable("mid") String mid, Model model) {
 		
 		
 		
-		model.addAttribute("id", id);
+		model.addAttribute("mid", mid);
 		return "/member/delete";
 	}
 	
@@ -79,24 +79,24 @@ public class MemberController {
 		
 		mService.update(dto);
 		
-		return "redirect:/member/mypage/"+dto.getId();
+		return "redirect:/member/mypage/"+dto.getMid();
 	}
 	
 	
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String updateUI(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value = "/update/{mid}", method = RequestMethod.GET)
+	public String updateUI(@PathVariable("mid") String mid, Model model) {
 		
-		MemberDTO dto = mService.updateUI(id);
+		MemberDTO dto = mService.updateUI(mid);
 		
 		model.addAttribute("dto", dto);
 		return "/member/update";
 	}
 	
 	
-	@RequestMapping(value = "/mypage/{id}") 
-	public String mypage(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value = "/mypage/{mid}") 
+	public String mypage(@PathVariable("mid") String mid, Model model) {
 		
-		MemberDTO dto = mService.mypage(id);
+		MemberDTO dto = mService.mypage(mid);
 		
 		model.addAttribute("dto", dto);
 		return "/member/mypage";

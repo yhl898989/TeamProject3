@@ -36,15 +36,15 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public MemberDTO mypage(String id) {
+	public MemberDTO mypage(String mid) {
 		// TODO Auto-generated method stub
-		return sqlsession.selectOne(NAMESPACE+".mypage", id);
+		return sqlsession.selectOne(NAMESPACE+".mypage", mid);
 	}
 
 	@Override
-	public MemberDTO updateUI(String id) {
+	public MemberDTO updateUI(String mid) {
 		// TODO Auto-generated method stub
-		return sqlsession.selectOne(NAMESPACE+".updateUI", id);
+		return sqlsession.selectOne(NAMESPACE+".updateUI", mid);
 	}
 
 	@Override

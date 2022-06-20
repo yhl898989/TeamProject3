@@ -34,7 +34,7 @@ public class itemController {
 	
 	
 	@Transactional
-	@RequestMapping(value = "/main", method = RequestMethod.GET,produces = "text/plain; charset=UTF-8")
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(Model model) {
 		
 		List<ItemDTO> list = iService.select();
@@ -45,12 +45,13 @@ public class itemController {
 	}
 	
 	
-	@RequestMapping(value = "/category/{category}/all", method = RequestMethod.GET)
-	public ResponseEntity<List<ItemDTO>> categorylist(@PathVariable("category") String category){
+	@RequestMapping(value = "/category/{category}/{showhowitemlist}/all", method = RequestMethod.GET)
+	public ResponseEntity<List<ItemDTO>> categorylist(@PathVariable("category") String category, @PathVariable("showhowitemlist") String showhowitemlist){
 		ResponseEntity<List<ItemDTO>> entity = null;
 		
 		try {
-			List<ItemDTO> categoryList = iService.categoryList(category);
+			List<ItemDTO> categoryList = iService.categoryList(category, showhowitemlist);
+			
 			entity = new ResponseEntity<List<ItemDTO>>(categoryList,HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -66,7 +67,7 @@ public class itemController {
 	public String adminlist(Model model) {
 		List<ItemDTO> adminlist = iService.adminlist();
 		
-		System.out.println(adminlist);
+		
 		model.addAttribute("adminlist", adminlist);
 		return "/item/adminlist";
 	}
@@ -79,22 +80,16 @@ public class itemController {
 		return "/item/read";
 	}
 	
-	@Transactional
-	@RequestMapping(value = "/list", method = RequestMethod.GET,produces = "text/plain; charset=UTF-8")
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
-		
-		List<ItemDTO> list = iService.select();
 
-		model.addAttribute("list", list);
-		
 		return "/item/list";
 	}
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public ResponseEntity<String> insert(MultipartHttpServletRequest request) {
 		ResponseEntity<String> entity = null;
-		String iId = request.getParameter("iId");
-		int id = Integer.parseInt(iId);
 		String iName = request.getParameter("iName");
 		String iPrice = request.getParameter("iPrice");
 		int Price = Integer.parseInt(iPrice);
@@ -121,8 +116,10 @@ public class itemController {
 			}
 		
 			String ifilename = filenameList.get(0);
-			
-			ItemDTO iDto = new ItemDTO(id, iName, Price, DC, Count, ifilename, i_CATEGORY);
+			String prifix = ifilename.substring(0,12);
+			String suffix = ifilename.substring(14);
+			ifilename = prifix + suffix;
+			ItemDTO iDto = new ItemDTO(0, iName, Price, DC, Count, ifilename, i_CATEGORY);
 			
 			iDto.setIfilenameList(filenameList);
 			iService.insert(iDto);
@@ -135,54 +132,7 @@ public class itemController {
 		}
 		return entity;
 	}
-	
-	
-	
-//	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-//	public ResponseEntity<String> insert(MultipartHttpServletRequest request) {
-//		ResponseEntity<String> entity = null;
-//		String iId = request.getParameter("iId");
-//		int id = Integer.parseInt(iId);
-//		String iName = request.getParameter("iName");
-//		String iPrice = request.getParameter("iPrice");
-//		int Price = Integer.parseInt(iPrice);
-//		String iDc = request.getParameter("iDc");
-//		int DC = Integer.parseInt(iDc);
-//		String iCount = request.getParameter("iCount");
-//		int Count = Integer.parseInt(iCount);
-//		
-//		
-//		try {
-//			Map<String, MultipartFile>map = request.getFileMap();
-//			List<String> filenameList = new ArrayList<String>();
-//			Set<String> set = map.keySet();
-//			Iterator<String> it = set.iterator();
-//			while (it.hasNext()) {
-//				String key = it.next();
-//				MultipartFile file = map.get(key);
-//				String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
-//				filenameList.add(uploadedFilename);
-//				entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
-//				
-//			}
-//		
-//			String ifilename = filenameList.get(0);
-//			
-//			ItemDTO iDto = new ItemDTO(id, iName, Price, DC, Count, null, ifilename);
-//			
-//			iDto.setIfilename(filenameList);
-//			iService.insert(iDto);
-//			
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//			entity = new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
-//		}
-//		return entity;
-//	}
-	
-	
+
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insertui() {
 		return "/item/insert";

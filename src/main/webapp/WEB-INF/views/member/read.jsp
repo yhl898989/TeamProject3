@@ -10,11 +10,13 @@
 </head>
 <body>
 <h1>회원 정보 자세히 보기</h1>
-아이디 : ${dto.id} <br>
-비밀번호 : ${dto.pw} <br>
-이름 : ${dto.name} <br>
-번호 : ${dto.phone} <br>
-생일 : ${dto.birth} <br>
-<a href="/member/update/${dto.id}">수정</a> <a href="/member/delete/${dto.id}">삭제</a> <a href="/member/list">목록</a> 
+아이디 : ${dto.mid} <br>
+비밀번호 : ${dto.mpw} <br>
+이름 : ${dto.mname} <br>
+이메일 : ${dto.memail} <br>
+번호 : ${dto.mphone} <br>
+주소 : ${dto.maddress} <br>
+생일 : ${dto.mbirth} <br>
+<a href="/member/update/${dto.mid}">수정</a> <a href="/member/delete/${dto.mid}">삭제</a> <a href="/member/list">목록</a> 
 </body>
 </html>

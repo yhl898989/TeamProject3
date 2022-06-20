@@ -16,11 +16,13 @@
 
 <h1>회원 정보 입력 화면</h1>
 <form action="/member/insert" method="post">
-	ID : <input name="id"> <button>아이디 중복 체크</button> <br>
-	PW : <input type="password" name="pw"><br>
-	이름 : <input name="name"><br>
-	번호 : <input name="phone"><br>
-	생일 : <input name="birth" type="date"><br>
+	ID : <input name="mid"> <button>아이디 중복 체크</button> <br>
+	PW : <input type="password" name="mpw"><br>
+	이름 : <input name="mname"><br>
+	이메일 : <input name="memail" type="email"><br>
+	번호 : <input name="mphone"><br>
+	주소 : <input name="maddress"><br>
+	생일 : <input name="mbirth" type="date"><br>
 	<input type="submit" value="입력 완료">
 
 

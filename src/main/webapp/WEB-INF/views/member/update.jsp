@@ -11,11 +11,13 @@
 <body>
 <h1>회원 정보 수정 화면</h1>
 <form action="/member/update" method="post">
-	ID : <input name="id" value="${dto.id}" readonly="readonly"> <br>
-	PW : <input type="password" name="pw"><br>
-	이름 : <input name="name" value="${dto.name}"><br>
-	번호 : <input name="phone" value="${dto.phone}"><br>
-	생일 : <input name="birth" type="date" value="${dto.birth}"><br>
+	ID : <input name="mid" value="${dto.mid}" readonly="readonly"> <br>
+	PW : <input type="password" name="mpw"><br>
+	이름 : <input name="mname" value="${dto.mname}"><br>
+	이메일 : <input name="memail" value="${dto.memail}"><br>
+	번호 : <input name="mphone" value="${dto.mphone}"><br>
+	주소 : <input name="maddress" value="${dto.address}"><br>
+	생일 : <input name="mbirth" type="date" value="${dto.mbirth}"><br>
 	<input type="submit" value="입력 완료">
 
 

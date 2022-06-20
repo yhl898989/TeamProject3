@@ -12,9 +12,9 @@ public interface MemberService {
 
 	List<MemberDTO> list();
 
-	MemberDTO mypage(String id);
+	MemberDTO mypage(String mid);
 
-	MemberDTO updateUI(String id);
+	MemberDTO updateUI(String mid);
 
 	void update(MemberDTO dto);
 

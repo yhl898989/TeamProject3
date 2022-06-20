@@ -39,12 +39,7 @@ public class itemServiceImpl implements itemService{
 		// TODO Auto-generated method stub
 		return iDao.select();
 	}
-	
-	@Override
-	public List<String> getfile(int iId) {
-		// TODO Auto-generated method stub
-		return iDao.getfile(iId);
-	}
+
 	@Override
 	public ItemDTO read(int iId) {
 		// TODO Auto-generated method stub
@@ -54,6 +49,24 @@ public class itemServiceImpl implements itemService{
 	public List<ItemDTO> categoryList(String category) {
 		// TODO Auto-generated method stub
 		return iDao.categoryList(category);
+	}
+
+	@Transactional
+	@Override
+	public List<ItemDTO> categoryList(String category, String showhowitemlist) {
+		// TODO Auto-generated method stub
+		
+		if(showhowitemlist.equals("itemsequence")) {
+			return iDao.categoryListitemsequence(category);
+		}else if(showhowitemlist.equals("iPricedesc")) {
+			return iDao.categoryListiPricedesc(category);
+		}else if(showhowitemlist.equals("iPriceasc")) {
+			return iDao.categoryListiPriceasc(category);
+		}else {
+			return iDao.categoryListitemsequence(category);
+		}
+		
+	
 	}
 	
 }
