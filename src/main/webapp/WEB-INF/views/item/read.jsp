@@ -16,6 +16,27 @@
 #formFileMultiple{
    padding-left: 0%;
 }
+
+
+
+.itemread{
+	width : 100%;
+	height : 500px;
+	margin : 20px;
+}
+.itemreadphoto{
+	width: 50%;
+	float : left;
+	heigth: 500px;
+	text-align : center;
+}
+.itemreadinfo{
+	width : 50%;
+	float : right;
+	heigth: 500px;
+	
+	
+}
 </style>
 </head>
 <body>
@@ -25,8 +46,11 @@
    <h1 class="text-center">상품 상세 보기</h1>
 </div>
 
-  <div class="form-group row">
-    <label for="bno" class="col-sm-2 col-form-label col-form-label-lg">상품아이디</label>
+<div class = "itemread">
+<div class = "itemreadphoto"> <img alt="" src="/displayfile?filename=${item.ifilename}" width = "50%" height = "500px"></div>
+<div class = "itemreadinfo">
+ <div class="form-group row">
+    <label for="iId" class="col-sm-2 col-form-label col-form-label-lg">상품아이디</label>
     <div class="col-sm-10">
       <input readonly class="form-control form-control-lg"  id="" value="${item.iId}">
     </div>
@@ -34,17 +58,35 @@
   
   
   <div class="form-group row">
-    <label for="title" class="col-sm-2 col-form-label col-form-label-lg">상품명</label>
+    <label for="iName" class="col-sm-2 col-form-label col-form-label-lg">상품명</label>
     <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="" value="${item.iName}">
+      <input readonly class="form-control form-control-lg"  id="itemiName" value="${item.iName}">
     </div>
   </div>
 
 <div class="form-group row">
-    <label for="title" class="col-sm-2 col-form-label col-form-label-lg">가격</label>
+    <label for="iPrice" class="col-sm-2 col-form-label col-form-label-lg">소비자가</label>
     <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="" value="${item.iPrice}">
+      <input readonly class="form-control form-control-lg"  id="itemiPrice" value="${item.iPrice}원">
     </div>
+  </div>
+  
+<div class="form-group row">
+    <label for="saleiPrice" class="col-sm-2 col-form-label col-form-label-lg">판매가</label>
+    <div class="col-sm-10">
+      <input readonly class="form-control form-control-lg"  id="saleiPrice" value="">
+    </div>  
+  </div>
+  
+ <div class="form-group row">
+    <label for="iDc" class="col-sm-2 col-form-label col-form-label-lg">할인율</label>
+    <div class="col-sm-10">
+      <input readonly class="form-control form-control-lg"  id="itemiDc" value="${item.iDc}%">
+    </div>
+  </div>
+  
+  
+  </div>
   </div>
 <br>
 <br>
@@ -85,6 +127,11 @@ $(function() {
    
 let iId = ${item.iId};
 
+let iPrice = ${item.iPrice};
+let iDc = ${item.iDc};
+let savePrice = iPrice*(iDc/100)
+let saleiPrice = Math.ceil((iPrice - savePrice)/100)*100; 
+$("#saleiPrice").val(saleiPrice+"원");
 
 $("#reply_btn_submit").on("click", function() {
    
