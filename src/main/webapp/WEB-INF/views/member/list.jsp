@@ -29,6 +29,7 @@
 	<thead>
 		<tr>
 			<th>아이디</th>
+			<th>비밀번호</th>
 			<th>이름</th>
 			<th>이메일</th>
 			<th>번호</th>
@@ -41,6 +42,7 @@
 	<c:forEach items="${list}" var="dto">
 		<tr>
 			<td><a href="/member/read/${dto.mid}">${dto.mid}</a></td>
+			<td>${dto.mpw}</td>
 			<td>${dto.mname}</td>
 			<td>${dto.memail}</td>
 			<td>${dto.mphone}</td>

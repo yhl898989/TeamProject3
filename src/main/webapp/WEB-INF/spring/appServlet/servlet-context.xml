@@ -36,11 +36,25 @@
 
 	<beans:bean id="myHandlerInterceptor"  class="kr.co.dw.interceptor.MyHandlerInterceptor"></beans:bean>
    <beans:bean id="loginHandlerInterceptor" class="kr.co.dw.interceptor.LoginHandlerInterceptor"></beans:bean>
+   <beans:bean id="loginHandlerInterceptor2" class="kr.co.dw.interceptor.LoginHandlerInterceptor2"></beans:bean>
    <beans:bean id="logoutHandlerInterceptor" class="kr.co.dw.interceptor.LogoutHandlerInterceptor"></beans:bean>
+    <beans:bean id="logoutHandlerInterceptor2" class="kr.co.dw.interceptor.LogoutHandlerInterceptor2"></beans:bean>
    <beans:bean id="authHandlerInterceptor" class="kr.co.dw.interceptor.AuthHandlerInterceptor"></beans:bean>
+   <beans:bean id="authHandlerInterceptor2" class="kr.co.dw.interceptor.AuthHandlerInterceptor2"></beans:bean>
    
 
 	<interceptors>
+	
+		<interceptor>
+			<mapping path="/admin/login" />
+			<beans:ref bean="loginHandlerInterceptor2" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/logout" />
+			<beans:ref bean="loginHandlerInterceptor2" />
+		</interceptor>
+	
 		<interceptor>
 			<mapping path="/replies/*" />
 			<beans:ref bean="loginHandlerInterceptor" />

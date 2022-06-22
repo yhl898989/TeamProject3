@@ -43,12 +43,6 @@ public class MemberController {
 			
 			return result;		
 	}
-	
-	@RequestMapping(value = "/login2", method = RequestMethod.GET)
-	public String login2() {
-		
-		return "/member/login2";
-	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() {
@@ -56,7 +50,7 @@ public class MemberController {
 		return "redirect:/item/list";
 	}
 	
-	@RequestMapping(value = "/loginui", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		
 		return "/member/login";
@@ -138,7 +132,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(MemberDTO dto) {
-		System.out.println(dto);
+		
 		mService.insert(dto);
 		
 		return "redirect:/item/list";

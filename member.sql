@@ -1,15 +1,17 @@
 CREATE TABLE tbl_member(
 mid VARCHAR2(150),
-mpw VARCHAR2(600),
-mname VARCHAR2(15),
-memail VARCHAR2(300),
-mphone VARCHAR2(15),
-maddress VARCHAR2(300),
-mbirth DATE,
-macount VARCHAR2(3000),
-mpoint VARCHAR2(3000),
+mpw VARCHAR2(600) NOT NULL,
+mname VARCHAR2(15) NOT NULL,
+memail VARCHAR2(300) NOT NULL,
+mphone VARCHAR2(15) NOT NULL,
+maddress VARCHAR2(500) NOT NULL,
+mbirth DATE NOT NULL,
+macount NUMBER,
+mpoint NUMBER,
 CONSTRAINT pk_member_mid PRIMARY KEY(mid)
 )
+
+DROP table tbl_member
 
 
 INSERT INTO tbl_member

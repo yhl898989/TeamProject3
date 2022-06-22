@@ -10,7 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import kr.co.dw.domain.AdminDTO;
 import kr.co.dw.domain.MemberDTO;
 
-public class AuthHandlerInterceptor extends HandlerInterceptorAdapter{
+public class AuthHandlerInterceptor2 extends HandlerInterceptorAdapter{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -18,17 +18,17 @@ public class AuthHandlerInterceptor extends HandlerInterceptorAdapter{
 		
 		HttpSession session = request.getSession(false);
 		if(session != null) {
-			MemberDTO login = (MemberDTO)session.getAttribute("login");
+			AdminDTO login = (AdminDTO)session.getAttribute("login");
 			if(login == null) {
 				
-				response.sendRedirect("/member/login");
+				response.sendRedirect("/admin/login");
 				
 				return false;
 			}else {
 				return true;
 			}
 		}else {
-			response.sendRedirect("/member/login");
+			response.sendRedirect("/admin/login");
 			return false;
 		}
 	}
