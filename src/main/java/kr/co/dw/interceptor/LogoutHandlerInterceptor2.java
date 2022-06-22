@@ -1,5 +1,7 @@
 package kr.co.dw.interceptor;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,30 +9,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import kr.co.dw.domain.AdminDTO;
 import kr.co.dw.domain.MemberDTO;
 
-public class AuthHandlerInterceptor extends HandlerInterceptorAdapter{
+public class LogoutHandlerInterceptor2 extends HandlerInterceptorAdapter{
 
-	@Override
+	@Override  //member컨트롤러의 로그인으로 가야함
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
 		HttpSession session = request.getSession(false);
 		if(session != null) {
-			MemberDTO login = (MemberDTO)session.getAttribute("login");
-			if(login == null) {
-				
-				response.sendRedirect("/member/login");
-				
-				return false;
-			}else {
-				return true;
-			}
-		}else {
-			response.sendRedirect("/member/login");
-			return false;
+			session.invalidate();
 		}
+		
+		return true;
 	}
 
 	@Override
