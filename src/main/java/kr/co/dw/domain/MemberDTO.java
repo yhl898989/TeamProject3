@@ -10,63 +10,125 @@ public class MemberDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String id;
-	private String pw;
-	private String name;
-	private String phone;
-	private String birth;
+	private String mid;
+	private String mpw;
+	private String mname;
+	private String memail;
+	private String mphone;
+	private String maddress;
+	private String maddress1;
+	private String maddress2;
+	private String maddress3;
+	private String mbirth;
+	private int macount;
+	private int mpoint;
 	
 	public MemberDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MemberDTO(String id, String pw, String name, String phone, String birth) {
+	public MemberDTO(String mid, String mpw, String mname, String memail, String mphone, String maddress1,
+			String maddress2, String maddress3, String mbirth, int macount, int mpoint) {
 		super();
-		this.id = id;
-		this.pw = pw;
-		this.name = name;
-		this.phone = phone;
-		this.birth = birth;
+		this.mid = mid;
+		this.mpw = mpw;
+		this.mname = mname;
+		this.memail = memail;
+		this.mphone = mphone;
+		this.maddress1 = maddress1;
+		this.maddress2 = maddress2;
+		this.maddress3 = maddress3;
+		this.mbirth = mbirth;
+		this.macount = macount;
+		this.mpoint = mpoint;
 	}
 
-	public String getId() {
-		return id;
+	public String getMid() {
+		return mid;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
-	public String getPw() {
-		return pw;
+	public String getMpw() {
+		return mpw;
 	}
 
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setMpw(String mpw) {
+		this.mpw = mpw;
 	}
 
-	public String getName() {
-		return name;
+	public String getMname() {
+		return mname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMname(String mname) {
+		this.mname = mname;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getMemail() {
+		return memail;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setMemail(String memail) {
+		this.memail = memail;
 	}
 
-	public String getBirth() {
-		return birth;
+	public String getMphone() {
+		return mphone;
 	}
 
-	public void setBirth(String birth) {
-		this.birth = birth;
+	public void setMphone(String mphone) {
+		this.mphone = mphone;
+	}
+
+	public String getMaddress1() {
+		return maddress1;
+	}
+
+	public void setMaddress1(String maddress1) {
+		this.maddress1 = maddress1;
+	}
+
+	public String getMaddress2() {
+		return maddress2;
+	}
+
+	public void setMaddress2(String maddress2) {
+		this.maddress2 = maddress2;
+	}
+
+	public String getMaddress3() {
+		return maddress3;
+	}
+
+	public void setMaddress3(String maddress3) {
+		this.maddress3 = maddress3;
+	}
+
+	public String getMbirth() {
+		return mbirth;
+	}
+
+	public void setMbirth(String mbirth) {
+		this.mbirth = mbirth;
+	}
+
+	public int getMacount() {
+		return macount;
+	}
+
+	public void setMacount(int macount) {
+		this.macount = macount;
+	}
+
+	public int getMpoint() {
+		return mpoint;
+	}
+
+	public void setMpoint(int mpoint) {
+		this.mpoint = mpoint;
 	}
 
 	public static long getSerialversionuid() {
@@ -75,7 +137,7 @@ public class MemberDTO implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, pw);
+		return Objects.hash(mid, mpw);
 	}
 
 	@Override
@@ -87,14 +149,27 @@ public class MemberDTO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		MemberDTO other = (MemberDTO) obj;
-		return Objects.equals(id, other.id) && Objects.equals(pw, other.pw);
+		return Objects.equals(mid, other.mid) && Objects.equals(mpw, other.mpw);
+	}
+
+
+	public String getMaddress() {
+		return maddress;
+	}
+
+	public void setMaddress(String maddress) {
+		this.maddress = maddress;
 	}
 
 	@Override
 	public String toString() {
-		return "MemberDTO [id=" + id + ", pw=" + pw + ", name=" + name + ", phone=" + phone + ", birth=" + birth + "]";
+		return "MemberDTO [mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", memail=" + memail + ", mphone="
+				+ mphone + ", maddress=" + maddress + ", maddress1=" + maddress1 + ", maddress2=" + maddress2
+				+ ", maddress3=" + maddress3 + ", mbirth=" + mbirth + ", macount=" + macount + ", mpoint=" + mpoint
+				+ "]";
 	}
 
 	
+
 	
 }

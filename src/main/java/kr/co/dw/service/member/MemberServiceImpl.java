@@ -28,29 +28,37 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public void insert(MemberDTO dto) {
+		
+		dto.setMaddress(dto.getMaddress1()+ "/" + dto.getMaddress2()+dto.getMaddress3());
+		
+		
+	
+		
+		
+		
 		mDao.insert(dto);
 	}
 
 	@Override
-	public MemberDTO mypage(String id) {
+	public MemberDTO mypage(String mid) {
 		// TODO Auto-generated method stub
-		return mDao.mypage(id);
+		return mDao.mypage(mid);
 	}
 
 	@Override
-	public MemberDTO updateUI(String id) {
+	public MemberDTO updateUI(String mid) {
 		
-		MemberDTO dto = mDao.updateUI(id);
+		MemberDTO dto = mDao.updateUI(mid);
 		
-		String birth = dto.getBirth().substring(0, 10);
-		dto.setBirth(birth);
+		String mbirth = dto.getMbirth().substring(0, 10);
+		dto.setMbirth(mbirth);
 		
 		return dto;
 	}
 
 	@Override
 	public void update(MemberDTO dto) {
-		
+		dto.setMaddress(dto.getMaddress1()+ "/" + dto.getMaddress2()+dto.getMaddress3());
 		mDao.update(dto);
 		
 	}
@@ -60,5 +68,12 @@ public class MemberServiceImpl implements MemberService{
 		mDao.delete(dto);
 		
 	}
+
+	@Override
+	public int idCheck(String mid) {
+		// TODO Auto-generated method stub
+		return mDao.idCheck(mid);
+	}
+
 	
 }

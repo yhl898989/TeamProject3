@@ -77,17 +77,19 @@
 </div>
 
 
-<script type="text/javascript" src="/resources/js/tl3.js"></script>
+<script type="text/javascript" src="/resources/js/tl.js"></script>
 
 <script type="text/javascript">
-
+$(function() {
+   
+   
 let iId = ${item.iId};
 
 
 $("#reply_btn_submit").on("click", function() {
-	
-	
-	
+   
+   
+   
 
     
     let rtitle = $("#rtitle").val();
@@ -102,7 +104,7 @@ $("#reply_btn_submit").on("click", function() {
           "X-HTTP-Method-Override" : "POST"
        },
        data : JSON.stringify({
-    	  rtitle : rtitle,
+         rtitle : rtitle,
           rcontent : rcontent,
           iId : iId
       
@@ -121,19 +123,22 @@ $("#reply_btn_submit").on("click", function() {
        
     });
     
+  
     
  });
  
 
 
-   $(function() {
+ 
 $(".reply").on("click", function() {
          $(".collapse").collapse("toggle");
       });
 
+getAllReply3(iId, $("#review"));
+
    });
    
-   getAllReply3(iId, $("#review"));
+
 
 
 </script>

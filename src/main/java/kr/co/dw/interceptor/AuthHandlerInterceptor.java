@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import kr.co.dw.domain.AdminDTO;
 import kr.co.dw.domain.MemberDTO;
 
 public class AuthHandlerInterceptor extends HandlerInterceptorAdapter{

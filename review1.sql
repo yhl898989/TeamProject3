@@ -1,0 +1,12 @@
+CREATE TABLE tbl_review(
+rno NUMBER,
+iId NUMBER,
+rtitle VARCHAR2(600),
+rcontent VARCHAR2(3000),
+regDay DATE DEFAULT SYSDATE,
+updateDay DATE DEFAULT SYSDATE,
+CONSTRAINT pk_review_rno PRIMARY KEY(rno),
+CONSTRAINT fk_review_iid FOREIGN KEY (iId) REFERENCES tbl_item(iId)
+)
+
+CREATE SEQUENCE seq_review_rno

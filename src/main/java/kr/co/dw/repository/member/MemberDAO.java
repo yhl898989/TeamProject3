@@ -12,12 +12,16 @@ public interface MemberDAO {
 
 	void update(MemberDTO dto);
 
-	MemberDTO updateUI(String id);
+	MemberDTO updateUI(String mid);
 
-	MemberDTO mypage(String id);
+	MemberDTO mypage(String mid);
 
 	void insert(MemberDTO dto);
 
 	List<MemberDTO> list();
+
+	int idCheck(String mid);
+
+
 
 }
