@@ -18,6 +18,14 @@ public interface itemService {
 
 	List<ItemDTO> categoryList(String category, String showhowitemlist);
 
+	List<String> getitemfilelist(int iId);
+
+	List<ItemDTO> search(String criteria, String keyword);
+
+	void updateitem(ItemDTO iDto);
+
+	void deleteitem(int iId);
+
 	
 
 }

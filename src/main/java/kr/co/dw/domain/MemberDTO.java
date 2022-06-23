@@ -15,12 +15,12 @@ public class MemberDTO implements Serializable{
 	private String mname;
 	private String memail;
 	private String mphone;
-	private String maddress;
 	private String maddress1;
 	private String maddress2;
 	private String maddress3;
 	private String mbirth;
 	private int macount;
+	private int mmoney;
 	private int mpoint;
 	
 	public MemberDTO() {
@@ -28,7 +28,7 @@ public class MemberDTO implements Serializable{
 	}
 
 	public MemberDTO(String mid, String mpw, String mname, String memail, String mphone, String maddress1,
-			String maddress2, String maddress3, String mbirth, int macount, int mpoint) {
+			String maddress2, String maddress3, String mbirth, int macount, int mmoney, int mpoint) {
 		super();
 		this.mid = mid;
 		this.mpw = mpw;
@@ -40,6 +40,7 @@ public class MemberDTO implements Serializable{
 		this.maddress3 = maddress3;
 		this.mbirth = mbirth;
 		this.macount = macount;
+		this.mmoney = mmoney;
 		this.mpoint = mpoint;
 	}
 
@@ -123,6 +124,14 @@ public class MemberDTO implements Serializable{
 		this.macount = macount;
 	}
 
+	public int getMmoney() {
+		return mmoney;
+	}
+
+	public void setMmoney(int mmoney) {
+		this.mmoney = mmoney;
+	}
+
 	public int getMpoint() {
 		return mpoint;
 	}
@@ -152,24 +161,14 @@ public class MemberDTO implements Serializable{
 		return Objects.equals(mid, other.mid) && Objects.equals(mpw, other.mpw);
 	}
 
-
-	public String getMaddress() {
-		return maddress;
-	}
-
-	public void setMaddress(String maddress) {
-		this.maddress = maddress;
-	}
-
 	@Override
 	public String toString() {
 		return "MemberDTO [mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", memail=" + memail + ", mphone="
-				+ mphone + ", maddress=" + maddress + ", maddress1=" + maddress1 + ", maddress2=" + maddress2
-				+ ", maddress3=" + maddress3 + ", mbirth=" + mbirth + ", macount=" + macount + ", mpoint=" + mpoint
-				+ "]";
+				+ mphone + ", maddress1=" + maddress1 + ", maddress2=" + maddress2 + ", maddress3=" + maddress3
+				+ ", mbirth=" + mbirth + ", macount=" + macount + ", mmoney=" + mmoney + ", mpoint=" + mpoint + "]";
 	}
 
 	
-
+	
 	
 }

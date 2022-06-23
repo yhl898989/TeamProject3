@@ -12,10 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
 <style type="text/css">
-.mainbanner img{
-height : 300px;
-width : 100%;
-}
+
 *{padding:0;margin:0}
 li{list-style:none}
 a{text-decoration:none;font-size:14px}
@@ -42,19 +39,15 @@ a{text-decoration:none;font-size:14px}
 	margin : 20px;
 
 }
-
 </style>
 
-
-
 </head>
+
 <body>
+
 <jsp:include page="../common/header.jsp"></jsp:include>
-<center>
-<h1>쇼핑몰</h1>
-</center>
- 
-</div>
+
+
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
@@ -99,7 +92,9 @@ a{text-decoration:none;font-size:14px}
        
       </li>
     </ul>
-<div id = "itemlist">
+    <center>
+<h1>검색 결과</h1>
+</center>
 <form action="/item/search" method="post">
 	<select name = "criteria">
 		<option value = "iName">상품이름</option>
@@ -107,8 +102,8 @@ a{text-decoration:none;font-size:14px}
 	<input name = "keyword">
 	<input type = "submit" value = "검색">
 	</form>
-
-<c:forEach items="${list}" var = "list">
+<div id = "itemlist">
+<c:forEach items = "${list}" var = "list">
 <div class="card " style="width: 18rem;">
  <a href = "/item/read/${list.iId}">
  <div>
@@ -116,18 +111,15 @@ a{text-decoration:none;font-size:14px}
   </div>
   </a>
   <div class="card-body">
-    <p class="card-text">상품이름:${list.iName} </p>
-    <p class="card-price">상품가격:${list.iPrice} </p>
+    <p class="card-text">상품이름:${list.iName}</p>
+    <p class="card-price">상품가격:${list.iPrice}</p>
   </div>
 </div>
 </c:forEach>
 </div>
 
 
-
-<script type="text/javascript" src = "/resources/js/item.js"></script>
 <script type="text/javascript">
-
 $(document).ready(function() {
 	$(".menu").on("click","a", function() {
 		let category = $(this).attr("id");
@@ -137,6 +129,7 @@ $(document).ready(function() {
 		
 	})
 })
+
 
 
 </script>
