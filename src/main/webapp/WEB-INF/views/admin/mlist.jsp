@@ -16,8 +16,8 @@
 <center>
 <h1>관리자 페이지</h1>
 
-<table>
-	<thead>
+<table border="1px">
+	<thead style="text-align: center">
 		<tr>
 			<th>아이디</th>
 			<th>비밀번호</th>
@@ -29,7 +29,7 @@
 		</tr>
 	</thead>
 	
-	<tbody>
+	<tbody style="text-align: center">
 	<c:forEach items="${mlist}" var="dto">
 		<tr>
 			<td><a href="/member/mypage/${dto.mid}">${dto.mid}</a></td>
@@ -37,7 +37,7 @@
 			<td>${dto.mname}</td>
 			<td>${dto.memail}</td>
 			<td>${dto.mphone}</td>
-			<td>${dto.maddress}</td>
+			<td>${dto.maddress1} / ${dto.maddress2} / ${dto.maddress3}</td>
 			<td>${dto.mbirth}</td>
 			<td><a href="/member/update/${dto.mid}">수정</a></td>
 			<td><a href="/member/delete/${dto.mid}">삭제</a></td>

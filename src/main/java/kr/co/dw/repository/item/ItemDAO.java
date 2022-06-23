@@ -24,6 +24,16 @@ public interface ItemDAO {
 
 	List<ItemDTO> categoryListiPriceasc(String category);
 
+	List<String> getitemfilelist(int iId);
+
+	List<ItemDTO> search(String criteria, String keyword);
+
+	void updateitem(ItemDTO iDto);
+
+	void deleteitem(int iId);
+
+	void deleteitemimgfile(int iId);
+
 	
 
 	

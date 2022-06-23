@@ -53,7 +53,7 @@ public class MemberController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() {
 			
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	@RequestMapping(value = "/loginui", method = RequestMethod.GET)
@@ -69,7 +69,7 @@ public class MemberController {
 		//System.out.println(login);
 		model.addAttribute("login", login);
 		
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	
@@ -80,7 +80,7 @@ public class MemberController {
 		mService.delete(dto);
 	
 		
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	
@@ -141,7 +141,7 @@ public class MemberController {
 		System.out.println(dto);
 		mService.insert(dto);
 		
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	

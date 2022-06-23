@@ -28,14 +28,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public void insert(MemberDTO dto) {
-		
-		dto.setMaddress(dto.getMaddress1()+ "/" + dto.getMaddress2()+dto.getMaddress3());
-		
-		
-	
-		
-		
-		
+
 		mDao.insert(dto);
 	}
 
@@ -58,7 +51,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void update(MemberDTO dto) {
-		dto.setMaddress(dto.getMaddress1()+ "/" + dto.getMaddress2()+dto.getMaddress3());
+	
 		mDao.update(dto);
 		
 	}

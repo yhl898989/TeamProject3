@@ -72,5 +72,34 @@ public class ItemDAOImpl implements ItemDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".categoryListitemsequence",category);
 	}
+	@Override
+	public List<String> getitemfilelist(int iId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".getitemfilelist", iId);
+	}
+	@Override
+	public List<ItemDTO> search(String criteria, String keyword) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("criteria", criteria);
+		map.put("keyword", keyword);
+		return sqlSession.selectList(NAMESPACE+".search", map);
+	}
+	@Override
+	public void updateitem(ItemDTO iDto) {
+		// TODO Auto-generated method stub
+		sqlSession.update(NAMESPACE+".updateitem", iDto);
+	}
+	@Override
+	public void deleteitem(int iId) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(NAMESPACE+".deleteitem", iId);
+	}
+	@Override
+	public void deleteitemimgfile(int iId) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(NAMESPACE+".deleteitemimgfile", iId);
+	}
 	
 }
