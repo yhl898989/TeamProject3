@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,91 @@ public class itemController {
 	
 	
 	private String uploadPath = "C:"+File.separator+"upload";
+	
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteitem(HttpServletRequest request){
+		ResponseEntity<String> entity = null;
+		String adminlistiId = request.getParameter("adminlistiId");
+		int iId = Integer.parseInt(adminlistiId);
+		
+		try {
+			
+			List<String> list = iService.getitemfilelist(iId);
+			for(int i = 0 ; i < list.size();i++) {
+				String deleteifilename = list.get(i);
+				DWUtils.deleteFile(uploadPath, deleteifilename);
+			}
+			
+			iService.deleteitem(iId);
+			
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			entity = new ResponseEntity<String>("FAIL",HttpStatus.OK);
+		}
+
+		return entity;
+	}
+	
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ResponseEntity<String> updateitem(HttpServletRequest request){
+		ResponseEntity<String> entity = null;
+		String updateiId = request.getParameter("updateiId");
+		int iId = Integer.parseInt(updateiId);
+		String iName = request.getParameter("updateiName");
+		String updateiPrice = request.getParameter("updateiPrice");
+		int iPrice = Integer.parseInt(updateiPrice);
+		String updateiDc = request.getParameter("updateiDc");
+		int iDc = Integer.parseInt(updateiDc);
+		String updateiCount = request.getParameter("updateiCount");
+		int iCount = Integer.parseInt(updateiCount);
+		String i_CATEGORY = request.getParameter("updatei_CATEGORY");
+		
+		try {
+			ItemDTO iDto = new ItemDTO(iId, iName, iPrice, iDc, iCount, null, i_CATEGORY);
+			iService.updateitem(iDto);
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			entity = new ResponseEntity<String>("FAIL",HttpStatus.OK);
+		}
+
+		return entity;
+	}
+	
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String search(HttpServletRequest request, Model model) {
+		String criteria = request.getParameter("criteria");
+		
+		String keyword = request.getParameter("keyword");
+		
+		List<ItemDTO> list = iService.search(criteria,keyword);
+		
+		model.addAttribute("list", list);
+		
+		return "/item/search";
+	}
+	
+	@RequestMapping(value = "/getitemfilelist/{iId}", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getitemfilelist(@PathVariable("iId") int iId){
+		ResponseEntity<List<String>> entity = null;
+		
+		try {
+			List<String> itemfilelist = iService.getitemfilelist(iId);
+			entity = new ResponseEntity<List<String>>(itemfilelist,HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			entity = new ResponseEntity<List<String>>(HttpStatus.OK);
+		}
+		
+		return entity;
+	}
 	
 	
 	@Transactional

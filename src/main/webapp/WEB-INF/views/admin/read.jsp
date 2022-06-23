@@ -19,8 +19,11 @@
 이름 : ${dto.mname} <br>
 이메일 : ${dto.memail} <br>
 번호 : ${dto.mphone} <br>
-주소 : ${dto.maddress} <br>
+우편번호 : ${dto.maddress1} <br>
+주소 : ${dto.maddress2} <br>
+상세주소 : ${dto.maddress3} <br>
 생일 : ${dto.mbirth} <br>
+금액 : ${dto.mmoney} <br>
 <a href="/member/update/${dto.mid}">수정</a> <a href="/member/delete/${dto.mid}">삭제</a> <a href="/admin/main">목록</a>
 </body>
 </html>

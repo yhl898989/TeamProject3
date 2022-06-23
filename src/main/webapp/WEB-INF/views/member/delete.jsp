@@ -9,6 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+<jsp:include page="../common/header.jsp"/>
 <h1>회원 정보 삭제</h1>
 
 <form action="/member/delete" method="post">

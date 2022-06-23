@@ -65,8 +65,30 @@ public class itemServiceImpl implements itemService{
 		}else {
 			return iDao.categoryListitemsequence(category);
 		}
-		
-	
+
 	}
+	@Override
+	public List<String> getitemfilelist(int iId) {
+		// TODO Auto-generated method stub
+		return iDao.getitemfilelist(iId);
+	}
+	@Override
+	public List<ItemDTO> search(String criteria, String keyword) {
+		// TODO Auto-generated method stub
+		return iDao.search(criteria,keyword);
+	}
+	@Override
+	public void updateitem(ItemDTO iDto) {
+		// TODO Auto-generated method stub
+		iDao.updateitem(iDto);
+	}
+	@Transactional
+	@Override
+	public void deleteitem(int iId) {
+		// TODO Auto-generated method stub
+		iDao.deleteitem(iId);
+		iDao.deleteitemimgfile(iId);
+	}
+	
 	
 }

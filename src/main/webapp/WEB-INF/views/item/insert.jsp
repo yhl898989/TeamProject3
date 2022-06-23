@@ -12,11 +12,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <style type="text/css">
 #itemimguploadFile{
-	width : 100%;
+	width : 500px;
 	height : 250px;
-	border: 1px solid red;
+	border: 1px solid black;
+	padding : 0px;
 }
-
+.iteminsertform{
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+}
 
 </style>	
 
@@ -27,14 +32,15 @@
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
 <center>
-<h1>쇼핑몰</h1>
-</center>
 <h1>상품등록</h1>
+</center>
+<div class = "iteminsertform">
+<div class = "aaaaa">
 <form action="" method="post">
-상품 이름 : <input id ="iName" name = "iName"><br>
-상품 가격 : <input id = "iPrice" name = "iPrice"><br>
-상품 할인율 : <input id = "iDc" name = "iDc"><br>
-상품 수량 : <input id = "iCount" name = "iCount"><br>
+상품 이름 : <input id ="iName" name = "iName" required="required"><br>
+상품 가격 : <input id = "iPrice" name = "iPrice" type="number" required="required" ><br>
+상품 할인율 : <input id = "iDc" name = "iDc" type="number" required="required"><br>
+상품 수량 : <input id = "iCount" name = "iCount" type="number" required="required"><br>
 카테고리 : 
 <select id = "category" onchange = "changecategory()">
 <option value = "옷">옷</option>
@@ -45,11 +51,16 @@
 </select>
 </form>
 <input id = "cateogoryname" type = "hidden" value = "옷">
-<input id = "item_btn_submit" type="submit" value = "상품 등록">
+</div>
 
-<div class ="form-group">
-<div id = "itemimguploadFile" class ="form-control text-center"></div>
+<div id = "itemimguploadFileform" class ="form-group">
+<div id = "itemimguploadFile" class ="form-control text-center">메인사진</div>
 	</div>
+</div>	
+<center>
+<input id = "item_btn_submit" type="submit" value = "상품 등록">
+</center>
+
 <div id = "itemimguploadedItems" class ="row row-cols-3">
 
 </div>	
@@ -90,6 +101,7 @@ $(document).ready(function() {
 		let itemimgfilekey = $(this).attr("data-itemimgfilekey");
 		formData.delete(itemimgfilekey);
 		$(this).parent().parent().parent().remove();
+		
 	})	
 	
 	$("#item_btn_submit").click(function() {
@@ -98,12 +110,28 @@ $(document).ready(function() {
 		let iDc = $("#iDc").val();
 		let iCount = $("#iCount").val();
 		let icategory = $("#cateogoryname").val();
-		
+		if(iName == ""){
+			alert("상품이름을 등록해주세요");
+			return
+		}else if(iPrice == ""){
+			alert("가격을 입력해주세요");
+			return
+		}else if(iDc == ""){
+			alert("할인을을 입력해주세요");
+			return
+		}else if(iCount == ""){
+			alert("수량을 입력해주세요");
+			return
+		}else if(icategory == ""){
+			alert("카레고리를 골라주세요");
+			return
+		}
 		formData.append("iName", iName);
 		formData.append("iPrice", iPrice);
 		formData.append("iDc", iDc);
 		formData.append("iCount", iCount);
 		formData.append("icategory",icategory);
+		
 		$.ajax({
 			
 			type : "post",
