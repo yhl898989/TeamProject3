@@ -12,14 +12,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 </head>
 <body>
+<jsp:include page="../common/header.jsp"/>
 <h1>회원 정보 자세히 보기</h1>
 아이디 : ${dto.mid} <br>
 비밀번호 : ${dto.mpw} <br>
 이름 : ${dto.mname} <br>
 이메일 : ${dto.memail} <br>
 번호 : ${dto.mphone} <br>
-주소 : ${dto.maddress} <br>
+우편번호 : ${dto.maddress1} <br>
+주소 : ${dto.maddress2} <br>
+상세주소 : ${dto.maddress3} <br>
 생일 : ${dto.mbirth} <br>
+잔액 : ${dto.mmoney} <br>
 <a href="/member/update/${dto.mid}">수정</a> <a href="/member/delete/${dto.mid}">삭제</a> <a href="/item/main">목록</a> 
 
 </body>

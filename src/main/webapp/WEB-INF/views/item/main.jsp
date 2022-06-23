@@ -20,7 +20,7 @@ width : 100%;
 li{list-style:none}
 a{text-decoration:none;font-size:14px}
 .menu {
-  width: 100%;
+  width: 1920px;
   overflow: hidden;
   
 }
@@ -36,6 +36,11 @@ a{text-decoration:none;font-size:14px}
 .menu a {
   color: #fff;
   width: 100%;
+}
+#itemlist{
+
+	margin : 20px;
+
 }
 
 </style>
@@ -94,6 +99,14 @@ a{text-decoration:none;font-size:14px}
        
       </li>
     </ul>
+<div id = "itemlist">
+<form action="/item/search" method="post">
+	<select name = "criteria">
+		<option value = "iName">상품이름</option>
+	</select>
+	<input name = "keyword">
+	<input type = "submit" value = "검색">
+	</form>
 
 <c:forEach items="${list}" var = "list">
 <div class="card " style="width: 18rem;">
@@ -108,6 +121,7 @@ a{text-decoration:none;font-size:14px}
   </div>
 </div>
 </c:forEach>
+</div>
 
 
 

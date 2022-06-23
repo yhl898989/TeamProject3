@@ -22,7 +22,9 @@ drop table itemfileupload
 
 drop table tbl_member
 
+SELECT * FROM tbl_item WHERE iName like '%'||3||'%'
 
+SELECT * FROM tbl_item WHERE UPPER(iName) like '%'||UPPER(3)||'%'
 
 
 delete from itemfileupload

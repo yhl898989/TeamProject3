@@ -27,15 +27,5 @@
 </div>
 
 
-<div>
-<h1>관리자 로그인</h1>
-	<form action="#" method="post">
-	
-		ID: <input name="mid"> <br>
-		PW: <input name="mpw"> <br>
-		<input type="submit" value="로그인 완료">
-		</form>
-</div>
-
 </body>
 </html>

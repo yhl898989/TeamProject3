@@ -59,4 +59,11 @@ public class MemberDAOImpl implements MemberDAO{
 		
 	}
 
+	@Override
+	public int idCheck(String mid) {
+		// TODO Auto-generated method stub
+		return sqlsession.selectOne(NAMESPACE+".idCheck", mid);
+	}
+
+
 }

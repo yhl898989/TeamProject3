@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -30,13 +34,29 @@ public class MemberController {
 	@Autowired
 	private MemberService mService;
 	
+	//중복확인
+	@ResponseBody
+	@RequestMapping(value="/idCheck",method=RequestMethod.POST)
+	public int getIdCheck(HttpServletRequest req) throws Exception{
+		String mid = req.getParameter("mid");
+		int result = mService.idCheck(mid);//중복아이디 있으면 1, 없으면 0
+			
+			return result;		
+	}
+	
+	@RequestMapping(value = "/login2", method = RequestMethod.GET)
+	public String login2() {
+		
+		return "/member/login2";
+	}
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() {
 			
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginui", method = RequestMethod.GET)
 	public String login() {
 		
 		return "/member/login";
@@ -49,7 +69,7 @@ public class MemberController {
 		//System.out.println(login);
 		model.addAttribute("login", login);
 		
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	
@@ -60,7 +80,7 @@ public class MemberController {
 		mService.delete(dto);
 	
 		
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	
@@ -118,10 +138,10 @@ public class MemberController {
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(MemberDTO dto) {
-		
+		System.out.println(dto);
 		mService.insert(dto);
 		
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
 	
 	

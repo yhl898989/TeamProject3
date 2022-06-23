@@ -28,6 +28,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public void insert(MemberDTO dto) {
+
 		mDao.insert(dto);
 	}
 
@@ -50,7 +51,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void update(MemberDTO dto) {
-		
+	
 		mDao.update(dto);
 		
 	}
@@ -60,5 +61,12 @@ public class MemberServiceImpl implements MemberService{
 		mDao.delete(dto);
 		
 	}
+
+	@Override
+	public int idCheck(String mid) {
+		// TODO Auto-generated method stub
+		return mDao.idCheck(mid);
+	}
+
 	
 }

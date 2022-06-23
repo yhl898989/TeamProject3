@@ -20,7 +20,7 @@ width : 100%;
 li{list-style:none}
 a{text-decoration:none;font-size:14px}
 .menu {
-  width: 100%;
+  width: 1920px;
   overflow: hidden;
   
 }
@@ -108,6 +108,13 @@ a{text-decoration:none;font-size:14px}
     <a href = "/item/list" id = "iPriceasc">낮은가격순</a>
     </div>
     <div id = "category"></div>
+    <form action="/item/search" method="post">
+	<select name = "criteria">
+		<option value = "iName">상품이름</option>
+	</select>
+	<input name = "keyword">
+	<input type = "submit" value = "검색">
+	</form>
 <div id = "itemlist">
 
 </div>

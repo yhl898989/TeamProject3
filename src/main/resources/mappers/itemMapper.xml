@@ -4,6 +4,38 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.item">
   
+  
+  <delete id="deleteitemimgfile">
+  
+  DELETE FROM itemfileupload WHERE iId = #{iId}
+  
+  </delete>
+  
+  <delete id="deleteitem">
+  
+  DELETE FROM tbl_item WHERE iId = #{iId}
+ 
+  </delete>
+  
+  <update id="updateitem">
+  
+  UPDATE tbl_item SET iName = #{iName}, iPrice = #{iPrice} ,iDc = #{iDc}, iCount = #{iCount}, i_CATEGORY = #{i_CATEGORY} WHERE iId = #{iId}
+  
+  </update>
+  
+  
+  <select id="search" resultType="iTemDTO">
+  <if test ="criteria == 'iName'">
+  SELECT * FROM tbl_item WHERE iName like '%'||#{keyword}||'%'
+  </if>
+  </select>
+  
+  
+  <select id="getitemfilelist" resultType="string">
+  
+  SELECT ifilename FROM itemfileupload WHERE iId = #{iId}
+  </select>
+  
   <select id="categoryListiPriceasc" resultType="iTemDTO">
   
   SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice ASC
@@ -32,7 +64,7 @@
   
   <select id="adminlist" resultType="itemDTO">
   
-  SELECT * FROM tbl_item
+  SELECT * FROM tbl_item order by iId desc
   
   </select>
   

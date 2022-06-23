@@ -19,24 +19,31 @@
 
 
 
-.itemread{
-	width : 100%;
+ .itemread{
+	display : flex;
+	width : 1920px;
 	height : 500px;
-	margin : 20px;
+	margin-left: 40px;
+	margin-right: 40px;
 }
 .itemreadphoto{
-	width: 50%;
-	float : left;
-	heigth: 500px;
+	width: 960px;
+	
+	height: 400px;
 	text-align : center;
 }
 .itemreadinfo{
-	width : 50%;
-	float : right;
-	heigth: 500px;
-	
-	
+	width : 960px;
+
+	height: 500px;	
 }
+.itemreadsubphoto{
+	margin-top : 10px;
+	margin-left: 240px;
+	margin-right: 240px;
+	text-align: right;
+	
+} 
 </style>
 </head>
 <body>
@@ -47,12 +54,15 @@
 </div>
 
 <div class = "itemread">
-<div class = "itemreadphoto"> <img alt="" src="/displayfile?filename=${item.ifilename}" width = "50%" height = "500px"></div>
+<div class = "itemreadphoto">
+<img alt="" src="/displayfile?filename=${item.ifilename}" width = "50%" height = "400px">
+<div class = "itemreadsubphoto" id = "subphoto"></div>
+</div>
 <div class = "itemreadinfo">
  <div class="form-group row">
     <label for="iId" class="col-sm-2 col-form-label col-form-label-lg">상품아이디</label>
     <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="" value="${item.iId}">
+      <input readonly class="form-control form-control-lg"  id="itemiId" value="${item.iId}">
     </div>
   </div>
   
@@ -118,7 +128,7 @@
 <div id="review">
 </div>
 
-
+<script type="text/javascript" src="/resources/js/item.js"></script>
 <script type="text/javascript" src="/resources/js/tl.js"></script>
 
 <script type="text/javascript">
@@ -126,13 +136,47 @@ $(function() {
    
    
 let iId = ${item.iId};
-
 let iPrice = ${item.iPrice};
-let iDc = ${item.iDc};
-let savePrice = iPrice*(iDc/100)
-let saleiPrice = Math.ceil((iPrice - savePrice)/100)*100; 
-$("#saleiPrice").val(saleiPrice+"원");
 
+if(iPrice >= 1000){
+	let iPrice = ${item.iPrice};
+	let iDc = ${item.iDc};
+	let savePrice = iPrice*(iDc/100);
+	let saleiPrice = Math.ceil((iPrice - savePrice)/100)*100;
+	$("#saleiPrice").val(saleiPrice+"원");
+}
+if(iPrice < 1000 || iPrice >= 100){
+	let iPrice = ${item.iPrice};
+	let iDc = ${item.iDc};
+	let savePrice = iPrice*(iDc/100);
+	let saleiPrice = Math.ceil((iPrice - savePrice)/10)*10;
+	$("#saleiPrice").val(saleiPrice+"원");
+}
+if(iPrice < 100 || iPrice >= 10){
+	let iPrice = ${item.iPrice};
+	let iDc = ${item.iDc};
+	let savePrice = iPrice*(iDc/100);
+	let saleiPrice = Math.ceil((iPrice - savePrice)/1)*1;
+	$("#saleiPrice").val(saleiPrice+"원");
+}
+if(iPrice < 10){
+	let iPrice = ${item.iPrice};
+	console.log(iPrice);
+	let iDc = ${item.iDc};
+	console.log(iDc);
+	let savePrice = iPrice*(iDc/100);
+	console.log(savePrice);
+	let saleiPrice = Math.floor((iPrice - savePrice));
+	console.log(saleiPrice);
+	$("#saleiPrice").val(saleiPrice+"원");
+}
+ 
+
+
+getitemfilelist(iId,$("#subphoto"));
+
+
+//////////////////////////////////////////////////////////////////////////
 $("#reply_btn_submit").on("click", function() {
    
    
