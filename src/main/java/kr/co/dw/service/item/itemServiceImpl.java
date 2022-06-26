@@ -2,6 +2,7 @@ package kr.co.dw.service.item;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +16,6 @@ public class itemServiceImpl implements itemService{
 	@Autowired
 	private ItemDAO iDao;
 
-	@Override
-	public List<ItemDTO> adminlist() {
-		// TODO Auto-generated method stub
-		return iDao.adminlist();
-	}
-	
 	@Override
 	@Transactional
 	public void insert(ItemDTO iDto) {
@@ -45,28 +40,7 @@ public class itemServiceImpl implements itemService{
 		// TODO Auto-generated method stub
 		return iDao.read(iId);
 	}
-	@Override
-	public List<ItemDTO> categoryList(String category) {
-		// TODO Auto-generated method stub
-		return iDao.categoryList(category);
-	}
 
-	@Transactional
-	@Override
-	public List<ItemDTO> categoryList(String category, String showhowitemlist) {
-		// TODO Auto-generated method stub
-		
-		if(showhowitemlist.equals("itemsequence")) {
-			return iDao.categoryListitemsequence(category);
-		}else if(showhowitemlist.equals("iPricedesc")) {
-			return iDao.categoryListiPricedesc(category);
-		}else if(showhowitemlist.equals("iPriceasc")) {
-			return iDao.categoryListiPriceasc(category);
-		}else {
-			return iDao.categoryListitemsequence(category);
-		}
-
-	}
 	@Override
 	public List<String> getitemfilelist(int iId) {
 		// TODO Auto-generated method stub
@@ -86,8 +60,30 @@ public class itemServiceImpl implements itemService{
 	@Override
 	public void deleteitem(int iId) {
 		// TODO Auto-generated method stub
-		iDao.deleteitem(iId);
 		iDao.deleteitemimgfile(iId);
+		iDao.deleteitem(iId);
+	}
+	@Override
+	public List<ItemDTO> adminlist(int curPage) {
+		// TODO Auto-generated method stub
+		return iDao.adminlist(curPage);
+	}
+	@Override
+	public Integer getamount(String Catrgory) {
+		// TODO Auto-generated method stub
+		return iDao.getamount(Catrgory);
+	}
+	@Override
+	public List<ItemDTO> categoryList(String category, String showhowitemlist, int curPage) {
+		// TODO Auto-generated method stub
+		
+		return iDao.categoryList(category,showhowitemlist,curPage);
+		
+	}
+	@Override
+	public int getamount() {
+		// TODO Auto-generated method stub
+		return iDao.getamount();
 	}
 	
 	

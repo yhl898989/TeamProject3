@@ -100,11 +100,48 @@ public class HomeController {
 		
 		return entity;
 	}
+	
+	@RequestMapping(value = "/uploadform", method = RequestMethod.POST)
+    public String uploadForm(MultipartHttpServletRequest request, Model model) throws Exception {
+       // MultipartRequest호출하는 것 자체가 파일 업로드 하는 것이기 때문이다.
+       
+       String id = request.getParameter("id");
+       /* System.out.println(id); */
+
+       //여러 개의 파일이 업로드 되었을 때 해당 파일들의 목록을 가져오는 코드
+       List<MultipartFile>list= request.getFiles("file");
+       //여러 개의 파일들이 업로드 된후 파일명을 반복문을 이용해서 실제로 저장하게 하는 코드
+       List<String>filenameList=new ArrayList<String>();
+       
+       for(int i=0; i<list.size(); i++) {
+          //list에 들어 있는 multipartfile 객체 하나씩 획득
+          MultipartFile file = list.get(i);
+          //multipartfile에 들어 있는 파일 데이터를 파일로 저장하는 코드
+          String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+          //여러 개의 업로드된 파일명을 저장하는 코드
+          filenameList.add(uploadedFilename);
+       }
+
+       model.addAttribute("filenameList", filenameList);
+       
+       return "test";// 업로드 파일에 /2022가 슬래쉬가 있다.
+       
+    }
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 	
-		return "redirect:/item/list";
+		return "redirect:/item/main";
 	}
+	
+	 @RequestMapping(value = "/makefolder", method = RequestMethod.GET)
+	   public String makeFolder(Model model) {// 이거 서비스 만들어야 한다. 업로드 할 때
+
+	      String uploadPath = DWUtils.makeFolder("C:" + File.separator + "upload");
+	      System.out.println(uploadPath);
+
+	      return "redirect:/";
+
+	   }
 	
 }

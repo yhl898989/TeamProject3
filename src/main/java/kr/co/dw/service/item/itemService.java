@@ -12,12 +12,6 @@ public interface itemService {
 
 	ItemDTO read(int iId);
 
-	List<ItemDTO> adminlist();
-
-	List<ItemDTO> categoryList(String category);
-
-	List<ItemDTO> categoryList(String category, String showhowitemlist);
-
 	List<String> getitemfilelist(int iId);
 
 	List<ItemDTO> search(String criteria, String keyword);
@@ -26,6 +20,12 @@ public interface itemService {
 
 	void deleteitem(int iId);
 
-	
+	List<ItemDTO> adminlist(int curPage);
+
+	List<ItemDTO> categoryList(String category, String showhowitemlist, int curPage);
+
+	Integer getamount(String catrgory);
+
+	int getamount();
 
 }

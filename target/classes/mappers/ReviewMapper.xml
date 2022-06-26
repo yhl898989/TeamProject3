@@ -4,16 +4,56 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.review">
 
+	<select id="getreviewimgfilename" resultType="string">
+	
+	SELECT rfilename FROM reviewfileupload WHERE rno = #{rno}
+	
+	</select>
+	
+	
+	<update id="update">
+	
+	update tbl_review set rtitle = #{replyer}, rcontent = #{replyText} WHERE rno = #{rno}  
+	
+	</update>
+	
+	<delete id="delete">
+	
+	DELETE FROM tbl_review WHERE rno = #{rno}
+	
+	</delete>
+	
+	<select id="getrfilenamelist" resultType="string">
+	
+	SELECT * FROM reviewfileupload WHERE rno = #{rno}
+	
+	
+	</select>
+	
+	<select id="Selectrno" resultType="Integer">
+	select max(rno) from tbl_review
 
+	
+	</select>
+	
+	<insert id="insertfilename">
+	
+	INSERT INTO reviewfileupload (rno,rfilename) VALUES (#{rno},#{rfilename})
+	
+	
+	
+	</insert>
+	
+	
 	<select id="list" resultType="ReviewDTO">
-		SELECT * FROM tbl_review WHERE iId = #{iId}
+		SELECT * FROM tbl_review WHERE iId = #{iId} order by rno desc
 	</select>
 	
 	<insert id="insert">
 		INSERT INTO tbl_review 
-		(rno, iId, rtitle, rcontent)
+		(rno, iId, mid, rtitle, rcontent)
 		VALUES
-		(seq_review_rno.NEXTVAL, #{iId}, #{rtitle}, #{rcontent})
+		(seq_review_rno.NEXTVAL, #{iId}, #{mid}, #{rtitle}, #{rcontent})
 	
 	</insert>
 

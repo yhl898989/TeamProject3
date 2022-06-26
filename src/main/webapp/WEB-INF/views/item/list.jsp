@@ -40,12 +40,33 @@ a{text-decoration:none;font-size:14px}
 
 #itemlist{
 
-	margin : 20px;
-
+	margin : 10px 150px 150px 270px;
+	width : 1500px;
+	
+	
 }
 
 #showhowitemlist > a {
 	color : black;
+}
+
+.box{
+	
+	display: inline-block;
+	
+} 
+.card{
+	display:inline-block;
+	margin : 20px;
+}
+.flexitem{
+	display: flex;
+	width:1250px;
+	justify-content: space-between;
+	margin-left: 300px;
+}
+.red{
+	color: red;
 }
 </style>
 
@@ -82,32 +103,30 @@ a{text-decoration:none;font-size:14px}
 </div>
 <ul class="menu">
       <li>
-        <a href="/item/list" id = "옷">옷</a>
+        <a href="/item/list?Category=옷" id = "옷">옷</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "신발">신발</a>
+        <a href="/item/list?Category=신발" id = "신발">신발</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "가방">가방</a>
+        <a href="/item/list?Category=가방" id = "가방">가방</a>
         
       </li>
       <li>
-        <a href="/item/list" id = "모자">모자</a>
+        <a href="/item/list?Category=모자" id = "모자">모자</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "원피스">원피스</a>
+        <a href="/item/list?Category=원피스" id = "원피스">원피스</a>
        
       </li>
     </ul>
-    <div id = "showhowitemlist">
-    <a href = "/item/list" id = "itemsequence">최신순</a>
-    <a href = "/item/list" id = "iPricedesc">높은가격순</a>
-    <a href = "/item/list" id = "iPriceasc">낮은가격순</a>
-    </div>
     <div id = "category"></div>
+    <div class = "flexitem">
+   
+    
     <form action="/item/search" method="post">
 	<select name = "criteria">
 		<option value = "iName">상품이름</option>
@@ -115,44 +134,60 @@ a{text-decoration:none;font-size:14px}
 	<input name = "keyword">
 	<input type = "submit" value = "검색">
 	</form>
-<div id = "itemlist">
-
+	 <div id = "showhowitemlist">
+    <a href = "/item/list?Category=${pt.list[0].i_CATEGORY}&&showhowitemlist=itemsequence&&curPage=${pt.curPage}" id = "itemsequence">최신순</a>
+    <a href = "/item/list?Category=${pt.list[0].i_CATEGORY}&&showhowitemlist=iPricedesc&&curPage=${pt.curPage}" id = "iPricedesc">높은가격순</a>
+    <a href = "/item/list?Category=${pt.list[0].i_CATEGORY}&&showhowitemlist=iPriceasc&&curPage=${pt.curPage}" id = "iPriceasc">낮은가격순</a>
+    </div>
+	</div>
+	
+<div id = "itemlist" class = "box-wrapper">
+	
+	<c:forEach items = "${pt.list}" var = "iteminfo">
+	<div class = "box">
+	<div class="card " style="width: 18rem;">
+ <a href = "/item/read/${iteminfo.iId}">
+ <div>
+  <img src="/displayfile?filename=${iteminfo.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
+  </div>
+  </a>
+  <div class="card-body">
+    <p class="card-text">상품이름:${iteminfo.iName}</p>
+    <p class="card-price">상품가격:${iteminfo.iPrice}</p>
+    <div>${pt.list[0].i_CATEGORY}</div>
+  </div>
+</div>
+	</div>
+	</c:forEach>
 </div>
 
+
+
+	<center>
+<a href = "/item/list?curPage=${pt.curPage > 1? pt.curPage -1:1}&&Category=${pt.list[0].i_CATEGORY}">&laquo;</a>
+	
+	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
+	<a href = "/item/list?curPage=${i}&&Category=${pt.list[0].i_CATEGORY}" class = "${i == pt.curPage?'red':""}">
+	
+	${i}
+	
+	
+	
+	</a> &nbsp;&nbsp;
+	
+	</c:forEach>
+	<a href = "/item/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&Category=${pt.list[0].i_CATEGORY}">&raquo;</a>
+</center>	
+	<br>
 
 <script type="text/javascript" src = "/resources/js/item.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	
-		gocategoryitem(localStorage.getItem("category"), $("#itemlist"),localStorage.getItem("showhowitemlist"));
-	
-		$("#category").text(localStorage.getItem("category"));
 		
-		if(localStorage.getItem("showhowitemlist") == "itemsequence"){
-			$("#itemsequence").css({"font-weight":"bold","color":"red"});
-		}else if(localStorage.getItem("showhowitemlist") == "iPricedesc"){
-			$("#iPricedesc").css({"font-weight":"bold","color":"red"});
-		}else{
-			$("#iPriceasc").css({"font-weight":"bold","color":"red"});
-		}
-		
-		
-	$(".menu").on("click","a", function() {
-		let category = $(this).attr("id");
-		localStorage.setItem("category",category);
-		let showhowitemlist = "itemsequence";
-		localStorage.setItem("showhowitemlist",showhowitemlist);
-		gocategoryitem(category, $("#itemlist"),localStorage.getItem("showhowitemlist"));
-		
-	})
 	$("#showhowitemlist").on("click","a",function() {
-		let showhowitemlist = $(this).attr("id");
-		localStorage.setItem("showhowitemlist",showhowitemlist);
-		$(this).attr("class","aaa");
+			$(this).attr("class","aaa");
 	})
-})
-
-
+	
 
 </script>
 </body>

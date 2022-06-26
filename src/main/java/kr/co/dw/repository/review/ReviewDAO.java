@@ -11,5 +11,19 @@ public interface ReviewDAO {
 
 	List<ReviewDTO> list(int iId);
 
+	void insertfilename(String rfilename, int rno);
+
+	int Selectrno();
+
+	List<String> getrfilenamelist(int rno);
+
+	void update(Map<String, Object> map);
+
+	void delete(Map<String, Object> map);
+
+	List<String> getreviewimgfilename(Map<String, Object> map);
+
+	
+
 
 }

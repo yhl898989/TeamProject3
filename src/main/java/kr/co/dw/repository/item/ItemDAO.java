@@ -14,16 +14,6 @@ public interface ItemDAO {
 
 	ItemDTO read(int iId);
 
-	List<ItemDTO> adminlist();
-
-	List<ItemDTO> categoryList(String category);
-
-	List<ItemDTO> categoryListitemsequence(String category);
-
-	List<ItemDTO> categoryListiPricedesc(String category);
-
-	List<ItemDTO> categoryListiPriceasc(String category);
-
 	List<String> getitemfilelist(int iId);
 
 	List<ItemDTO> search(String criteria, String keyword);
@@ -34,7 +24,13 @@ public interface ItemDAO {
 
 	void deleteitemimgfile(int iId);
 
-	
+	List<ItemDTO> adminlist(int curPage);
+
+	int getamount();
+
+	List<ItemDTO> categoryList(String category, String showhowitemlist, int curPage);
+
+	Integer getamount(String catrgory);
 
 	
 
