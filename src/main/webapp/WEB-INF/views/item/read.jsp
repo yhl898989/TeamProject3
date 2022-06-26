@@ -95,6 +95,11 @@
     </div>
   </div>
   
+     <select name="oqty" id="oqty" >
+      <c:forEach begin="1" end="${item.iCount}" var="iCount">
+         <option value="${iCount}">${iCount}</option>
+      </c:forEach>
+   </select>
   
   </div>
   </div>
@@ -102,6 +107,14 @@
 <br>
 
 <a class="btn btn-success reply">리뷰</a>
+<a class="btn btn-success btn_buy">바로구매</a>
+
+<form action="/order/${login.mid}" method="get" class="order_form">
+	<input type="hidden" name="orders[0].iId" value="${item.iId}">
+	<input type="hidden" name="orders[0].iCount" value="">
+</form>
+
+
 
 <div class="collapse">
   <div class="card card-body">
@@ -117,7 +130,13 @@
   <textarea class="form-control" id="rcontent" placeholder="내용을 입력해 주세요." rows="10"></textarea>
 </div>
 
-     
+<form id="upload" action="/review2/uploadform" method="post" enctype="multipart/form-data" target="repacatFrame">
+<div class="form-group row">
+   <label for="formFileMultiple" class="form-label">사진첨부</label>
+  <input class="form-control"  type="file" name="file" id="formFileMultiple" multiple>
+</div>
+</form>
+    <%--  <input value = "${item.iId}"> --%>
      <div class="form-group row">
        <input id="reply_btn_submit" class="form-control btn btn-primary col-sm-2 offset-sm-5" type="submit" value="리뷰 작성 완료">   
     </div>    
@@ -128,12 +147,45 @@
 <div id="review">
 </div>
 
-<script type="text/javascript" src="/resources/js/item.js"></script>
+<!-- Modal -->
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">rno: <span id="modal_rno">5</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+           <input id="item_input_update_rtitle" class="form-control" placeholder="제목을 입력해 주세요." value = "">
+        </div>
+        <div class="form-group">
+           <input id="item_input_update_rcontent" class="form-control" placeholder="내용을 입력해 주세요." value = "">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button id="item_btn_update_submit" type="button" data-dismiss="modal" class="btn btn-primary">리뷰 수정 완료</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input id = "mid" type = "hidden" value = "${login.mid}">
+<script type="text/javascript" src="/resources/js/item2.js"></script>
 <script type="text/javascript" src="/resources/js/tl.js"></script>
 
 <script type="text/javascript">
 $(function() {
    
+	
+ 
+   
+  
+   /////////////////////////////////////////////////
+let mid = $("#mid").val();   
    
 let iId = ${item.iId};
 let iPrice = ${item.iPrice};
@@ -175,44 +227,143 @@ if(iPrice < 10){
 
 getitemfilelist(iId,$("#subphoto"));
 
+$(".btn_buy").on("click" , function () {
+	let itemCount =$("#oqty").val();
+	console.log(itemCount)
+	$(".order_form").find("input[name='orders[0].iCount']").val(itemCount);
+	$(".order_form").submit();
+});
 
-//////////////////////////////////////////////////////////////////////////
-$("#reply_btn_submit").on("click", function() {
+
+$("#item_btn_update_submit").on("click",function() {
+	
+    let replyer = $("#item_input_update_rtitle").val();
+    
+    let replyText = $("#item_input_update_rcontent").val();
+    
+    let rno = $("#modal_rno").text();
+    
+    $.ajax({
+   	 type : "put", 
+   	 url : "/review",
+   	 headers : {
+   		 "Content-Type" : "application/json; charset=UTF-8",
+   		 "X-HTTP-Method-Override" : "PUT"
+   	 },
+   	 data : JSON.stringify({
+   		 replyer : replyer,
+   		 replyText : replyText,
+   		 rno : rno
+   	 }),
+   	 dataType: "text",
+   	 success : function(result) {
+   		
+   		 if(result=="SUCCESS"){
+   			 
+   		 	getAllReply3(iId, $("#review"));
+   		 	
+   		 }
+		}
+    });
+    
+ });
+
+
+$("#review").on("click", ".item_btn_update", function() {
+    $("#myModal").modal("show");
+    
+    let rtitle = $(this).prev().prev().prev().prev().text();
    
-   
-   
+    
+    let rcontent = $(this).prev().prev().prev().text();
+    
+    let rno = $(this).attr("data-rno");
+    
 
     
+    
+    $("#modal_rno").text(rno);
+    $("#item_input_update_rtitle").val(rtitle);
+    $("#item_input_update_rcontent").val(rcontent);
+    
+    
+    
+    
+    
+    
+ });
+ 
+ 
+ $("#review").on("click", ".item_btn_delete", function() {
+    let rno = $(this).attr("data-rno");
+    
+    $.ajax({
+       type : 'delete',
+       url : '/review',
+       headers : {
+          "Content-Type" : "application/json",
+          "X-HTTP-Method-Override" : "DELETE"
+       },
+       data : JSON.stringify({
+          rno : rno
+       }),
+       dataType : 'text',
+       success : function(result) {
+    	   
+          
+          location.assign("/item/read/"+iId);
+       }
+       
+    });
+ });
+
+
+$("#reply_btn_submit").on("click", function() {
+	
+	let file = $("#formFileMultiple")[0];
+	
+	let rfile = file.files;
+	
+	
     let rtitle = $("#rtitle").val();
     let rcontent = $("#rcontent").val();
-
-
+  
     $.ajax({
        type : 'post',
        url : '/review',
        headers : {
-          "Content-Type" : "application/json",
-          "X-HTTP-Method-Override" : "POST"
-       },
+  		 "Content-Type" : "application/json; charset=UTF-8",
+  		 "X-HTTP-Method-Override" : "POST"
+  	 },
        data : JSON.stringify({
-         rtitle : rtitle,
-          rcontent : rcontent,
-          iId : iId
-      
+    	   mid : mid,
+    	   iId : iId,
+    	   rtitle : rtitle,
+    	   rcontent : rcontent,
+    	  
        }),
        dataType : 'text',
        success : function(result) {
           if(result =='SUCCESS') {
-             getAllReply3(iId, $("#review"));
-              $("#rtitle").val("");
-              $("#rcontent").val("");
+
+        	  $("#rtitle").val("");
+        	  $("#rcontent").val("");
+            
           }else {
              alert("입력 실패했습니다.");
           }
          
        }
-       
+      
     });
+    		 
+    if(rfile.length != 0){
+    	  $("#upload").submit();
+    }
+  
+  			
+    getAllReply3(iId, $("#review"));
+  
     
   
     
@@ -224,13 +375,31 @@ $("#reply_btn_submit").on("click", function() {
 $(".reply").on("click", function() {
          $(".collapse").collapse("toggle");
       });
+      
+
+
+$(".item_btn_delete").on("click", function() {
+   $("form")
+   .attr("action", "/item/read/${item.iId}")
+   .attr("method", "post")
+   .submit();
+});     
+
+
 
 getAllReply3(iId, $("#review"));
 
    });
    
-
-
+   
+   
+/*  headers : {
+"Content-Type" : "application/json",
+"X-HTTP-Method-Override" : "POST"
+}, */
+/*  getAllReply3(iId, $("#review"));
+$("#rtitle").val("");
+$("#rcontent").val(""); */
 
 </script>
 </body>

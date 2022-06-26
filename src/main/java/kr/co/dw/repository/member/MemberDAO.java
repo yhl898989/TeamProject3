@@ -21,6 +21,10 @@ public interface MemberDAO {
 	List<MemberDTO> list();
 
 	int idCheck(String mid);
+	
+	String findid(MemberDTO mDto);
+
+	String findpw(MemberDTO mDto);
 
 
 

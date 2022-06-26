@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dw.order">
+  
+  <select id="getItemsInfo" resultType="OrderPageItemDTO">
+  	SELECT iId,ifilename, iName, iPrice, iDc 
+  	FROM tbl_item WHERE iId =#{iId}
+  
+  </select>
+  
+  <select id="getOrderInfo" resultType="OrderItemDTO">
+    	SELECT iId, iPrice, iDc 
+  		FROM tbl_item WHERE iId =#{iId}
+ 
+  </select>
+  
+  	<insert id="enrollOrder">
+	
+		insert into tbl_order(orderId, addressee, mId, memberAddr1, memberAddr2, memberAddr3, orderState, deliveryCost, usePoint)
+    	values(#{orderId},#{addressee}, #{mid}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, '배송준비', #{deliveryCost}, #{usePoint})
+	
+	</insert>
+  	<insert id="enrollOrderItem">
+	
+		insert into tbl_orderItem(oId, iId, itemCount, itemPrice, itemDiscount, savePoint)
+		values(seq_orderItem_oid.NEXTVAL, #{iId}, #{iCount}, #{iPrice}, #{iDc}, #{savePoint})
+	
+	</insert>
+	
+	<update id="deductMoney">
+	
+		update tbl_member set mmoney = #{mmoney}, mpoint = #{mpoint} where mid = #{mid}
+		
+	</update>
+	
+
+	
+	<update id="deductStock">
+	
+		update tbl_item set iCount = #{iCount} where iId = #{iId}
+	
+	</update>
+	
+
+</mapper>

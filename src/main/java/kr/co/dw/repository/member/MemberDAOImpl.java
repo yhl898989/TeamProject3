@@ -16,6 +16,7 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	private final String NAMESPACE = "kr.co.dw.member";
 	
+
 	@Override
 	public MemberDTO login(MemberDTO mDto) {
 		// TODO Auto-generated method stub
@@ -65,5 +66,16 @@ public class MemberDAOImpl implements MemberDAO{
 		return sqlsession.selectOne(NAMESPACE+".idCheck", mid);
 	}
 
+	@Override
+	public String findid(MemberDTO mDto) {
+
+		return sqlsession.selectOne(NAMESPACE + ".findid", mDto);
+	}
+
+	@Override
+	public String findpw(MemberDTO mDto) {
+		// TODO Auto-generated method stub
+		return sqlsession.selectOne(NAMESPACE+".findpw", mDto);
+	}
 
 }

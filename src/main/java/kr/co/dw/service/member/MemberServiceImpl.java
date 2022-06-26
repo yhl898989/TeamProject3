@@ -1,6 +1,9 @@
 package kr.co.dw.service.member;
 
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +16,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	private MemberDAO mDao;
-
+	
 	@Override
 	public MemberDTO login(MemberDTO mDto) {
 		// TODO Auto-generated method stub
@@ -68,5 +71,14 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.idCheck(mid);
 	}
 
-	
+	@Override
+	public String findid(MemberDTO mDto) {
+		return mDao.findid(mDto);
+	}
+
+	@Override
+	public String findpw(MemberDTO mDto) {
+		// TODO Auto-generated method stub
+		return mDao.findpw(mDto);
+	}
 }

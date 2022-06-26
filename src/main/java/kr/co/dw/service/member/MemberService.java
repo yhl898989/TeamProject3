@@ -2,6 +2,8 @@ package kr.co.dw.service.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import kr.co.dw.domain.MemberDTO;
 
 public interface MemberService {
@@ -21,6 +23,10 @@ public interface MemberService {
 	void delete(MemberDTO dto);
 
 	int idCheck(String mid);
+
+	String findid(MemberDTO mDto);
+
+	String findpw(MemberDTO mDto);
 
 
 }

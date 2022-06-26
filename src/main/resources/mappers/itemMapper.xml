@@ -3,7 +3,38 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.item">
+
+  <select id="categoryList" resultType="iTemDTO">
+  <if test ="showhowitemlist == 'itemsequence'">
+  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iId DESC
+  </if>
   
+  <if test ="showhowitemlist == 'iPricedesc'">
+   SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice DESC
+  </if>
+  
+  <if test ="showhowitemlist == 'iPriceasc'">
+  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice ASC
+  </if>
+  </select>
+
+  <select id="adminlist" resultType="itemDTO">
+  
+  SELECT * FROM tbl_item order by iId DESC
+  
+  </select>
+  
+  <select id="getAmount2" resultType="Integer">
+  
+  SELECT count(*) FROM tbl_item WHERE i_CATEGORY = #{i_CATEGORY}
+  
+  </select>
+  
+  <select id="getAmount" resultType="Integer">
+  
+  SELECT count(*) FROM tbl_item
+  
+  </select>
   
   <delete id="deleteitemimgfile">
   
@@ -36,38 +67,8 @@
   SELECT ifilename FROM itemfileupload WHERE iId = #{iId}
   </select>
   
-  <select id="categoryListiPriceasc" resultType="iTemDTO">
   
-  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice ASC
-  
-  </select>
-  
-  <select id="categoryListiPricedesc" resultType="iTemDTO">
-  
-  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice DESC
-  
-  </select>
-  
-  <select id="categoryListitemsequence" resultType="iTemDTO">
-  
-  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iId DESC
-  
-  </select>
-  
-  <select id="categoryList" resultType="itemDTO">
-  
-  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category}
-  
-  
-  </select>
-  
-  
-  <select id="adminlist" resultType="itemDTO">
-  
-  SELECT * FROM tbl_item order by iId desc
-  
-  </select>
-  
+
   <select id="read" resultType="itemDTO">
   
   SELECT * FROM tbl_item WHERE iId = #{iId}

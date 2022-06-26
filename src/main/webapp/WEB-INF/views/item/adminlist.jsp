@@ -26,6 +26,9 @@ text-align: center;
 .modal-body{
 	height : 500px;
 }
+.red{
+	color : red;
+}
 
 </style>
 
@@ -47,7 +50,7 @@ text-align: center;
     </tr>
   </thead>
   <tbody class = "tbody">
-    <c:forEach items = "${adminlist}" var = "adminlist">
+    <c:forEach items = "${pt.list}" var = "adminlist">
 			<tr>
 				<td class = "adminlistiId">${adminlist.iId}</td>
 				<td class = "adminlistiName">${adminlist.iName}</td>
@@ -75,8 +78,22 @@ text-align: center;
 			</c:forEach>
   </tbody>
 </table>
-
-
+<center>
+<a href = "/item/adminlist?curPage=${pt.curPage > 1? pt.curPage -1:1}">&laquo;</a>
+	
+	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum }">
+	<a href = "/item/adminlist?curPage=${i}" class = "${i == pt.curPage?'red':""}">
+	
+	${i}
+	
+	
+	
+	</a> &nbsp;&nbsp;
+	
+	</c:forEach>
+	<a href = "/item/adminlist?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">&raquo;</a>
+</center>	
+	
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
