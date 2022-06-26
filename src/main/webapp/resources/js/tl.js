@@ -8,33 +8,55 @@
 	el.html("");
 	
 	$.getJSON("/review/"+iId+"/all", function(result){
-
+			
 		for(let i = 0 ; i <result.length; i++){
+			let tagstr = "";
 			let item = result[i];
-			let str = makeItemTag2(item);
+			let rfilename = item.rfilenamelist;
+			for(let j = 0 ; j < rfilename.length;j++){
+				let rfile = rfilename[j];
+				let itemstr = makeItemTag3(rfile);
+				tagstr += itemstr;
+				
+			}
+			let str = makeItemTag2(item,tagstr);
 			el.append(str);
 		}
+		
 	})
 };
 
 
+function makeItemTag3(rfile){
+	
+	
+	let str = `
+	
+<span><img src="/displayfile?filename=${rfile}"alt="..." width="300px" height="250px"></span>
+
+	
+	`;
+	return str;
+
+}
 
 
-
-function makeItemTag2(item){
+function makeItemTag2(item,tagstr){
+	
 	
 	
 	let str = `
 	
 <div class="card item my-5">
   <div class="card-header">
-    <span>댓글 번호 : ${item.rno}</span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+    <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
     <h5 class="card-title">${item.rtitle}</h5>
-    <p class="card-text">${item.rcontent}</p>
-    <a data-rno ="${item.rno}" href="#" class="btn btn-primary item_btn_update">수정</a>
-    <a data-rno ="${item.rno}" href="#" class="btn btn-primary item_btn_delete">삭제</a>
+    <p  class="card-text">${item.rcontent}<div>${tagstr}</div></p>
+    
+    <a data-rno ="${item.rno}" class="btn btn-primary item_btn_update">수정</a>
+    <a data-rno ="${item.rno}" class="btn btn-primary item_btn_delete">삭제</a>
   </div>
 </div>
 
@@ -235,7 +257,7 @@ function getOrgName(filename) {
 function getAllReply2(bno, el){
    let tagStr = "";
    
-   $.getJSON("/replies/"+bno+"/all", function(result){
+   $.getJSON("/review/"+bno+"/all", function(result){
       for(let i = 0 ; i <result.length; i++){
          let item = result[i];
          let str = makeItemTag(item);
@@ -248,7 +270,8 @@ function getAllReply2(bno, el){
 function getAllReply(bno, el){
    el.html("");
    
-   $.getJSON("/replies/"+bno+"/all", function(result){
+   $.getJSON("/review/"+bno+"/all", function(result){
+	
       for(let i = 0 ; i <result.length; i++){
          let item = result[i];
          let str = makeItemTag(item);
@@ -264,7 +287,7 @@ function makeItemTag(item){
    
 <div class="card item my-5">
   <div class="card-header">
-    <span>댓글 번호 : ${item.rno}</span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+    <span>작성자 : ${dto.mid}</span> <span>댓글 번호 : ${item.rno}</span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
     <h5 class="card-title">${item.replyer}</h5>

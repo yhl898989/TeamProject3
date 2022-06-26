@@ -1,6 +1,7 @@
 package kr.co.dw.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class ReviewDTO implements Serializable{
@@ -9,18 +10,19 @@ public class ReviewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int rno;
 	private int iId;
+	private String mid;
 	private String rtitle;
 	private String rcontent;
 	private String regDay;
 	private String updateDay;
-	
+	private List<String> rfilenamelist;
 	
 	public ReviewDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public ReviewDTO(int rno, int iId, String rtitle, String rcontent, String regDay, String updateDay) {
+	public ReviewDTO(int rno, int iId, String rtitle, String rcontent, String regDay, String updateDay ,String mid) {
 		super();
 		this.rno = rno;
 		this.iId = iId;
@@ -28,6 +30,22 @@ public class ReviewDTO implements Serializable{
 		this.rcontent = rcontent;
 		this.regDay = regDay;
 		this.updateDay = updateDay;
+		this.mid = mid;
+	}
+	
+	
+
+	public ReviewDTO(int rno, int iId, String mid, String rtitle, String rcontent, String regDay, String updateDay,
+			List<String> rfilenamelist) {
+		super();
+		this.rno = rno;
+		this.iId = iId;
+		this.mid = mid;
+		this.rtitle = rtitle;
+		this.rcontent = rcontent;
+		this.regDay = regDay;
+		this.updateDay = updateDay;
+		this.rfilenamelist = rfilenamelist;
 	}
 
 
@@ -48,6 +66,16 @@ public class ReviewDTO implements Serializable{
 
 	public void setiId(int iId) {
 		this.iId = iId;
+	}
+
+
+	public String getMid() {
+		return mid;
+	}
+
+
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
 
@@ -94,11 +122,23 @@ public class ReviewDTO implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
+	
+
+	public List<String> getRfilenamelist() {
+		return rfilenamelist;
+	}
+
+
+	public void setRfilenamelist(List<String> rfilenamelist) {
+		this.rfilenamelist = rfilenamelist;
+	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(rno);
+		return Objects.hash(iId, mid, rcontent, regDay, rno, rtitle, updateDay);
 	}
 
 
@@ -111,19 +151,16 @@ public class ReviewDTO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ReviewDTO other = (ReviewDTO) obj;
-		return rno == other.rno;
+		return iId == other.iId && Objects.equals(mid, other.mid) && Objects.equals(rcontent, other.rcontent)
+				&& Objects.equals(regDay, other.regDay) && rno == other.rno && Objects.equals(rtitle, other.rtitle)
+				&& Objects.equals(updateDay, other.updateDay);
 	}
 
 
 	@Override
 	public String toString() {
-		return "ReviewDTO [rno=" + rno + ", iId=" + iId + ", rtitle=" + rtitle + ", rcontent=" + rcontent + ", regDay="
-				+ regDay + ", updateDay=" + updateDay + "]";
+		return "ReviewDTO [rno=" + rno + ", iId=" + iId + ", mid=" + mid + ", rtitle=" + rtitle + ", rcontent="
+				+ rcontent + ", regDay=" + regDay + ", updateDay=" + updateDay + "]";
 	}
-	
-	
-	
-	
-	
 
 }

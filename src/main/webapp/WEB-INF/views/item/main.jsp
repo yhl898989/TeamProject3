@@ -79,23 +79,23 @@ a{text-decoration:none;font-size:14px}
 </div>
 <ul class="menu">
       <li>
-        <a href="/item/list" id = "옷">옷</a>
+        <a href="/item/list?Category=옷" id = "옷">옷</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "신발">신발</a>
+        <a href="/item/list?Category=신발" id = "신발">신발</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "가방">가방</a>
+        <a href="/item/list?Category=가방" id = "가방">가방</a>
         
       </li>
       <li>
-        <a href="/item/list" id = "모자">모자</a>
+        <a href="/item/list?Category=모자" id = "모자">모자</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "원피스">원피스</a>
+        <a href="/item/list?Category=원피스" id = "원피스">원피스</a>
        
       </li>
     </ul>
@@ -127,16 +127,6 @@ a{text-decoration:none;font-size:14px}
 
 <script type="text/javascript" src = "/resources/js/item.js"></script>
 <script type="text/javascript">
-
-$(document).ready(function() {
-	$(".menu").on("click","a", function() {
-		let category = $(this).attr("id");
-		let showhowitemlist = "itemsequence";
-		localStorage.setItem("category",category);
-		localStorage.setItem("showhowitemlist",showhowitemlist);
-		
-	})
-})
 
 
 </script>

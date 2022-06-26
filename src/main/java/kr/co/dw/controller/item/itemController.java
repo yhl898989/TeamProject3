@@ -18,10 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.dw.domain.ItemDTO;
+import kr.co.dw.domain.itemPageTO;
 import kr.co.dw.service.item.itemService;
 import kr.co.dw.utils.DWUtils;
 
@@ -132,31 +134,23 @@ public class itemController {
 		return "/item/main";
 	}
 	
-	
-	@RequestMapping(value = "/category/{category}/{showhowitemlist}/all", method = RequestMethod.GET)
-	public ResponseEntity<List<ItemDTO>> categorylist(@PathVariable("category") String category, @PathVariable("showhowitemlist") String showhowitemlist){
-		ResponseEntity<List<ItemDTO>> entity = null;
-		
-		try {
-			List<ItemDTO> categoryList = iService.categoryList(category, showhowitemlist);
-			
-			entity = new ResponseEntity<List<ItemDTO>>(categoryList,HttpStatus.OK);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			entity = new ResponseEntity<List<ItemDTO>>(HttpStatus.BAD_REQUEST);
-		}
-		
-		
-		return entity;
-	}
-	
+
 	@RequestMapping(value = "/adminlist", method = RequestMethod.GET)
-	public String adminlist(Model model) {
-		List<ItemDTO> adminlist = iService.adminlist();
+	public String adminlist(@RequestParam(value ="curPage" , defaultValue = "1") String ScurPage, Model model) {
 		
+		int curPage = Integer.parseInt(ScurPage);
 		
-		model.addAttribute("adminlist", adminlist);
+		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>();
+		
+		int amount = iService.getamount();
+		pt.setAmount(amount);
+		pt.setCurPage(curPage);
+		List<ItemDTO> list = iService.adminlist(curPage);
+		pt.setList(list);
+
+		model.addAttribute("pt", pt);
+		  
+		 
 		return "/item/adminlist";
 	}
 	
@@ -170,8 +164,37 @@ public class itemController {
 	
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
-
+	public String list(@RequestParam(value = "Category", defaultValue = "옷") String Catrgory,  
+					   @RequestParam(value = "showhowitemlist", defaultValue = "itemsequence") String showhowitemlist,
+					   @RequestParam(value = "curPage", defaultValue = "1") String ScurPage,
+			Model model) {
+		
+		int curPage = Integer.parseInt(ScurPage);
+		
+		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
+		Integer amount = iService.getamount(Catrgory);
+		System.out.println(amount);
+		if(amount == null){
+		      amount = 0;
+		   }
+		pt.setAmount(amount);
+		
+		
+		try {
+			List<ItemDTO> categoryList = iService.categoryList(Catrgory, showhowitemlist,curPage);
+			
+			
+			
+			pt.setList(categoryList);
+			System.out.println(pt.getFinishPageNum());
+			System.out.println(categoryList);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			
+		}
+		model.addAttribute("pt", pt);
+		
 		return "/item/list";
 	}
 	
@@ -191,18 +214,29 @@ public class itemController {
 		
 		try {
 			Map<String, MultipartFile>map = request.getFileMap();
+			MultipartFile mainimgfile = request.getFile("itemimgfile");
+			String mainimgfilename = DWUtils.uploadFile(uploadPath, mainimgfile.getOriginalFilename(), mainimgfile.getBytes());
+			
 			List<String> filenameList = new ArrayList<String>();
+			filenameList.add(mainimgfilename);
 			Set<String> set = map.keySet();
+			
+			
 			Iterator<String> it = set.iterator();
+			
 			while (it.hasNext()) {
 				String key = it.next();
 				MultipartFile file = map.get(key);
+				if(file.equals(mainimgfile)) {
+					continue;
+				}
+				
 				String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+				
 				filenameList.add(uploadedFilename);
-				entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 				
 			}
-		
+			
 			String ifilename = filenameList.get(0);
 			String prifix = ifilename.substring(0,12);
 			String suffix = ifilename.substring(14);
@@ -210,9 +244,9 @@ public class itemController {
 			ItemDTO iDto = new ItemDTO(0, iName, Price, DC, Count, ifilename, i_CATEGORY);
 			
 			iDto.setIfilenameList(filenameList);
-			iService.insert(iDto);
 			
-			
+				iService.insert(iDto);
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

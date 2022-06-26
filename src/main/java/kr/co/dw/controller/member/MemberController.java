@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,36 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService mService;
+	
+	// 비밀번호 찾기
+	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
+	public String findpw(HttpServletResponse response, MemberDTO mDto, Model model){
+		System.out.println(mDto);
+		String mpw = mService.findpw(mDto);
+		model.addAttribute("mpw", mpw);
+		return "/member/findpw";
+	}
+	
+	// 비밀번호 찾기 폼
+		@RequestMapping(value = "/findpwform", method = RequestMethod.GET)
+		public String findPWForm() throws Exception{
+			return "/member/findpwform";
+		}
+	
+	// 아이디 찾기
+	@RequestMapping(value = "/findid", method = RequestMethod.POST)
+	public String findid(HttpServletResponse response, MemberDTO mDto, Model model){
+		System.out.println(mDto);
+		String mid = mService.findid(mDto);
+		model.addAttribute("mid", mid);
+		return "/member/findid";
+	}
+	
+	// 아이디 찾기 폼
+	@RequestMapping(value = "/findidform", method = RequestMethod.GET)
+	public String findIdForm() throws Exception{
+		return "/member/findidform";
+	}
 	
 	//중복확인
 	@ResponseBody
@@ -114,7 +145,14 @@ public class MemberController {
 	
 	
 	@RequestMapping(value = "/mypage/{mid}") 
-	public String mypage(@PathVariable("mid") String mid, Model model) {
+	public String mypage(@PathVariable("mid") String mid, Model model, HttpSession session) {
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		
+		System.out.println(login.getMid());
+		System.out.println(mid);
+		if (!login.getMid().equals(mid)) {
+			return "redirect:/item/main";
+		}
 		
 		MemberDTO dto = mService.mypage(mid);
 		
@@ -122,7 +160,7 @@ public class MemberController {
 		return "/member/mypage";
 	}
 	
-	
+
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {

@@ -4,6 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.member">
 
+
+	<!-- 비밀번호 찾기 -->
+	<select id="findpw" resultType="String">
+		select mpw from tbl_member where mid = #{mid} AND mname = #{mname} AND memail = #{memail}
+	</select>
+
+	<!-- 아이디 찾기 -->
+	<select id="findid" resultType="String">
+		select mid from tbl_member where mname = #{mname} AND memail = #{memail}
+	</select>
+
 	<select id="idCheck" resultType="int">
 	select count(*)
 		from tbl_member

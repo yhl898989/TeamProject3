@@ -12,18 +12,29 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <style type="text/css">
 #itemimguploadFile{
-	width : 500px;
-	height : 250px;
-	border: 1px solid black;
-	padding : 0px;
+   width : 500px;
+   height : 250px;
+   border: 1px solid black;
+   padding : 0px;
+}
+#itemimguploadFile2{
+   width : 500px;
+   height : 250px;
+   border: 1px solid black;
+   padding : 0px;
 }
 .iteminsertform{
 display: flex;
 justify-content: space-evenly;
 align-items: center;
 }
-
-</style>	
+#itemsubimguploadFile{
+   width : 500px;
+   height : 250px;
+   border: 1px solid black;
+   padding : 0px;
+}
+</style>   
 
 </head>
 
@@ -55,109 +66,164 @@ align-items: center;
 
 <div id = "itemimguploadFileform" class ="form-group">
 <div id = "itemimguploadFile" class ="form-control text-center">메인사진</div>
-	</div>
-</div>	
+   </div>
+</div>   
 <center>
 <input id = "item_btn_submit" type="submit" value = "상품 등록">
 </center>
-
-<div id = "itemimguploadedItems" class ="row row-cols-3">
-
-</div>	
-<script type="text/javascript" src ="/resources/js/item.js"></script>
+<div id = "itemimguploadedItems" class ="row row-cols-3"></div>   
+<div id = "itemsubimguploadedItems" class ="row row-cols-3"></div>
+<script type="text/javascript" src ="/resources/js/item2.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	let formData = new FormData();
-	let idx = 0;
-	
-	
-	
-	$("#itemimguploadFile").on("dragenter dragover", function(event) {
-		event.preventDefault();
-	});
-	
-	$("#itemimguploadFile").on("drop", function(event) {
-		event.preventDefault();
-		let itemimgfiles = event.originalEvent.dataTransfer.files;
-		let itemimgfile = itemimgfiles[0];
-		
-		formData.append("itemimgfile"+idx,itemimgfile);
-		
-		let reader = new FileReader();
-		
-		reader.readAsDataURL(itemimgfile);
-		
-		reader.onload = function(event) {
-			
-			let str = insertitemimgfile(event.target.result, itemimgfile["name"],"itemimgfile"+idx++);
-			
-			$("#itemimguploadedItems").append(str);
-			
-		}
-	
-		
-	});
-	$("#itemimguploadedItems").on("click",".btn_del_item", function() {
-		let itemimgfilekey = $(this).attr("data-itemimgfilekey");
-		formData.delete(itemimgfilekey);
-		$(this).parent().parent().parent().remove();
-		
-	})	
-	
-	$("#item_btn_submit").click(function() {
-		let iName = $("#iName").val();
-		let iPrice = $("#iPrice").val();
-		let iDc = $("#iDc").val();
-		let iCount = $("#iCount").val();
-		let icategory = $("#cateogoryname").val();
-		if(iName == ""){
-			alert("상품이름을 등록해주세요");
-			return
-		}else if(iPrice == ""){
-			alert("가격을 입력해주세요");
-			return
-		}else if(iDc == ""){
-			alert("할인을을 입력해주세요");
-			return
-		}else if(iCount == ""){
-			alert("수량을 입력해주세요");
-			return
-		}else if(icategory == ""){
-			alert("카레고리를 골라주세요");
-			return
-		}
-		formData.append("iName", iName);
-		formData.append("iPrice", iPrice);
-		formData.append("iDc", iDc);
-		formData.append("iCount", iCount);
-		formData.append("icategory",icategory);
-		
-		$.ajax({
-			
-			type : "post",
-			url : "/item/insert",
-			data : formData,
-			processData : false,
-			contentType : false,
-			dataType : "text",
-			success : function(result) {
-				if(result == "SUCCESS"){
-					location.assign("/item/main");
-				}
-			
-			}
-			
-		})
-	})
-	
-	
+   let formData = new FormData();
+   let idx = 0;
+   
+   
+   
+   $("#itemimguploadFile").on("dragenter dragover", function(event) {
+      event.preventDefault();
+   });
+   
+   $("#itemimguploadFile").on("drop", function(event) {
+      event.preventDefault();
+      let itemimgfiles = event.originalEvent.dataTransfer.files;
+      let itemimgfile = itemimgfiles[0];
+      
+      
+      formData.append("itemimgfile",itemimgfile);
+      
+      let reader = new FileReader();
+      
+      reader.readAsDataURL(itemimgfile);
+      
+      reader.onload = function(event) {
+         
+         let str = insertitemimgfile(event.target.result, itemimgfile["name"],"itemimgfile");
+         
+         $("#itemimguploadedItems").append(str);
+         $("#itemimguploadFile").remove();
+         $("#itemimguploadFileform").append('<div id = "itemsubimguploadFile" class ="form-control text-center">서브 사진</div>')
+         
+      }
+   });   
+   $("#itemimguploadFileform").on("dragenter dragover","#itemimguploadFile2", function(event) {
+         event.preventDefault();
+   })   
+      
+   $("#itemimguploadFileform").on("drop","#itemimguploadFile2", function(event) {
+      event.preventDefault();
+      let itemimgfiles = event.originalEvent.dataTransfer.files;
+      let itemimgfile = itemimgfiles[0];
+      
+      
+      formData.append("itemimgfile",itemimgfile);
+      
+      let reader = new FileReader();
+      
+      reader.readAsDataURL(itemimgfile);
+      
+      reader.onload = function(event) {
+         
+         let str = insertitemimgfile(event.target.result, itemimgfile["name"],"itemimgfile");
+         
+         $("#itemimguploadedItems").append(str);
+         $("#itemimguploadFile2").remove();
+         $("#itemimguploadFileform").append('<div id = "itemsubimguploadFile" class ="form-control text-center">서브 사진</div>')
+      }
+   })
+      
+   
+   $("#itemimguploadedItems").on("click",".btn_del_item", function() {
+      let itemimgfilekey = $(this).attr("data-itemimgfilekey");
+      formData.delete(itemimgfilekey);
+      $(this).parent().parent().parent().remove();
+      $("#itemimguploadFileform").html('<div id = "itemimguploadFile2" class ="form-control text-center">메인사진</div>');
+   })   
+   
+   $("#itemsubimguploadedItems").on("click",".btn_del_subitem", function() {
+      let itemimgfilekey = $(this).attr("data-itemimgfilekey");
+      formData.delete(itemimgfilekey);
+      $(this).parent().parent().parent().remove();
+   })   
+   
+   $("#itemimguploadFileform").on("dragenter dragover","#itemsubimguploadFile", function(event) {
+      event.preventDefault();
+      
+   })
+   
+   $("#itemimguploadFileform").on("drop","#itemsubimguploadFile", function(event) {
+      event.preventDefault();
+      let itemimgfiles = event.originalEvent.dataTransfer.files;
+      let itemimgfile = itemimgfiles[0];
+      
+      
+      formData.append("itemimgfile"+idx,itemimgfile);
+      
+      let reader = new FileReader();
+      
+      reader.readAsDataURL(itemimgfile);
+      
+      reader.onload = function(event) {
+         
+         let str = insertitemsubimgfile(event.target.result, itemimgfile["name"],"itemimgfile"+idx++);
+         
+         $("#itemsubimguploadedItems").append(str);
+         
+         
+      }
+   })
+   
+   $("#item_btn_submit").click(function() {
+	   
+      let iName = $("#iName").val();
+      let iPrice = $("#iPrice").val();
+      let iDc = $("#iDc").val();
+      let iCount = $("#iCount").val();
+      let icategory = $("#cateogoryname").val();
+      if(iName == ""){
+         alert("상품이름을 등록해주세요");
+         return
+      }else if(iPrice == ""){
+         alert("가격을 입력해주세요");
+         return
+      }else if(iDc == ""){
+         alert("할인을을 입력해주세요");
+         return
+      }else if(iCount == ""){
+         alert("수량을 입력해주세요");
+         return
+      }else if(icategory == ""){
+         alert("카레고리를 골라주세요");
+         return
+      }
+      formData.append("iName", iName);
+      formData.append("iPrice", iPrice);
+      formData.append("iDc", iDc);
+      formData.append("iCount", iCount);
+      formData.append("icategory",icategory);
+      
+      $.ajax({
+         
+         type : "post",
+         url : "/item/insert",
+         data : formData,
+         processData : false,
+         contentType : false,
+         dataType : "text",
+         success : function(result) {
+        	
+            if(result == "SUCCESS"){
+            	
+               location.assign("/item/main");
+            }
+         
+         }
+         
+      })
+   })
+
 })
-
-
-
-
-
-
 </script>
 </body>
 </html>

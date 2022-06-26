@@ -31,4 +31,5 @@ delete from itemfileupload
 delete from tbl_item
 select * from tbl_item
 select * from itemfileupload
-
+alter system set processes=450 scope=spfile;
+select * from v$resource_limit where resource_name = 'processes';

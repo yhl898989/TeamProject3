@@ -23,6 +23,7 @@ public class MemberDTO implements Serializable{
 	private int mmoney;
 	private int mpoint;
 	
+	
 	public MemberDTO() {
 		// TODO Auto-generated constructor stub
 	}
