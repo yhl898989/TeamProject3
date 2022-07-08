@@ -25,43 +25,27 @@ public class ItemDAOImpl implements ItemDAO{
 		// TODO Auto-generated method stub
 		sqlSession.insert(NAMESPACE+".insert",iDto);
 	}
-	
-	
 	@Override
 	public void upload(int iId, String ifilename) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("iId", iId);
 		map.put("ifilename", ifilename);
 		sqlSession.insert(NAMESPACE+".upload", map);
-		// TODO Auto-generated method stub
-		
 	}
-	
 	@Override
-	public List<ItemDTO> select() {
+	public List<ItemDTO> main() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".list");
 	}
-
 	@Override
 	public ItemDTO read(int iId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE+".read", iId);
 	}
-
 	@Override
 	public List<String> getitemfilelist(int iId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".getitemfilelist", iId);
-	}
-	@Override
-	public List<ItemDTO> search(String criteria, String keyword) {
-		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("criteria", criteria);
-		map.put("keyword", keyword);
-		return sqlSession.selectList(NAMESPACE+".search", map);
 	}
 	@Override
 	public void updateitem(ItemDTO iDto) {
@@ -79,50 +63,25 @@ public class ItemDAOImpl implements ItemDAO{
 		sqlSession.delete(NAMESPACE+".deleteitemimgfile", iId);
 	}
 	@Override
-	public List<ItemDTO> adminlist(int curPage) {
+	public List<ItemDTO> adminlist(itemPageTO<ItemDTO> pt, String category) {
 		// TODO Auto-generated method stub
-		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
-		
-		  Integer amount = sqlSession.selectOne(NAMESPACE+".getAmount");
-		  
-		  
-		   if(amount == null){
-		      amount = 0;
-		   }
-		   
-		   pt.setAmount(amount);
-
-		
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("category", category);
 		RowBounds rb = new RowBounds(pt.getStartNum()-1,pt.getPerPage());
 		
-		return sqlSession.selectList(NAMESPACE+".adminlist", null, rb);
+		return sqlSession.selectList(NAMESPACE+".adminlist", map, rb);
 	}
 	@Override
 	public int getamount() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE+".getAmount");
 	}
-
-
 	@Override
-	public List<ItemDTO> categoryList(String category, String showhowitemlist, int curPage) {
+	public List<ItemDTO> categoryList(String category, String showhowitemlist, itemPageTO<ItemDTO> pt) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("category", category);
 		map.put("showhowitemlist", showhowitemlist);
-		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
-		
-		  Integer amount = sqlSession.selectOne(NAMESPACE+".getAmount2",category);
-		  
-		  
-		   if(amount == null){
-		      amount = 0;
-		   }
-		   
-		   pt.setAmount(amount);
-
-		
 		
 		RowBounds rb = new RowBounds(pt.getStartNum()-1,pt.getPerPage());
 		
@@ -131,8 +90,59 @@ public class ItemDAOImpl implements ItemDAO{
 	@Override
 	public Integer getamount(String i_CATEGORY) {
 		System.out.println(i_CATEGORY);
-		System.out.println(":::::::::::");
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NAMESPACE+".getAmount2", i_CATEGORY);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("i_CATEGORY", i_CATEGORY);
+		return sqlSession.selectOne(NAMESPACE+".getAmount2", map);
 	}
+	
+	@Override
+	public List<ItemDTO> search(String criteria, String keyword, itemPageTO<ItemDTO> pt, String showhowitemlist) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("criteria", criteria);
+		map.put("keyword", keyword);
+		map.put("showhowitemlist", showhowitemlist);
+		
+		
+		RowBounds rb = new RowBounds(pt.getStartNum()-1,pt.getPerPage());
+		
+		return sqlSession.selectList(NAMESPACE+".search", map,rb);
+	}
+	@Override
+	public Integer getamount(String criteria, String keyword) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("criteria", criteria);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne(NAMESPACE+".getamount3", map);
+	}
+	@Override
+	public String getmainimgfilename(int iId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".getmainimgfilename", iId);
+	}
+	@Override
+	public void updateitemimg(String uploadedFilename, int iId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ifilename", uploadedFilename);
+		map.put("iId", iId);
+		// TODO Auto-generated method stub
+		sqlSession.update(NAMESPACE+".updateitemimg", map);
+	}
+	@Override
+	public void deleteitemfilename(int iId, String deletefile) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("iId", iId);
+		map.put("ifilename", deletefile);
+		sqlSession.delete(NAMESPACE+".deleteitemfilename", map);
+	}
+	@Override
+	public int deleteimgcount(String getmainimgfilename) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".deleteimgcount", getmainimgfilename);
+	}
+	
 }

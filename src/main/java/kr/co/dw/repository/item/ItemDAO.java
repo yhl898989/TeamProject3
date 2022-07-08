@@ -3,6 +3,7 @@ package kr.co.dw.repository.item;
 import java.util.List;
 
 import kr.co.dw.domain.ItemDTO;
+import kr.co.dw.domain.itemPageTO;
 
 public interface ItemDAO {
 
@@ -10,13 +11,11 @@ public interface ItemDAO {
 
 	void upload(int iId, String filename);
 
-	List<ItemDTO> select();
+	List<ItemDTO> main();
 
 	ItemDTO read(int iId);
 
 	List<String> getitemfilelist(int iId);
-
-	List<ItemDTO> search(String criteria, String keyword);
 
 	void updateitem(ItemDTO iDto);
 
@@ -24,13 +23,29 @@ public interface ItemDAO {
 
 	void deleteitemimgfile(int iId);
 
-	List<ItemDTO> adminlist(int curPage);
+	List<ItemDTO> adminlist(itemPageTO<ItemDTO> pt, String category);
 
 	int getamount();
 
-	List<ItemDTO> categoryList(String category, String showhowitemlist, int curPage);
-
 	Integer getamount(String catrgory);
+
+	Integer getamount(String criteria, String keyword);
+
+	List<ItemDTO> search(String criteria, String keyword, itemPageTO<ItemDTO> pt, String showhowitemlist);
+
+	String getmainimgfilename(int iId);
+
+	void updateitemimg(String uploadedFilename, int iId);
+
+	void deleteitemfilename(int iId, String deletefile);
+
+	List<ItemDTO> categoryList(String category, String showhowitemlist, itemPageTO<ItemDTO> pt);
+
+	int deleteimgcount(String getmainimgfilename);
+
+	
+
+	
 
 	
 

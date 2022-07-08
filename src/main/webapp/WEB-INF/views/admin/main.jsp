@@ -18,7 +18,12 @@
 
 <a href="/admin/mlist">회원관리</a> <br>
 <a href="/item/adminlist">상품관리</a> <br>
-<a href="#">공지사항 </a> <br>
+<a href="/notice/list">공지사항 </a> <br>
+<a href="/orderList"> 주문관리 </a><br>
+<c:if test="${alogin.aauth == 2}">
+<a href="/order/orderSale"> 매출현황 </a>
+</c:if>
+
 </center>
 </body>
 </html>

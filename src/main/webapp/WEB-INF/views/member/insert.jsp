@@ -17,16 +17,17 @@
 <jsp:include page="../common/header.jsp"/>
 
 <h1>회원 정보 입력 화면</h1>
-<form action="/member/insert" method="post">
+<form action="/member/insert" method="post" onsubmit="return formCheck()">
 	ID : <input id="mid" name="mid"> <button type="button" onclick="idCheckFn()">아이디 중복확인</button> <br>
-	PW : <input type="password" name="mpw"><br>
-	이름 : <input name="mname"><br>
-	이메일 : <input name="memail" type="email"><br>
-	번호 : <input name="mphone"><br>
-	우편번호 :<input  id="maddress1"  name="maddress1"> <button type="button" onclick="findAddr()">주소찾기</button> <br>
-    주소 :  <input size="50" id="maddress2"  name="maddress2"><br>
+	PW : <input type="password" name="mpw" id="mpw"><br>
+	PW 재확인 : <input type="password" id="mpwCheck"><br>
+	이름 : <input name="mname" id="mname"><br>
+	이메일 : <input name="memail" type="email" id="memail"><br>
+	번호 : <input name="mphone" id="mphone"><br>
+	우편번호 :<input  id="maddress1"  name="maddress1" readonly="readonly"> <button type="button" onclick="findAddr()">주소찾기</button> <br>
+    주소 :  <input size="50" id="maddress2"  name="maddress2" readonly="readonly"><br>
     상세주소 : <input size="50" id="maddress3"  name="maddress3"><br>
-	생일 : <input name="mbirth" type="date"><br>
+	생일 : <input name="mbirth" type="date" id="mbirth"><br>
 	<input id="OK" type="submit" value="입력 완료">
 </form>
 
@@ -47,7 +48,7 @@
 	   }
 
 function idCheckFn() {
-
+	
 	var mid = {mid: $("#mid").val()};
 	
 	$.ajax({
@@ -66,6 +67,76 @@ function idCheckFn() {
 	});
 }
 
+function formCheck() {
+	let mid = document.getElementById("mid");
+	let mpw = document.getElementById("mpw");
+	let mpwCheck = document.getElementById("mpwCheck");
+	let mname = document.getElementById("mname");
+	let memail = document.getElementById("memail");
+	let mphone = document.getElementById("mphone");
+	let maddress1 = document.getElementById("maddress1");
+	let maddress2 = document.getElementById("maddress2");
+	let maddress3 = document.getElementById("maddress3");
+	let mbirth = document.getElementById("mbirth");
+	
+	if (mid.value == '') {
+		alert("아이디를 입력하세요");
+		mid.focus();
+		return false;
+	}
+	
+	if (mpw.value == '') {
+		alert("비밀번호를 입력하세요");
+		mpw.focus();
+		return false;
+	}
+	
+	if (mpw.value != mpwCheck.value) {
+		alert("비밀번호가 일치하지 않습니다");
+		mpw.focus();
+		return false;
+	}
+	
+	if (mname.value == '') {
+		alert("이름을 입력하세요");
+		mname.focus();
+		return false;
+	}
+	
+	if (memail.value == '') {
+		alert("이메일을 입력하세요");
+		memail.focus();
+		return false;
+	}
+	
+	if (mphone.value == '') {
+		alert("전화번호를 입력하세요");
+		mphone.focus();
+		return false;
+	}
+	
+	if (maddress1.value == '') {
+		alert("주소를 입력하세요");
+		maddress1.focus();
+		return false;
+	}
+	
+	if (maddress3.value == '') {
+		alert("상세주소를 입력하세요");
+		maddress3.focus();
+		return false;
+	}
+	
+	if (mbirth.value == '') {
+		alert("생년월일을 입력하세요");
+		mbirth.focus();
+		return false;
+	}
+	
+	
+	
+	return true;
+}
 
 </script>
 

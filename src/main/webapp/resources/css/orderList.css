@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+a{
+	text-decoration: none;
+}
+a:link {color: blue;}
+a:visited {color: blue;}
+a:active {color: blue;}
+a:hover {color: blue;}
+
+
+.order_table{
+	margin: auto;
+    width: 100%;
+    border: 1px solid #d3d8e1;
+    text-align: center;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.order_table td{
+	padding: 10px 5px;
+	border : 1px solid #e9ebf0;
+}
+.order_table thead{
+	background-color: #f8f9fd;	
+	font-weight: 600;
+}
+
+.table_empty{
+	height: 50px;
+    text-align: center;
+    margin: 200px 0 215px 0px;
+    font-size: 25px;
+}

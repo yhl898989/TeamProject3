@@ -1,0 +1,39 @@
+@charset "UTF-8";
+body{
+   width : 1920px;
+}
+.itemread{
+   display : flex;
+   width : 1920px;
+   height : 500px;
+}
+.itemreadphoto{
+   width: 960px;
+   
+   height: 400px;
+   text-align : center;
+}
+.itemreadinfo{
+   width : 960px;
+
+   height: 500px;   
+}
+#subphoto{
+   margin-top : 10px;
+   margin-left: 240px;
+   margin-right: 240px;
+   text-align: right;
+   position: relative;   
+}
+.slick-next{
+	position : absolute;
+	top: 30px;
+
+	
+}
+.slick-prev{
+	position : absolute;
+	right: 480px;
+	bottom: 35px;
+	
+}

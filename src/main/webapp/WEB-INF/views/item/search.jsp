@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix ="c"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,36 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
-<style type="text/css">
-
-*{padding:0;margin:0}
-li{list-style:none}
-a{text-decoration:none;font-size:14px}
-.menu {
-  width: 1920px;
-  overflow: hidden;
-  
-}
-
-.menu > li {
-  width: 20%; /*20*5=100%*/
-  float: left;
-  text-align: center;
-  line-height: 40px;
-  background-color: #5778ff;
-}
-
-.menu a {
-  color: #fff;
-  width: 100%;
-}
-#itemlist{
-
-	margin : 20px;
-
-}
-</style>
+<link href = "/resources/css/itemsearch.css" rel="stylesheet">
 
 </head>
 
@@ -72,38 +44,47 @@ a{text-decoration:none;font-size:14px}
 </div>
 <ul class="menu">
       <li>
-        <a href="/item/list" id = "옷">옷</a>
+        <a href="/item/list?Category=옷" id = "옷">옷</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "신발">신발</a>
+        <a href="/item/list?Category=신발" id = "신발">신발</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "가방">가방</a>
+        <a href="/item/list?Category=가방" id = "가방">가방</a>
         
       </li>
       <li>
-        <a href="/item/list" id = "모자">모자</a>
+        <a href="/item/list?Category=모자" id = "모자">모자</a>
        
       </li>
       <li>
-        <a href="/item/list" id = "원피스">원피스</a>
+        <a href="/item/list?Category=원피스" id = "원피스">원피스</a>
        
       </li>
     </ul>
     <center>
 <h1>검색 결과</h1>
 </center>
-<form action="/item/search" method="post">
+<div class = "flexitem">
+   
+    
+    <form action="/item/search" method="get">
 	<select name = "criteria">
 		<option value = "iName">상품이름</option>
 	</select>
 	<input name = "keyword">
 	<input type = "submit" value = "검색">
 	</form>
-<div id = "itemlist">
-<c:forEach items = "${list}" var = "list">
+	 <div id = "showhowitemlist">
+    <a href = "/item/search?showhowitemlist=itemsequence&&curPage=${pt.curPage}&&criteria=${criteria}&&keyword=${keyword}" id = "itemsequence" class = "${showhowitemlist == 'itemsequence'?'itemcss':''}">최신순</a>
+    <a href = "/item/search?showhowitemlist=iPricedesc&&curPage=${pt.curPage}&&criteria=${criteria}&&keyword=${keyword}" id = "iPricedesc" class = "${showhowitemlist == 'iPricedesc'?'itemcss':''}">높은가격순</a>
+    <a href = "/item/search?showhowitemlist=iPriceasc&&curPage=${pt.curPage}&&criteria=${criteria}&&keyword=${keyword}" id = "iPriceasc" class = "${showhowitemlist == 'iPriceasc'?'itemcss':''}">낮은가격순</a>
+    </div>
+	</div>
+<div id = "itemlist" class="box-wrapper">
+<c:forEach items = "${pt.list}" var = "list">
 <div class="card " style="width: 18rem;">
  <a href = "/item/read/${list.iId}">
  <div>
@@ -111,27 +92,33 @@ a{text-decoration:none;font-size:14px}
   </div>
   </a>
   <div class="card-body">
-    <p class="card-text">상품이름:${list.iName}</p>
-    <p class="card-price">상품가격:${list.iPrice}</p>
+    <p class="card-text">${list.iName}<span class = "${list.iDc > 0?'iDc':'iDchidden'}">${list.iDc}%</span></p>
+    <p class="card-price"><span class = "iPrice">${list.iPrice}원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<span><fmt:parseNumber var = "iPrice" value = "${list.iPrice < 1000?Math.floor(list.iPrice - list.iPrice*(list.iDc/100)):Math.ceil((list.iPrice - list.iPrice*(list.iDc/100))/10)*10}" integerOnly="true"/>${iPrice}원</span>
+    </p>
   </div>
 </div>
 </c:forEach>
 </div>
+<br>
 
+<center>
+<a href = "/item/search?curPage=${pt.curPage > 1? pt.curPage -1:1}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}">&laquo;</a>
+	
+	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
+	<a href = "/item/search?curPage=${i}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}" class = "${i == pt.curPage?'red':""}">
+	
+	${i}
+	
+	
+	
+	</a> &nbsp;&nbsp;
+	
+	</c:forEach>
+	<a href = "/item/search?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}">&raquo;</a>
+</center>	
+<jsp:include page="../common/footer.jsp"></jsp:include>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$(".menu").on("click","a", function() {
-		let category = $(this).attr("id");
-		let showhowitemlist = "itemsequence";
-		localStorage.setItem("category",category);
-		localStorage.setItem("showhowitemlist",showhowitemlist);
-		
-	})
-})
-
-
-
-</script>
+<script type="text/javascript"></script>
 </body>
 </html>

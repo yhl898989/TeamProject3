@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dw.notice">
+	<sql id="sql_where_part">
+		<if test="criteria != null">
+			<if test="criteria == 'mid'.toString()">
+				WHERE UPPER(aid) LIKE '%'||UPPER(#{keyword})||'%'
+			</if>
+			
+			<if test="criteria == 'ntitle'.toString()">
+				WHERE UPPER(ntitle) LIKE '%'||UPPER(#{keyword})||'%'
+			</if>
+			
+			<if test="criteria == 'ncontent'.toString()">
+				WHERE LOWER(ncontent) LIKE  '%'||LOWER(#{keyword})||'%'
+			</if>
+		</if>
+	</sql>
+
+
+	<select id="listall">
+	SELECT * from tbl_notice
+	</select>
+	<select id="listpage" resultType="NoticeDTO">
+	
+	SELECT * FROM tbl_notice order by nno desc
+	
+	</select>
+
+  
+	<select id="list" resultType="NoticeDTO">
+		SELECT * from tbl_notice
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_notice
+		(nno,aid,ntitle,ncontent,nreadcnt)
+		VALUES
+		(seq_notice_nno.NEXTVAL,#{aid},#{ntitle},#{ncontent},#{nreadcnt})
+		<selectKey keyProperty="nno" resultType="Integer" order="AFTER">
+			SELECT seq_notice_nno.CURRVAL FROM DUAL
+		
+		</selectKey>
+		
+	</insert>
+	<delete id="delete">
+		DELETE FROM tbl_notice WHERE nno=#{nno}
+	</delete>
+	<update id="update">
+		UPDATE tbl_notice
+		SET
+		ntitle=#{ntitle},ncontent=#{ncontent},nupdateday=SYSDATE
+		WHERE
+		nno = #{nno}
+	</update>
+	<select id="updateUI" resultType="NoticeDTO">
+		SELECT * FROM tbl_notice where nno = #{nno}
+	</select>
+	
+	<select id="read" resultType="NoticeDTO">
+		SELECT
+			nno,aid,ntitle,ncontent,ndate,nupdateday,nreadcnt
+		from
+			tbl_notice
+		where
+			nno=#{nno}
+	</select>
+	
+	<select id="getAmount" resultType="integer">
+      SELECT COUNT(*) FROM tbl_notice WHERE nno=#{nno}
+   </select>
+   
+   <update id="increaseReadCnt">
+		UPDATE tbl_notice
+		SET
+		nreadcnt = nreadcnt+1
+		WHERE nno=#{nno}
+	</update>
+	
+		<select id="getAmountNotice" resultType="integer">
+		SELECT COUNT(nno) FROM tbl_notice
+	</select>
+	
+	<select id="search" resultType="NoticeDTO">
+		SELECT * FROM tbl_notice 
+		<include refid="sql_where_part"></include>
+		ORDER BY nno DESC
+	</select>
+</mapper>

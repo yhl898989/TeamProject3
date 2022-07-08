@@ -12,136 +12,198 @@ public class OrderItemDTO implements Serializable{
 	private int oid;
 	private String orderId;
 	private int iId;
-	private int orderItemId;
+	private String iName;
 	private int iCount;
 	private int iPrice;
 	private int iDc;
+	private String ifilename;
 	private int savePoint;
 	private int salePrice;
 	private int totalPrice;
 	private int totalSavePoint;
 	
 	public OrderItemDTO() {
-		
+		// TODO Auto-generated constructor stub
 	}
 	
-	public OrderItemDTO(int oid, String orderId, int iId, int orderItemId, int iCount, int iPrice, int iDc,
-			int savePoint, int salePrice, int totalPrice, int totalSavePoint) {
+
+
+	public OrderItemDTO(int oid, String orderId, int iId, String iName, int iCount, int iPrice, int iDc,
+			String ifilename, int savePoint, int salePrice, int totalPrice, int totalSavePoint) {
 		super();
 		this.oid = oid;
 		this.orderId = orderId;
 		this.iId = iId;
-		this.orderItemId = orderItemId;
+		this.iName = iName;
 		this.iCount = iCount;
 		this.iPrice = iPrice;
 		this.iDc = iDc;
+		this.ifilename = ifilename;
 		this.savePoint = savePoint;
 		this.salePrice = salePrice;
 		this.totalPrice = totalPrice;
 		this.totalSavePoint = totalSavePoint;
 	}
 
-
+	
 
 	public int getOid() {
 		return oid;
 	}
 
+
+
 	public void setOid(int oid) {
 		this.oid = oid;
 	}
+
+
 
 	public String getOrderId() {
 		return orderId;
 	}
 
+
+
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
+
+
 
 	public int getiId() {
 		return iId;
 	}
 
+
+
 	public void setiId(int iId) {
 		this.iId = iId;
 	}
 
-	public int getOrderItemId() {
-		return orderItemId;
+
+
+	public String getiName() {
+		return iName;
 	}
 
-	public void setOrderItemId(int orderItemId) {
-		this.orderItemId = orderItemId;
+
+
+	public void setiName(String iName) {
+		this.iName = iName;
 	}
+
+
 
 	public int getiCount() {
 		return iCount;
 	}
 
+
+
 	public void setiCount(int iCount) {
 		this.iCount = iCount;
 	}
+
+
 
 	public int getiPrice() {
 		return iPrice;
 	}
 
+
+
 	public void setiPrice(int iPrice) {
 		this.iPrice = iPrice;
 	}
+
+
 
 	public int getiDc() {
 		return iDc;
 	}
 
+
+
 	public void setiDc(int iDc) {
 		this.iDc = iDc;
 	}
+
+
+
+	public String getIfilename() {
+		return ifilename;
+	}
+
+
+
+	public void setIfilename(String ifilename) {
+		this.ifilename = ifilename;
+	}
+
+
 
 	public int getSavePoint() {
 		return savePoint;
 	}
 
+
+
 	public void setSavePoint(int savePoint) {
 		this.savePoint = savePoint;
 	}
+
+
 
 	public int getSalePrice() {
 		return salePrice;
 	}
 
+
+
 	public void setSalePrice(int salePrice) {
 		this.salePrice = salePrice;
 	}
+
+
 
 	public int getTotalPrice() {
 		return totalPrice;
 	}
 
+
+
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
+
 
 	public int getTotalSavePoint() {
 		return totalSavePoint;
 	}
 
+
+
 	public void setTotalSavePoint(int totalSavePoint) {
 		this.totalSavePoint = totalSavePoint;
 	}
 
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
 
-	
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(iCount, iDc, iId, iPrice, oid, orderId, orderItemId, salePrice, savePoint, totalPrice,
-				totalSavePoint);
+		return Objects.hash(oid);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -152,19 +214,21 @@ public class OrderItemDTO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItemDTO other = (OrderItemDTO) obj;
-		return iCount == other.iCount && iDc == other.iDc && iId == other.iId && iPrice == other.iPrice
-				&& oid == other.oid && Objects.equals(orderId, other.orderId) && orderItemId == other.orderItemId
-				&& salePrice == other.salePrice && savePoint == other.savePoint && totalPrice == other.totalPrice
-				&& totalSavePoint == other.totalSavePoint;
+		return oid == other.oid;
 	}
+
+	
+	
 
 	@Override
 	public String toString() {
-		return "OrderItemDTO [oid=" + oid + ", orderId=" + orderId + ", iId=" + iId + ", orderItemId=" + orderItemId
-				+ ", iCount=" + iCount + ", iPrice=" + iPrice + ", iDc=" + iDc + ", savePoint=" + savePoint
-				+ ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + ", totalSavePoint=" + totalSavePoint
-				+ "]";
+		return "OrderItemDTO [oid=" + oid + ", orderId=" + orderId + ", iId=" + iId + ", iName=" + iName + ", iCount="
+				+ iCount + ", iPrice=" + iPrice + ", iDc=" + iDc + ", ifilename=" + ifilename + ", savePoint="
+				+ savePoint + ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + ", totalSavePoint="
+				+ totalSavePoint + "]";
 	}
+
+
 
 	public void initsaleTotal() {
 		

@@ -1,0 +1,67 @@
+@charset "UTF-8";
+body{
+	width : 1920px;
+}
+#itemimguploadFile{
+   width : 500px;
+   height : 250px;
+   border: 1px solid black;
+   padding : 0px;
+}
+#itemimguploadFile2{
+   width : 500px;
+   height : 250px;
+   border: 1px solid black;
+   padding : 0px;
+}
+.iteminsertform{
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+}
+#itemsubimguploadFile{
+   width : 500px;
+   height : 250px;
+   border: 1px solid black;
+   padding : 0px;
+}
+#itemimguploadedItems{
+	display : inline;
+	width : 300px;
+}
+#card{
+	display: inline;
+}
+
+#subcard{
+	display: inline-block;
+}
+#cardmain{
+	border: 1px solid black;
+}
+#subcardmain{
+	border: 1px solid black;
+}
+#itemimg{
+	display:flex;
+	margin-top: 20px;
+	justify-content: space-evenly;
+}
+#itemsubimguploadedItems{
+	margin-left: 10px;
+}
+#testImg{
+  postiion : relative;
+  width: 700px;
+  height: 350px;
+}
+button.btn1 {
+  position: absolute;
+  top: 170px;
+  left : 35px; 
+}
+button.btn2 {
+  position: absolute;
+  top: 85px;
+  left : 95px;
+}

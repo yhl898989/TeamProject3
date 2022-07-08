@@ -2,12 +2,12 @@ package kr.co.dw.service.item;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.dw.domain.ItemDTO;
+import kr.co.dw.domain.itemPageTO;
 import kr.co.dw.repository.item.ItemDAO;
 
 @Service
@@ -30,9 +30,9 @@ public class itemServiceImpl implements itemService{
 	}
 
 	@Override
-	public List<ItemDTO> select() {
+	public List<ItemDTO> main() {
 		// TODO Auto-generated method stub
-		return iDao.select();
+		return iDao.main();
 	}
 
 	@Override
@@ -47,44 +47,92 @@ public class itemServiceImpl implements itemService{
 		return iDao.getitemfilelist(iId);
 	}
 	@Override
-	public List<ItemDTO> search(String criteria, String keyword) {
-		// TODO Auto-generated method stub
-		return iDao.search(criteria,keyword);
-	}
-	@Override
 	public void updateitem(ItemDTO iDto) {
 		// TODO Auto-generated method stub
 		iDao.updateitem(iDto);
 	}
-	@Transactional
+
 	@Override
+	@Transactional
 	public void deleteitem(int iId) {
 		// TODO Auto-generated method stub
 		iDao.deleteitemimgfile(iId);
 		iDao.deleteitem(iId);
 	}
+	@Transactional
 	@Override
-	public List<ItemDTO> adminlist(int curPage) {
+	public itemPageTO<ItemDTO> adminlist(int curPage, String category) {
 		// TODO Auto-generated method stub
-		return iDao.adminlist(curPage);
-	}
-	@Override
-	public Integer getamount(String Catrgory) {
-		// TODO Auto-generated method stub
-		return iDao.getamount(Catrgory);
-	}
-	@Override
-	public List<ItemDTO> categoryList(String category, String showhowitemlist, int curPage) {
-		// TODO Auto-generated method stub
+		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
 		
-		return iDao.categoryList(category,showhowitemlist,curPage);
+		int amount = iDao.getamount(category);
 		
+		pt.setAmount(amount);
+		pt.setPerPage(10);
+		List<ItemDTO> adminlist = iDao.adminlist(pt,category);
+		pt.setList(adminlist);
+		
+		return pt;
+	}
+	@Transactional
+	@Override
+	public itemPageTO<ItemDTO> categoryList(String category, String showhowitemlist, int curPage) {
+		// TODO Auto-generated method stub
+		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
+		Integer amount = iDao.getamount(category);
+		
+		if(amount == null){
+		      amount = 0;
+		   }
+		pt.setAmount(amount);
+		List<ItemDTO> categoryList = iDao.categoryList(category,showhowitemlist,pt);
+		pt.setList(categoryList);
+		return pt;	
+	}
+	@Transactional
+	@Override
+	public itemPageTO<ItemDTO> search(String criteria, String keyword, int curPage, String showhowitemlist) {
+		// TODO Auto-generated method stub
+		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
+		Integer amount = iDao.getamount(criteria,keyword);
+		if(amount == null){
+		      amount = 0;
+		   }
+		pt.setAmount(amount);
+		
+		List<ItemDTO> list = iDao.search(criteria,keyword,pt,showhowitemlist);
+		
+		pt.setList(list);
+		return pt;
 	}
 	@Override
-	public int getamount() {
+	public String getmainimgfilename(int iId) {
 		// TODO Auto-generated method stub
-		return iDao.getamount();
+		return iDao.getmainimgfilename(iId);
 	}
-	
-	
+	@Override
+	public void updateitemimg(String uploadedFilename, int iId) {
+		// TODO Auto-generated method stub
+		iDao.updateitemimg(uploadedFilename,iId);
+	}
+	@Override
+	public void deleteitemfilename(int iId, String deletefile) {
+		// TODO Auto-generated method stub
+		iDao.deleteitemfilename(iId,deletefile);
+	}
+	@Override
+	public void uploadsubfilename(int iId, List<String> filenameList) {
+		// TODO Auto-generated method stub
+		for(int i = 0 ; i < filenameList.size();i++) {
+			String ifilename = filenameList.get(i);
+			
+			iDao.upload(iId,ifilename);
+		}
+	}
+	@Override
+	public int deleteimgcount(String getmainimgfilename) {
+		// TODO Auto-generated method stub
+		return iDao.deleteimgcount(getmainimgfilename);
+	}
+
 }
