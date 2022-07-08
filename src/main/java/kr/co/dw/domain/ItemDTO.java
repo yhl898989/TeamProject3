@@ -18,6 +18,7 @@ public class ItemDTO implements Serializable{
 	private List<String> ifilenameList;
 	private String ifilename;
 	private String i_CATEGORY;
+	private int isaleiPrice;
 	public ItemDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -31,6 +32,7 @@ public class ItemDTO implements Serializable{
 		this.iCount = iCount;
 		this.ifilename = ifilename;
 		this.i_CATEGORY = i_CATEGORY;
+		
 	}
 	public ItemDTO(int iId, String iName, int iPrice, int iDc, int iCount, List<String> ifilenameList, String ifilename,
 			String i_CATEGORY) {
@@ -43,6 +45,18 @@ public class ItemDTO implements Serializable{
 		this.ifilenameList = ifilenameList;
 		this.ifilename = ifilename;
 		this.i_CATEGORY = i_CATEGORY;
+	}
+	public ItemDTO(int iId, String iName, int iPrice, int iDc, int iCount, String ifilename,
+			String i_CATEGORY,int isaleiPrice) {
+		super();
+		this.iId = iId;
+		this.iName = iName;
+		this.iPrice = iPrice;
+		this.iDc = iDc;
+		this.iCount = iCount;
+		this.ifilename = ifilename;
+		this.i_CATEGORY = i_CATEGORY;
+		this.isaleiPrice = isaleiPrice;
 	}
 	public int getiId() {
 		return iId;
@@ -91,6 +105,12 @@ public class ItemDTO implements Serializable{
 	}
 	public void setI_CATEGORY(String i_CATEGORY) {
 		this.i_CATEGORY = i_CATEGORY;
+	}
+	public int getIsaleiPrice() {
+		return isaleiPrice;
+	}
+	public void setIsaleiPrice(int isaleiPrice) {
+		this.isaleiPrice = isaleiPrice;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

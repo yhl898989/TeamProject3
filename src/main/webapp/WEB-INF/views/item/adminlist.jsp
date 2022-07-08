@@ -11,31 +11,27 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
+<link href = "/resources/css/itemadminlist.css" rel="stylesheet">
+
 <style type="text/css">
 
-body{
-	width:1920px;
-}
-
-thead{
+#icategoryadmimlist{
 text-align: center;
 }
-tbody{
-text-align: center;
-}
-.modal-body{
-	height : 500px;
-}
-.red{
-	color : red;
-}
-
 </style>
+
 
 </head>
 <body>
 <h1>관리자 상품관리</h1>
-
+<div id = "icategoryadmimlist">
+<span><a href="/item/adminlist?category=all" class = "${category == 'all'?'menucss':''}">전체</a></span>&nbsp;&nbsp;
+<span><a href="/item/adminlist?category=옷" class = "${category == '옷'?'menucss':''}">옷</a></span>&nbsp;&nbsp;
+<span><a href="/item/adminlist?category=신발" class = "${category == '신발'?'menucss':''}">신발</a></span>&nbsp;&nbsp;
+<span><a href="/item/adminlist?category=가방" class = "${category == '가방'?'menucss':''}">가방</a></span>&nbsp;&nbsp;
+<span><a href="/item/adminlist?category=모자" class = "${category == '모자'?'menucss':''}">모자</a></span>&nbsp;&nbsp;
+<span><a href="/item/adminlist?category=원피스" class = "${category == '원피스'?'menucss':''}">원피스</a></span>
+</div>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -68,9 +64,8 @@ text-align: center;
 						data-ifilename = "${adminlist.ifilename}"
 						data-i_CATEGORY = "${adminlist.i_CATEGORY}"
 				>수정</button>
-				 <button data-iId = "${adminlist.iId}" id = "item_delete_btn">삭제</button> <div>
-				 <button data-iId = "${adminlist.iId}" id = "item_imgupdate_btn"
-				 data-toggle="modal" data-target="#exampleModal">이미지수정</button></div>
+				 <button data-iId = "${adminlist.iId}" id = "item_delete_btn">삭제</button><div>
+				 <button id = "item_imgupdate_btn" data-iName ="${adminlist.iName}" data-iId = "${adminlist.iId}">이미지 수정</button></div>
 				
 				</td>
 				
@@ -79,10 +74,10 @@ text-align: center;
   </tbody>
 </table>
 <center>
-<a href = "/item/adminlist?curPage=${pt.curPage > 1? pt.curPage -1:1}">&laquo;</a>
+<a href = "/item/adminlist?category=${category}&&curPage=${pt.curPage > 1? pt.curPage -1:1}">&laquo;</a>
 	
 	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum }">
-	<a href = "/item/adminlist?curPage=${i}" class = "${i == pt.curPage?'red':""}">
+	<a href = "/item/adminlist?category=${category}&&curPage=${i}" class = "${i == pt.curPage?'red':""}">
 	
 	${i}
 	
@@ -91,26 +86,33 @@ text-align: center;
 	</a> &nbsp;&nbsp;
 	
 	</c:forEach>
-	<a href = "/item/adminlist?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">&raquo;</a>
+	<a href = "/item/adminlist?category=${category}&&curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">&raquo;</a>
 </center>	
 	
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop ="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">이미지 수정</h5>
+        <h5 class="modal-title" id="ModaliName"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        미구현입니당
+      <input type = "hidden" id = "ModaliId" value = "111">
+      	 <div class = "getimg">
+        	<div id = "getmainimg"><input id = "mainimgedit" type = "checkbox" name = "selectupdate" >메인 이미지 편집</div>
+        	<div id = "getsubimg"><input id = "subimgedit" type = "checkbox" name = "selectupdate">서브 이미지 편집</div>
+        </div>
+       		<div id = "itemimguploadedItems"></div>
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <div id = "aabutton">
+        
+        </div>
       </div>
     </div>
   </div>
@@ -119,9 +121,12 @@ text-align: center;
 <script type="text/javascript" src = "/resources/js/item.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	 
-	  
+	let deletefilename = "";
+	let deleteFilenameArr = [];
+	let formData = new FormData();
+	let idx = 0;
+	let curPage = ${pt.curPage};
+	let category = "${category}";
 $(".tbody").on("click","#item_update_btn", function() {
 	let adminlistiId = $(this).attr("data-iId");
 	let adminlistiName = $(this).attr("data-iName");
@@ -132,7 +137,7 @@ $(".tbody").on("click","#item_update_btn", function() {
 	let adminlistii_CATEGORY = $(this).attr("data-i_CATEGORY");
 	
 	let str = updateitem(adminlistiId,adminlistiName,adminlistiPrice,adminlistiDc,
-			adminlistiCount,adminlistifilename,adminlistii_CATEGORY);
+			adminlistiCount,adminlistifilename,adminlistii_CATEGORY,curPage,category);
 	$(this).parent().parent().html(str);
 	$(".button").remove();
 	$("tr").append('<td></td>');
@@ -191,6 +196,252 @@ $.ajax({
 	
 	})
 })
+$(".tbody").on("click","#item_imgupdate_btn", function() {
+	$("#myModal").modal("show");
+	let iName = $(this).attr("data-iName");
+	let iId = $(this).attr("data-iId");	
+	$("#ModaliName").text(iName);
+	$("#ModaliId").val(iId);
+	$("#mainimgedit").prop('checked', false);
+	$("#subimgedit").prop('checked', false);
+	$("#itemimguploadedItems").html("");
+	$("#aabutton").html("");
+	$('#myModal').modal({backdrop: 'static'});
+})
+	
+////////////////////////////////////////////////////////	
+$('input[type="checkbox"][name="selectupdate"]').click(function(){
+	 
+	  if($(this).prop('checked')){
+	 
+	     $('input[type="checkbox"][name="selectupdate"]').prop('checked',false);
+	 
+	     $(this).prop('checked',true);
+	 
+	    }
+	  
+	   });
+	
+$("#getmainimg").on("change","input[type='checkbox']",function(){
+	
+	$("#mainimgedit").is(":checked");
+	if($("#mainimgedit").is(":checked")== false){
+		$("#itemimguploadedItems").html("");
+		$(".btn_itemainimg_update").remove();
+	}else{
+		$("#aabutton").html("");
+		$("#aabutton").append('<button type="button" class="btn btn-secondary btn_itemainimg_update" data-dismiss="modal">이미지 수정</button>');
+		$("#itemimguploadedItems").html("");
+		let formData = new FormData();
+		let iId = $("#ModaliId").val();
+		formData.append("iId",iId);
+		$.ajax({
+			
+			type : "post",
+			url : "/item/getmainimgfilename",
+			data : formData,
+			processData : false,
+			contentType : false,
+			dataType : "JSON",
+			success : function(result) {
+				
+				$("#itemimguploadedItems").css("display","flex");
+				$("#itemimguploadedItems").css("text-align","center");
+				getupdateitemimg(result,$("#itemimguploadedItems"));
+				 
+			}
+		
+		})
+	}
+})
+
+$("#getsubimg").on("change","input[type='checkbox']",function(){
+	if($("#subimgedit").is(":checked")== false){
+		$("#itemimguploadedItems").html("");
+		$(".btn_itemsubimg_update").remove();
+	}else{
+		$("#aabutton").html("");
+		$("#aabutton").append('<button type="button" class="btn btn-secondary btn_itemsubimg_update" data-dismiss="modal">이미지 수정</button>');
+		$("#itemimguploadedItems").html("");
+		let formData = new FormData();
+		let iId = $("#ModaliId").val();
+		formData.append("iId",iId);
+		 $.ajax({
+			
+			type : "post",
+			url : "/item/getsubimgfilename",
+			data : formData,
+			processData : false,
+			contentType : false,
+			dataType : "JSON",
+			success : function(result) {
+				$("#itemimguploadedItems").css("display","block");
+				$("#itemimguploadedItems").css("text-align","left");
+				$("#itemimguploadedItems").append('<div id = "itemsubimguploadFile">서브 사진</div>');
+				getupdateitemsubimg(result,$("#itemimguploadedItems"));
+				
+				
+				
+				
+			}
+	
+		}) 
+	}
+})	
+	//서브사진 드롭
+$("#itemimguploadedItems").on("dragenter dragover","#itemsubimguploadFile", function(event) {
+      event.preventDefault();
+      
+   })
+   
+   $("#itemimguploadedItems").on("drop","#itemsubimguploadFile", function(event) {
+      event.preventDefault();
+      let itemimgfiles = event.originalEvent.dataTransfer.files;
+      let itemimgfile = itemimgfiles[0];
+      
+      
+      formData.append("itemimgfile"+idx,itemimgfile);
+      
+      let reader = new FileReader();
+      
+      reader.readAsDataURL(itemimgfile);
+      
+      reader.onload = function(event) {
+         
+         let str = insertitemsubimgfile3(event.target.result,"itemimgfile"+idx++);
+         
+         $("#itemimguploadedItems").append(str);
+         
+         
+      }
+   })	
+	
+$("#itemimguploadedItems").on("click",".btn_del_subitem", function() {
+	$("#card").remove();
+	let subdeletefilename = $(this).attr("data-itemimgfilekey");
+	let filename = $(this).attr("data-itemimgfilename");
+	if(filename == "new"){
+		let filekey = $(this).attr("data-itemimgfilekey");
+		formData.delete(filekey);
+	}else{
+		deleteFilenameArr.push(subdeletefilename);
+		}
+	$(this).parent().parent().parent().remove();
+	})
+	
+   
+
+
+$("#aabutton").on("click",".btn_itemsubimg_update",function() {
+	
+	let iId = $("#ModaliId").val();
+	
+	formData.append("iId",iId);
+	formData.append("deleteFilenameArr",deleteFilenameArr);
+	formData.delete("itemimgfile");
+	$.ajax({
+		
+		type : "post",
+		url : "/item/updatesubitemimg",
+		data : formData,
+		processData : false,
+		contentType : false,
+		dataType : "text",
+		success : function(result) {
+			
+			if(result == "SUCCESS"){
+				
+				location.assign("/item/adminlist");
+			}		
+		}
+	
+	})
+	
+}) 
+
+
+//메인사진드롭
+$("#itemimguploadedItems").on("dragenter dragover","#itemimguploadFile2", function(event) {
+         event.preventDefault();
+   })  
+
+$("#itemimguploadedItems").on("drop","#itemimguploadFile2", function(event) {
+	
+      event.preventDefault();
+      let itemimgfiles = event.originalEvent.dataTransfer.files;
+      let itemimgfile = itemimgfiles[0];
+      
+      
+      formData.set("itemimgfile",itemimgfile);
+      
+      let reader = new FileReader();
+      
+      reader.readAsDataURL(itemimgfile);
+      
+      reader.onload = function(event) {
+         
+         let str = insertitemimgfile3(event.target.result, itemimgfile["name"]);
+         
+         $("#itemimguploadedItems").append(str);
+         $("#itemimguploadFile2").remove();
+         
+      }
+   })
+ 
+$("#itemimguploadedItems").on("click",".btn_del_item", function() {
+	$("#card").remove();
+	$("#itemimguploadedItems").html('<div id = "itemimguploadFile2" class ="form-control text-center">메인사진</div>');
+	let maindeletefilename = $(this).attr("data-itemimgfilekey");
+	let filename = $(this).attr("data-filename");
+	if(filename != "new"){
+		deletefilename = maindeletefilename;
+	}				 
+	
+	
+	
+	
+})   
+   
+$("#aabutton").on("click",".btn_itemainimg_update",function() {
+	
+	let iId = $("#ModaliId").val();
+	formData.append("iId",iId);
+	formData.append("deletefilename",deletefilename);
+	if(formData.get("itemimgfile") == null){
+   	 alert("메인 사진을 넣어주세요");
+   	 return
+	}
+	$.ajax({
+		
+		type : "post",
+		url : "/item/updateitemimg",
+		data : formData,
+		processData : false,
+		contentType : false,
+		dataType : "text",
+		success : function(result) {
+			if(result == "SUCCESS"){
+				location.assign("/item/adminlist");
+			}		
+		}
+	
+	})
+	
+}) 
+$(".close").on("click", function() {
+	
+	for(let i = 0 ; i < idx+1 ; i++){
+		if(formData.get("itemimgfile"+i) == null){
+			continue;
+		}else{
+			formData.delete("itemimgfile"+i);
+		}
+	}
+	deleteFilenameArr = [];
+	formData.delete("itemimgfile")
+	deletefilename = "";
+})
+
 })
 
 </script>

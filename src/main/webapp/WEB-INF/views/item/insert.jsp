@@ -10,32 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-<style type="text/css">
-#itemimguploadFile{
-   width : 500px;
-   height : 250px;
-   border: 1px solid black;
-   padding : 0px;
-}
-#itemimguploadFile2{
-   width : 500px;
-   height : 250px;
-   border: 1px solid black;
-   padding : 0px;
-}
-.iteminsertform{
-display: flex;
-justify-content: space-evenly;
-align-items: center;
-}
-#itemsubimguploadFile{
-   width : 500px;
-   height : 250px;
-   border: 1px solid black;
-   padding : 0px;
-}
-</style>   
-
+<link href = "/resources/css/iteminsert.css" rel="stylesheet">
 </head>
 
 
@@ -49,9 +24,9 @@ align-items: center;
 <div class = "aaaaa">
 <form action="" method="post">
 상품 이름 : <input id ="iName" name = "iName" required="required"><br>
-상품 가격 : <input id = "iPrice" name = "iPrice" type="number" required="required" ><br>
-상품 할인율 : <input id = "iDc" name = "iDc" type="number" required="required"><br>
-상품 수량 : <input id = "iCount" name = "iCount" type="number" required="required"><br>
+상품 가격 : <input id = "iPrice" name = "iPrice" type="number" ><br>
+상품 할인율 : <input id = "iDc" name = "iDc" type="number" ><span id = "iDccheck"></span><br>
+상품 수량 : <input id = "iCount" name = "iCount" type="number"><br>
 카테고리 : 
 <select id = "category" onchange = "changecategory()">
 <option value = "옷">옷</option>
@@ -71,15 +46,19 @@ align-items: center;
 <center>
 <input id = "item_btn_submit" type="submit" value = "상품 등록">
 </center>
-<div id = "itemimguploadedItems" class ="row row-cols-3"></div>   
-<div id = "itemsubimguploadedItems" class ="row row-cols-3"></div>
-<script type="text/javascript" src ="/resources/js/item2.js"></script>
+<div id = "itemimg">
+<div id = "itemimguploadedItems"></div>   
+<div id = "itemsubimguploadedItems"></div>
+</div>
+<script type="text/javascript" src ="/resources/js/item.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
    let formData = new FormData();
    let idx = 0;
    
-   
+   if($("#iDc").val() > 100){
+	   $("#iDccheck").html("할인율은 100을 넘을 수 없습니다");
+   }
    
    $("#itemimguploadFile").on("dragenter dragover", function(event) {
       event.preventDefault();
@@ -196,6 +175,12 @@ $(document).ready(function() {
       }else if(icategory == ""){
          alert("카레고리를 골라주세요");
          return
+      }else if(formData.get("itemimgfile") == null){
+    	 alert("메인 사진을 넣어주세요");
+    	 return
+      }else if($("#iDc").val() > 100){
+    	  $("#iDccheck").html("할인율은 100을 넘을 수 없습니다.");
+    	  return
       }
       formData.append("iName", iName);
       formData.append("iPrice", iPrice);

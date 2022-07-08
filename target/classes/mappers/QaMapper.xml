@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dw.qa">
+
+	<sql id="sql_where_part">
+		<if test="criteria != null">
+			<if test="criteria == 'mid'.toString()">
+				WHERE UPPER(mid) LIKE '%'||UPPER(#{keyword})||'%'
+			</if>
+			
+			<if test="criteria == 'qtitle'.toString()">
+				WHERE UPPER(qtitle) LIKE '%'||UPPER(#{keyword})||'%'
+			</if>
+			
+			<if test="criteria == 'qcontent'.toString()">
+				WHERE LOWER(qcontent) LIKE  '%'||LOWER(#{keyword})||'%'
+			</if>
+		</if>
+	</sql>
+
+	<select id="listpage" resultType="QaDTO">
+	
+	SELECT * FROM tbl_qa order by qno desc
+	
+	</select>
+  
+	<select id="list" resultType="QaDTO">
+		SELECT * from tbl_qa
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_qa
+		(qno,mid,qtitle,qcontent,qreadcnt)
+		VALUES
+		(seq_qa_qno.NEXTVAL,#{mid},#{qtitle},#{qcontent},#{qreadcnt})
+		<selectKey keyProperty="qno" resultType="Integer" order="AFTER">
+			SELECT seq_qa_qno.CURRVAL FROM DUAL
+		
+		</selectKey>
+		
+	</insert>
+	
+	<select id="read" resultType="QaDTO">
+		SELECT
+			qno,mid,qtitle,qcontent,qdate,qupdateday,qreadcnt
+		from
+			tbl_qa
+		where
+			qno=#{qno}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_qa
+		SET
+		qtitle=#{qtitle},qcontent=#{qcontent},qupdateday=SYSDATE
+		WHERE
+		qno = #{qno}
+	</update>
+	
+	<select id="updateUI" resultType="QaDTO">
+		SELECT * FROM tbl_qa where qno = #{qno}
+	</select>
+	
+	<update id="increaseReadCnt">
+		UPDATE tbl_qa
+		SET
+		qreadcnt = qreadcnt+1
+		WHERE qno=#{qno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_qa WHERE qno=#{qno}
+	</delete>
+	
+	<select id="getAmount" resultType="integer">
+      SELECT COUNT(*) FROM tbl_qa WHERE qno=#{qno}
+   </select>
+   
+	<select id="getAmountqa" resultType="integer">
+		SELECT COUNT(qno) FROM tbl_qa
+	</select>
+	
+	<select id="search" resultType="QaDTO">
+		SELECT * FROM tbl_qa 
+		<include refid="sql_where_part"></include>
+		ORDER BY qno DESC
+	</select>
+</mapper>

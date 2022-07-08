@@ -5,9 +5,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +43,74 @@ import kr.co.dw.utils.DWUtils;
 public class HomeController {
 	
 	private String uploadPath = "C:"+File.separator+"upload";
+	
+	public class UserAuthentication extends Authenticator{
+		private PasswordAuthentication pwa;
+		
+		 public UserAuthentication(String id , String pw) {
+			 pwa = new PasswordAuthentication(id, pw);
+			
+		}
+		 @Override  //별도 호출 x 
+		public PasswordAuthentication getPasswordAuthentication() {
+			// TODO Auto-generated method stub
+			return pwa;
+		}
+	}
+	
+	
+	@RequestMapping(value = "/sendMail",method = RequestMethod.POST)
+	public void sendMail(String from, String to, String title, String content, String pw) {
+		
+		
+		Properties props = System.getProperties();
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.naver.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "587");
+		
+		Authenticator auth = new UserAuthentication(from, pw);
+		
+		Session session = Session.getDefaultInstance(props, auth);
+		
+		//이메일 전송 객체
+		MimeMessage mMsg = new MimeMessage(session);
+		
+		try {
+			mMsg.setSentDate(new Date());
+			
+			InternetAddress fromId = new InternetAddress(from);
+			mMsg.setFrom(fromId);
+			
+			InternetAddress toId = new InternetAddress(to);
+			Address[] arr = {toId};
+			
+			mMsg.setRecipients(Message.RecipientType.TO, arr);
+			
+			mMsg.setSubject(title, "UTF-8");
+			
+			mMsg.setText(content, "UTF-8");
+			
+			mMsg.setHeader("content-Type", "text/html");
+			
+			Transport.send(mMsg, mMsg.getAllRecipients());
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@RequestMapping(value = "/sendMail",method = RequestMethod.GET)
+	public String sendMail() {
+		
+		return "sendMail";
+		
+	}
+	
+	
 
 	@RequestMapping(value = "/deletefile", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(String uploadedFilename) {
@@ -100,48 +179,11 @@ public class HomeController {
 		
 		return entity;
 	}
-	
-	@RequestMapping(value = "/uploadform", method = RequestMethod.POST)
-    public String uploadForm(MultipartHttpServletRequest request, Model model) throws Exception {
-       // MultipartRequest호출하는 것 자체가 파일 업로드 하는 것이기 때문이다.
-       
-       String id = request.getParameter("id");
-       /* System.out.println(id); */
-
-       //여러 개의 파일이 업로드 되었을 때 해당 파일들의 목록을 가져오는 코드
-       List<MultipartFile>list= request.getFiles("file");
-       //여러 개의 파일들이 업로드 된후 파일명을 반복문을 이용해서 실제로 저장하게 하는 코드
-       List<String>filenameList=new ArrayList<String>();
-       
-       for(int i=0; i<list.size(); i++) {
-          //list에 들어 있는 multipartfile 객체 하나씩 획득
-          MultipartFile file = list.get(i);
-          //multipartfile에 들어 있는 파일 데이터를 파일로 저장하는 코드
-          String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
-          //여러 개의 업로드된 파일명을 저장하는 코드
-          filenameList.add(uploadedFilename);
-       }
-
-       model.addAttribute("filenameList", filenameList);
-       
-       return "test";// 업로드 파일에 /2022가 슬래쉬가 있다.
-       
-    }
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 	
 		return "redirect:/item/main";
 	}
-	
-	 @RequestMapping(value = "/makefolder", method = RequestMethod.GET)
-	   public String makeFolder(Model model) {// 이거 서비스 만들어야 한다. 업로드 할 때
-
-	      String uploadPath = DWUtils.makeFolder("C:" + File.separator + "upload");
-	      System.out.println(uploadPath);
-
-	      return "redirect:/";
-
-	   }
 	
 }

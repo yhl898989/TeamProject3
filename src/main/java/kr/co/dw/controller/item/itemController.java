@@ -37,7 +37,108 @@ public class itemController {
 	
 	private String uploadPath = "C:"+File.separator+"upload";
 	
+	@RequestMapping(value = "/updatesubitemimg", method = RequestMethod.POST)
+	public ResponseEntity<String> updatesubitemimg(MultipartHttpServletRequest request){
+		
+		ResponseEntity<String> entity = null;
+		String siId = request.getParameter("iId");
+		String deleteFilenameArr = request.getParameter("deleteFilenameArr");
+		int iId = Integer.parseInt(siId);
+		
+		List<String> filenameList = new ArrayList<String>();
+		String[] arr = deleteFilenameArr.split(",");
+		try {
+			Map<String, MultipartFile> map = request.getFileMap();
+			Set<String> set = map.keySet();
+			Iterator<String> it = set.iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+			MultipartFile file = map.get(key);		
+			String uploadedFilename = DWUtils.itemuploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			
+			filenameList.add(uploadedFilename);
+		}
+		iService.uploadsubfilename(iId,filenameList);
+		for(int i = 0 ; i < arr.length;i++) {
+			String deletefile = arr[i];
+			iService.deleteitemfilename(iId,deletefile);
+			DWUtils.deleteFile(uploadPath, deletefile);
+		}
+		
+			entity = new ResponseEntity<String>("SUCCESS" , HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			entity = new ResponseEntity<String>("FAIL" , HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
 	
+	@RequestMapping(value = "/getsubimgfilename", method = RequestMethod.POST)
+	public ResponseEntity<List<String>> getsubimgfilename(int iId){
+		ResponseEntity<List<String>> entity = null;
+		
+		
+		try {
+			List<String> subfilename = iService.getitemfilelist(iId);
+			entity = new ResponseEntity<List<String>>(subfilename, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			entity = new ResponseEntity<List<String>>(HttpStatus.OK);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/updateitemimg", method = RequestMethod.POST)
+	public ResponseEntity<String> updateitemimg(MultipartHttpServletRequest request){
+		ResponseEntity<String> entity = null;
+		String siId = request.getParameter("iId");
+		int iId = Integer.parseInt(siId);
+		MultipartFile file = request.getFile("itemimgfile");
+		
+		try {
+			String uploadedFilename = DWUtils.itemuploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			String deleteFilenames = request.getParameter("deletefilename");
+			
+			DWUtils.deleteFile(uploadPath, deleteFilenames);
+			
+			
+			iService.updateitemimg(uploadedFilename,iId);
+			entity = new ResponseEntity<String>("SUCCESS" , HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			entity = new ResponseEntity<String>("FAIL" , HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/getmainimgfilename", method = RequestMethod.POST)
+	public ResponseEntity<List<String>> getmainimgfilename(int iId){
+		ResponseEntity<List<String>> entity = null;
+		
+		String getmainimgfilename = iService.getmainimgfilename(iId);
+			
+		try {
+			
+			List<String> list = new ArrayList<String>();
+			list.add(getmainimgfilename);
+			entity = new ResponseEntity<List<String>>(list, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			entity = new ResponseEntity<List<String>>(HttpStatus.BAD_REQUEST);
+			
+		}
+			
+		return entity;
+	}
+	@Transactional
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteitem(HttpServletRequest request){
 		ResponseEntity<String> entity = null;
@@ -47,9 +148,15 @@ public class itemController {
 		try {
 			
 			List<String> list = iService.getitemfilelist(iId);
+			
 			for(int i = 0 ; i < list.size();i++) {
 				String deleteifilename = list.get(i);
 				DWUtils.deleteFile(uploadPath, deleteifilename);
+			}
+			String getmainimgfilename = iService.getmainimgfilename(iId);
+			int deletecount = iService.deleteimgcount(getmainimgfilename);
+			if(deletecount == 0) {
+				DWUtils.deleteFile(uploadPath, getmainimgfilename);
 			}
 			
 			iService.deleteitem(iId);
@@ -93,15 +200,29 @@ public class itemController {
 	}
 	
 	
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search(@RequestParam(value ="curPage" , defaultValue = "1") String ScurPage,
+						 @RequestParam(value = "showhowitemlist", defaultValue = "itemsequence") String showhowitemlist,
+						 @RequestParam(value = "criteria", required = false) String Scriteria,
+						 @RequestParam(value = "keyword", required = false) String Skeyword,
+						 HttpServletRequest request,
+						 Model model) {
 		String criteria = request.getParameter("criteria");
-		
+		if(Scriteria != null) {
+			criteria = Scriteria;
+		}
 		String keyword = request.getParameter("keyword");
+		if(Skeyword != null) {
+			keyword = Skeyword;
+		}
+		int curPage = Integer.parseInt(ScurPage);
 		
-		List<ItemDTO> list = iService.search(criteria,keyword);
-		
-		model.addAttribute("list", list);
+		itemPageTO<ItemDTO> pt = iService.search(criteria,keyword,curPage,showhowitemlist);
+	
+		model.addAttribute("criteria", criteria);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("showhowitemlist", showhowitemlist);
+		model.addAttribute("pt", pt);
 		
 		return "/item/search";
 	}
@@ -127,8 +248,8 @@ public class itemController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(Model model) {
 		
-		List<ItemDTO> list = iService.select();
-
+		List<ItemDTO> list = iService.main();
+		
 		model.addAttribute("list", list);
 		
 		return "/item/main";
@@ -136,18 +257,15 @@ public class itemController {
 	
 
 	@RequestMapping(value = "/adminlist", method = RequestMethod.GET)
-	public String adminlist(@RequestParam(value ="curPage" , defaultValue = "1") String ScurPage, Model model) {
+	public String adminlist(@RequestParam(value ="curPage" , defaultValue = "1") String ScurPage, 
+							@RequestParam(value ="category" , defaultValue = "all") String category,
+			Model model) {
 		
 		int curPage = Integer.parseInt(ScurPage);
 		
-		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>();
-		
-		int amount = iService.getamount();
-		pt.setAmount(amount);
-		pt.setCurPage(curPage);
-		List<ItemDTO> list = iService.adminlist(curPage);
-		pt.setList(list);
 
+		itemPageTO<ItemDTO> pt = iService.adminlist(curPage,category);
+		model.addAttribute("category", category);
 		model.addAttribute("pt", pt);
 		  
 		 
@@ -170,29 +288,11 @@ public class itemController {
 			Model model) {
 		
 		int curPage = Integer.parseInt(ScurPage);
-		
-		itemPageTO<ItemDTO> pt = new itemPageTO<ItemDTO>(curPage);
-		Integer amount = iService.getamount(Catrgory);
-		System.out.println(amount);
-		if(amount == null){
-		      amount = 0;
-		   }
-		pt.setAmount(amount);
-		
-		
-		try {
-			List<ItemDTO> categoryList = iService.categoryList(Catrgory, showhowitemlist,curPage);
-			
-			
-			
-			pt.setList(categoryList);
-			System.out.println(pt.getFinishPageNum());
-			System.out.println(categoryList);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			
-		}
+	
+		itemPageTO<ItemDTO> pt = iService.categoryList(Catrgory, showhowitemlist,curPage);
+
+		model.addAttribute("category", Catrgory);
+		model.addAttribute("showhowitemlist", showhowitemlist);
 		model.addAttribute("pt", pt);
 		
 		return "/item/list";
@@ -209,16 +309,14 @@ public class itemController {
 		String iCount = request.getParameter("iCount");
 		int Count = Integer.parseInt(iCount);
 		String i_CATEGORY = request.getParameter("icategory");
-		
-		
-		
+			
 		try {
 			Map<String, MultipartFile>map = request.getFileMap();
 			MultipartFile mainimgfile = request.getFile("itemimgfile");
-			String mainimgfilename = DWUtils.uploadFile(uploadPath, mainimgfile.getOriginalFilename(), mainimgfile.getBytes());
+			String mainimgfilename = DWUtils.itemuploadFile(uploadPath, mainimgfile.getOriginalFilename(), mainimgfile.getBytes());
 			
 			List<String> filenameList = new ArrayList<String>();
-			filenameList.add(mainimgfilename);
+			
 			Set<String> set = map.keySet();
 			
 			
@@ -231,21 +329,20 @@ public class itemController {
 					continue;
 				}
 				
-				String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+				String uploadedFilename = DWUtils.itemuploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
 				
 				filenameList.add(uploadedFilename);
 				
+				
 			}
 			
-			String ifilename = filenameList.get(0);
-			String prifix = ifilename.substring(0,12);
-			String suffix = ifilename.substring(14);
-			ifilename = prifix + suffix;
+			String ifilename = mainimgfilename;
+		
 			ItemDTO iDto = new ItemDTO(0, iName, Price, DC, Count, ifilename, i_CATEGORY);
 			
 			iDto.setIfilenameList(filenameList);
-			
-				iService.insert(iDto);
+					
+			iService.insert(iDto);	
 			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -15,6 +15,8 @@ public interface MemberDAO {
 	MemberDTO updateUI(String mid);
 
 	MemberDTO mypage(String mid);
+	
+	MemberDTO s_mypage(String mid);
 
 	void insert(MemberDTO dto);
 
@@ -26,6 +28,19 @@ public interface MemberDAO {
 
 	String findpw(MemberDTO mDto);
 
+	int updatePw(MemberDTO mdDto);
+
+	MemberDTO readMember(String mid);
+
+	Object id2(String mid);
+
+	void socialInsert(MemberDTO mDto);
+
+	MemberDTO socialLogin(MemberDTO mDto);
+
+	void s_delete(MemberDTO mDto);
+
+	void charge(MemberDTO dto);
 
 
 }

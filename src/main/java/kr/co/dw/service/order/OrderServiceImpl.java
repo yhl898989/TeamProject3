@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.dw.domain.ItemDTO;
 import kr.co.dw.domain.MemberDTO;
+import kr.co.dw.domain.OrderCancelDTO;
 import kr.co.dw.domain.OrderDTO;
 import kr.co.dw.domain.OrderItemDTO;
 import kr.co.dw.domain.OrderPageItemDTO;
+import kr.co.dw.domain.PageTO;
+import kr.co.dw.domain.SaleDTO;
 import kr.co.dw.repository.item.ItemDAO;
 import kr.co.dw.repository.member.MemberDAO;
 import kr.co.dw.repository.order.OrderDAO;
@@ -64,6 +68,7 @@ public class OrderServiceImpl  implements OrderService{
 		List<OrderItemDTO> ords = new ArrayList<>();
 		for(OrderItemDTO oit : oDto.getOrders()) {
 			OrderItemDTO orderItem = oDAO.getOrderInfo(oit.getiId());
+			
 			// 수량 셋팅
 			orderItem.setiCount(oit.getiCount());
 			// 기본정보 셋팅
@@ -79,14 +84,18 @@ public class OrderServiceImpl  implements OrderService{
 		
 		/* orderId만들기 및 OrderDTO객체 orderId에 저장 */
 		Date date = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("_yyyyMMddmm");
+		SimpleDateFormat format = new SimpleDateFormat("_yyyyMMddHHmmss");
 		String orderId = member.getMid() + format.format(date);
 		oDto.setOrderId(orderId);
 		
 		/* db넣기 */
 		oDAO.enrollOrder(oDto);		//vam_order 등록
+		
+		
+		
 		for(OrderItemDTO oit : oDto.getOrders()) {		//vam_orderItem 등록
 			oit.setOrderId(orderId);
+
 			oDAO.enrollOrderItem(oit);			
 		}
 
@@ -94,7 +103,13 @@ public class OrderServiceImpl  implements OrderService{
 		
 		/* 비용 차감 & 변동 돈(money) Member객체 적용 */
 		int calMoney = member.getMmoney();
+		
 		calMoney -= oDto.getOrderFinalSalePrice();
+		if(calMoney<0) {
+			
+		}
+		
+		
 		member.setMmoney(calMoney);
 		
 		/* 포인트 차감, 포인트 증가 & 변동 포인트(point) Member객체 적용 */
@@ -116,7 +131,185 @@ public class OrderServiceImpl  implements OrderService{
 		
 		
 	}
+
+	@Override
+	public java.util.List<OrderDTO> List() {
+		// TODO Auto-generated method stub
+		
+		return oDAO.orderList();
+	}
+
+	@Override
+	public void orderUpdate(String orderId) {
+		oDAO.orderUpdate(orderId);
+		
+	}
+
+	@Override
+	public void orderCancle(OrderCancelDTO dto) {
+		
+		
+		/* 주문, 주문상품 객체 */
+		/*회원*/
+			MemberDTO member = mDAO.mypage(dto.getMid());
+		/*주문상품*/
+			List<OrderItemDTO> ords = oDAO.getOrderItemInfo(dto.getOrderId());
+
+			for(OrderItemDTO ord : ords) {
+				ord.initsaleTotal();
+			}
+		/* 주문 */
+			OrderDTO orw = oDAO.getOrder(dto.getOrderId());
+			orw.setOrders(ords);
+			
+			orw.getOrderPriceInfo();
+			
+	/* 주문상품 취소 DB */
+			oDAO.orderCancle(dto.getOrderId());
+			
+	/* 돈, 포인트, 재고 변환 */
+			/* 돈 */
+			int calMoney = member.getMmoney();
+			calMoney += orw.getOrderFinalSalePrice();
+			member.setMmoney(calMoney);
+			
+			/* 포인트 */
+			int calPoint = member.getMpoint();
+			calPoint = calPoint + orw.getUsePoint() - orw.getOrderSavePoint();
+			member.setMpoint(calPoint);
+			
+				/* DB적용 */
+				oDAO.deductMoney(member);
+				
+			/* 재고 */
+			for(OrderItemDTO ord : orw.getOrders()) {
+				ItemDTO item = iDAO.read(ord.getiId());
+				item.setiCount(item.getiCount() + ord.getiCount());
+				oDAO.deductStock(item);
+			}
+		
+		
+	}
+
+	@Override
+	public java.util.List<OrderDTO> orderList(String mid) {
+		// TODO Auto-generated method stub
+		return oDAO.orderMemberList(mid);
+	}
+
+	@Override
+	public OrderDTO orderRead(String orderId) {
+		// TODO Auto-generated method stub
+		return oDAO.orderRead(orderId);
+	}
+
+	@Override
+	public OrderItemDTO orderItemRead(String orderId) {
+		// TODO Auto-generated method stub
+		return oDAO.orderItemRead(orderId);
+	}
+
+	@Override
+	public void orderAddUpdate(OrderDTO odto) {
+		oDAO.orderAddUpdate(odto);
+		
+	}
+
+	@Override
+	public PageTO<OrderDTO> list(Integer curpage) {
+		PageTO<OrderDTO> pt = new PageTO<OrderDTO>(curpage);
+		
+		Integer amount = oDAO.getAmountOrder();
+		pt.setAmount(amount);
+		
+		List<OrderDTO> list = oDAO.OrderList(pt);
+		pt.setList(list);
+
+		return pt;
+	}
+
+	@Override
+	public PageTO<OrderDTO> myorderList(Integer curpage, String mid) {
+		PageTO<OrderDTO> pt = new PageTO<OrderDTO>(curpage);
+		
+		Integer amount = oDAO.getAmountmyOrder(mid);
+		pt.setAmount(amount);
+		
+		List<OrderDTO> list = oDAO.myOrderList(pt,mid);
+		pt.setList(list);
+		
+		
+		return pt;
+	}
+
+	@Override
+	public Integer gettodayPrice() {
+		// TODO Auto-generated method stub
+		return oDAO.gettodayPrice();
+	}
+
+	@Override
+	public Integer getAllPrice() {
+		// TODO Auto-generated method stub
+		return oDAO.getAllPrice();
+	}
+
+	@Override
+	public Integer getsale(SaleDTO sdto) {
+		// TODO Auto-generated method stub
+		return oDAO.getsale(sdto);
+	}
+
+
+	@Override
+	public java.util.List<OrderDTO> checkOid(String mid) {
+		// TODO Auto-generated method stub
+		return oDAO.checkOid(mid);
+	}
 	
+	@Override
+	public Integer count(Map<String, Object> map, String orderId) {
+		// TODO Auto-generated method stub
+		return oDAO.count(map, orderId);
+	}
 
+	@Override
+	public List<Integer> weekSale(List<String> list) {
+		// TODO Auto-generated method stub
+		
+		List<Integer> result = new ArrayList<Integer>();
+		
+		for(String lis : list) {
+			Integer sale = oDAO.weekSale(lis);
 
+			
+			result.add(sale);
+		}
+		
+		
+		
+		return result;
+	}
+	
+	@Override
+	public java.util.List<Integer> monthSale(java.util.List<String> month) {
+		
+		List<Integer> result = new ArrayList<Integer>();
+		
+		for(String sos : month) {
+			Integer sale = oDAO.monthSales(sos);
+			
+			result.add(sale);
+		}
+			
+		
+		return result;
+	}
+	
+	@Override
+	public List<Integer> gettodaytotal() {
+		// TODO Auto-generated method stub
+		return oDAO.gettodaytotal();
+	}
+	
 }

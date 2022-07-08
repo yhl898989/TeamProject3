@@ -8,6 +8,9 @@ CONSTRAINT pk_admin_aid PRIMARY KEY(aid)
 
 drop table tbl_admin
 
-insert into tbl_admin (aid, apw, aauth, aname)  values ('admin', 'admin', 2, '관리자')
+insert into tbl_admin (aid, apw, aauth, aname)  values ('aa', 'aa', 2, 'aa')
 
 select * from tbl_admin
+
+
+delete from tbl_admin where aid = 'bb'

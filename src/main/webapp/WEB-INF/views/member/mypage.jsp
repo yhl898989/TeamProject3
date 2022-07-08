@@ -15,7 +15,6 @@
 <jsp:include page="../common/header.jsp"/>
 <h1>회원 정보 자세히 보기</h1>
 아이디 : ${dto.mid} <br>
-비밀번호 : ${dto.mpw} <br>
 이름 : ${dto.mname} <br>
 이메일 : ${dto.memail} <br>
 번호 : ${dto.mphone} <br>
@@ -23,8 +22,41 @@
 주소 : ${dto.maddress2} <br>
 상세주소 : ${dto.maddress3} <br>
 생일 : ${dto.mbirth} <br>
-잔액 : ${dto.mmoney} <br>
+잔액 : ${dto.mmoney} &nbsp;  <input name="chargemmoney" id="chargemmoney"> <input id="charge" type="submit" value="충천"> <br> 
 <a href="/member/update/${dto.mid}">수정</a> <a href="/member/delete/${dto.mid}">삭제</a> <a href="/item/main">목록</a> 
+<a href="/myorderList/${dto.mid}">주문 내용</a>
+
+
+
+<input id ="mmoney" type="hidden" value = "${dto.mmoney}">
+<script type="text/javascript">
+	
+	
+	
+	let formdata = new FormData();
+	
+	$(document).ready(function() {
+		$("#charge").on("click", function() {
+			let mmoney = $("#mmoney").val();
+			let cargemmoney = $("#chargemmoney").val();
+			let plusmoney = Number(mmoney) + Number(cargemmoney);
+			formdata.append('mmoney',plusmoney);
+			$.ajax({
+				url:'/member/charge',
+				type:'post',
+				data: formdata,
+				processData : false,
+		         contentType : false,
+		         dataType : "text",
+				success:function(result){
+					alert("충전 완료");
+					location.assign("/member/mypage/"+${dto.mid});
+				}
+		});
+	});
+	});
+
+</script>
 
 </body>
 </html>

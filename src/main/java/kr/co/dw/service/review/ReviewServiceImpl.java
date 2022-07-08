@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.dw.domain.PageTO;
 import kr.co.dw.domain.ReviewDTO;
 import kr.co.dw.repository.review.ReviewDAO;
 
@@ -61,4 +62,47 @@ public class ReviewServiceImpl implements ReviewService {
 		// TODO Auto-generated method stub
 		return rDao.getreviewimgfilename(map);
 	}
+	@Override
+	public void deleterfilename(int rno) {
+		// TODO Auto-generated method stub
+		rDao.deleterfilename(rno);
+	}
+	@Override
+	public List<String> getreviewimgfilename(int rno) {
+		// TODO Auto-generated method stub
+		return rDao.getreviewimgfilename(rno);
+	}
+	@Override
+	public void deleterfilename(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		rDao.deleterfilename(map);
+	}
+
+	@Override
+	public PageTO<ReviewDTO> list(int iId,int curpage) {
+		PageTO<ReviewDTO> pt = new PageTO<ReviewDTO>(curpage); 
+		
+		Integer amount = rDao.getAmountBoard(iId);
+		if(amount == null) {
+			amount = 0;
+		}
+		pt.setAmount(amount);
+		
+		List<ReviewDTO> list = rDao.list(iId, pt);
+		pt.setList(list);
+		
+		return pt;
+	}
+	@Override
+	public int reviewcount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return rDao.reviewcount(map);
+}
+
+	@Override
+	public int orderreviewcheck(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return rDao.orderreviewcheck(map);
+	}
+	
 }

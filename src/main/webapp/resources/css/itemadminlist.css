@@ -1,0 +1,56 @@
+@charset "UTF-8";
+body{
+	width:1920px;
+}
+
+thead{
+text-align: center;
+}
+tbody{
+text-align: center;
+}
+.modal-body{
+	overflow : hidden;
+	height : auto;
+}
+.red{
+	color : red;
+}
+.getimg{
+	display: flex;
+	justify-content: space-evenly; 
+}
+#itemimguploadedItems{
+	overflow : hidden;
+	height : auto;
+	width : 446px;
+	display: flex;
+	text-align: center;
+	justify-content:center; 
+	
+	
+}
+#cardmain{
+	width:300px;
+	border: 1px solid black;
+}
+#itemimguploadFile2{
+   width : 350px;
+   height : 300px;
+   border: 1px solid red;
+   padding : 0px;
+  	
+}
+#subcard{
+	display: inline-block;
+	height: 200px;	
+}
+#itemsubimguploadFile{
+	display: inline-block;
+   width : 446px;
+   height : 100px;
+   border: 1px solid red; 
+}
+.menucss{
+	color: red;
+}

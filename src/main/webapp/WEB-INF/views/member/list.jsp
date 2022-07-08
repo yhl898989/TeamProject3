@@ -46,13 +46,28 @@
 			<td>${dto.mname}</td>
 			<td>${dto.memail}</td>
 			<td>${dto.mphone}</td>
-			<td>${dto.maddress}</td>
+			<td>${dto.maddress1} / ${dto.maddress2} / ${dto.maddress3}</td>
 			<td>${dto.mbirth}</td>
 		</tr>
 		</c:forEach>
 	</tbody>
 
 </table>
+
+<center>
+<a href = "/admin/mlist?curPage=${pt.curPage > 1? pt.curPage -1:1}">&laquo;</a>
+	
+	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum }">
+	<a href = "/admin/mlist?curPage=${i}" class = "${i == pt.curPage?'red':""}">
+	
+	${i}
+	
+	
+	</a> &nbsp;&nbsp;
+	
+	</c:forEach>
+	<a href = "/admin/mlist?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">&raquo;</a>
+</center>	
 
 
 
