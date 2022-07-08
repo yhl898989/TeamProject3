@@ -1,17 +1,16 @@
 /** 
  *
  */
- 
- 
-  
- function getAllReply3(iId, el){
+  function getAllReply4(iId, el, curpage, pageing, mid, aid){
 	el.html("");
 	
-	$.getJSON("/review/"+iId+"/all", function(result){
-			
-		for(let i = 0 ; i <result.length; i++){
+	
+	
+	$.getJSON("/review/"+iId+"/"+curpage+"/all", function(result){
+		console.log(result);
+		for(let i = 0 ; i <result.list.length; i++){
 			let tagstr = "";
-			let item = result[i];
+			let item = result.list[i];	
 			let rfilename = item.rfilenamelist;
 			for(let j = 0 ; j < rfilename.length;j++){
 				let rfile = rfilename[j];
@@ -19,20 +18,80 @@
 				tagstr += itemstr;
 				
 			}
-			let str = makeItemTag2(item,tagstr);
+			let str = makeItemTag22(item,tagstr, mid, aid);
 			el.append(str);
 		}
-		
+		let str2 = paging(result);
+		pageing.html(str2);
+	})
+};
+ 
+ 
+ 
+  // 리뷰 불러오는 코드
+ function getAllReply3(iId, el, curpage, pageing, mid, aid){
+	el.html("");
+	
+	
+	
+	$.getJSON("/review/"+iId+"/"+curpage+"/all", function(result){
+		console.log(result);
+		for(let i = 0 ; i <result.list.length; i++){
+			let tagstr = "";
+			let item = result.list[i];	
+			let rfilename = item.rfilenamelist;
+			for(let j = 0 ; j < rfilename.length;j++){
+				let rfile = rfilename[j];
+				let itemstr = makeItemTag3(rfile);
+				tagstr += itemstr;
+				
+			}
+			let str = makeItemTag2(item,tagstr, mid, aid);
+			el.append(str);
+		}
+		let str2 = paging(result);
+		pageing.html(str2);
 	})
 };
 
+function paging(pt){
+	
+	let page = "";
+	let prev = pt.curPage -1;
+	let next = pt.curPage +1;
+	
+	if(pt.curPage > 1){
+		
+		page += "<a href = '#' id = '"+prev+"'>&laquo;</a>";
+	}else{
+		page += "<a href = '#' id = '1'>&laquo;</a>";
+	}
+	for(let i = pt.beginPageNum ; i < pt.finishPageNum+1 ; i++){
+		if(i == pt.curPage){
+			page += "<a href = '#' id = '"+i+"' class = 'red'>"+i+"</a>&nbsp;&nbsp";
+		}else{
+			page += "<a href = '#' id = '"+i+"'>"+i+"</a>&nbsp;&nbsp";
+		}
+		
+	}
+	if(pt.curPage < pt.totalPage){
+		
+		page += "<a href = '#' id = '" + next + "'>&raquo;</a>";
+	}else{
+		page += "<a href = '#' id = '"+pt.totalPage+"'>&raquo;</a>";
+	}
+	
+	return page;
+}
 
+
+//이미지 크기 조절
 function makeItemTag3(rfile){
 	
 	
 	let str = `
 	
-<span><img src="/displayfile?filename=${rfile}"alt="..." width="300px" height="250px"></span>
+<span class="modalimg"><img src="/displayfile?filename=${rfile}"alt="..." width="300px" height="250px"></span>
 
 	
 	`;
@@ -40,23 +99,25 @@ function makeItemTag3(rfile){
 
 }
 
-
-function makeItemTag2(item,tagstr){
+// 리뷰 수정삭제 버튼
+function makeItemTag2(item,tagstr, mid, aid){
 	
+	console.log(aid);
 	
 	
 	let str = `
 	
 <div class="card item my-5">
   <div class="card-header">
-    <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+    <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span> &nbsp;&nbsp;&nbsp;
+	<span class = "float-right">최종 수정일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
     <h5 class="card-title">${item.rtitle}</h5>
     <p  class="card-text">${item.rcontent}<div>${tagstr}</div></p>
-    
-    <a data-rno ="${item.rno}" class="btn btn-primary item_btn_update">수정</a>
-    <a data-rno ="${item.rno}" class="btn btn-primary item_btn_delete">삭제</a>
+   
+    <a data-rno ="${item.rno}" class="${item.mid==mid?'btn btn-primary item_btn_update':'hidden'}">수정</a>
+    <a data-rno ="${item.rno}" class="${item.mid==mid || aid != ''?'btn btn-primary item_btn_delete':'hidden'}">삭제</a>  
   </div>
 </div>
 
@@ -67,6 +128,33 @@ function makeItemTag2(item,tagstr){
 }
  
  
+
+// 댓글 제버튼
+function makeItemTag22(item,tagstr){
+	
+	
+	
+	let str = `
+	
+<div class="card item my-5">
+  <div class="card-header">
+    <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span> &nbsp;&nbsp;&nbsp;
+	<span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">${item.rtitle}</h5>
+    <p  class="card-text">${item.rcontent}<div>${tagstr}</div></p>
+   
+    <a data-rno ="${item.rno}" class="btn btn-primary item_btn_update">수정</a>
+    <a data-rno ="${item.rno}" class="btn btn-primary item_btn_delete">삭제</a>
+  </div>
+</div>
+
+	
+	`;
+	return str;
+
+}
  
 
 function test2(result, filename, filekey){
@@ -137,7 +225,16 @@ function getAllUpload(bno, uploadedItems){
       }
    });
 }
-
+function getAllUploadqa(qno, uploadedItems){
+   $.getJSON("/qa/"+qno+"/uploadall", function(data){
+      console.log(data);
+      for(let i = 0 ; i < data.length ; i++){
+         let filename = data[i];
+         let str = makeUploadItemTagForRead(filename);
+         uploadedItems.append(str);
+      }
+   });
+}
  
 function makeUploadItemTagForRead(filename){
    let imgSrc = "";
@@ -267,6 +364,32 @@ function getAllReply2(bno, el){
    })
 };
 
+function getAllReplyqa(qno, el){
+   el.html("");
+   
+   $.getJSON("/replies/"+qno+"/all", function(result){
+      for(let i = 0 ; i <result.length; i++){
+         let item = result[i];
+         let str = makeItemTag(item);
+         el.append(str);
+      }
+   })
+};
+
+function getAllReply(bno, el){
+   el.html("");
+   
+   $.getJSON("/review/"+bno+"/all", function(result){
+   
+      for(let i = 0 ; i <result.length; i++){
+         let item = result[i];
+         let str = makeItemTag(item);
+         el.append(str);
+      }
+   })
+};
+
+
 function getAllReply(bno, el){
    el.html("");
    
@@ -279,6 +402,7 @@ function getAllReply(bno, el){
       }
    })
 };
+
 
 function makeItemTag(item){
    
@@ -304,4 +428,17 @@ function makeItemTag(item){
    return str;
    
    
+}
+
+
+function getPagingReply(nno, el, curPage) {
+   el.html("");
+
+   $.getJSON("/replies/" + nno + "/"+curPage, function(result) {
+      for (let i = 0; i < result.length; i++) {
+         let item = result[i];
+         let str = makeItemTag(item);
+         el.append(str);
+      }
+   });
 }

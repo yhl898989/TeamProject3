@@ -6,7 +6,7 @@ import java.util.List;
 
 public class itemPageTO<T> {
 	private int curPage;
-	private int perPage = 10;
+	private int perPage = 12;
 	private int perLine = 10;
 	private int amount;
 	//totalPage = (amount-1) / perPage+1;

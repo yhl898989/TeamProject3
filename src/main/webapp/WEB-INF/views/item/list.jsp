@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix ="c"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,71 +11,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
-<style type="text/css">
-.mainbanner img{
-height : 300px;
-width : 100%;
-}
-*{padding:0;margin:0}
-li{list-style:none}
-a{text-decoration:none;font-size:14px}
-.menu {
-  width: 1920px;
-  overflow: hidden;
-  
-}
-
-.menu > li {
-  width: 20%; /*20*5=100%*/
-  float: left;
-  text-align: center;
-  line-height: 40px;
-  background-color: #5778ff;
-}
-
-.menu a {
-  color: #fff;
-  width: 100%;
-}
-
-#itemlist{
-
-	margin : 10px 150px 150px 270px;
-	width : 1500px;
-	
-	
-}
-
-#showhowitemlist > a {
-	color : black;
-}
-
-.box{
-	
-	display: inline-block;
-	
-} 
-.card{
-	display:inline-block;
-	margin : 20px;
-}
-.flexitem{
-	display: flex;
-	width:1250px;
-	justify-content: space-between;
-	margin-left: 300px;
-}
-.red{
-	color: red;
-}
-</style>
-
-
+<link href = "/resources/css/itemlist.css" rel="stylesheet">
 
 </head>
 <body>
+<div id = "include">
 <jsp:include page="../common/header.jsp"></jsp:include>
+</div>
 <center>
 <h1>쇼핑몰</h1>
 </center>
@@ -101,33 +44,12 @@ a{text-decoration:none;font-size:14px}
     <span class="sr-only">Next</span>
   </button>
 </div>
-<ul class="menu">
-      <li>
-        <a href="/item/list?Category=옷" id = "옷">옷</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=신발" id = "신발">신발</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=가방" id = "가방">가방</a>
-        
-      </li>
-      <li>
-        <a href="/item/list?Category=모자" id = "모자">모자</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=원피스" id = "원피스">원피스</a>
-       
-      </li>
-    </ul>
+<br><br>
     <div id = "category"></div>
     <div class = "flexitem">
    
     
-    <form action="/item/search" method="post">
+    <form action="/item/search" method="get">
 	<select name = "criteria">
 		<option value = "iName">상품이름</option>
 	</select>
@@ -135,39 +57,42 @@ a{text-decoration:none;font-size:14px}
 	<input type = "submit" value = "검색">
 	</form>
 	 <div id = "showhowitemlist">
-    <a href = "/item/list?Category=${pt.list[0].i_CATEGORY}&&showhowitemlist=itemsequence&&curPage=${pt.curPage}" id = "itemsequence">최신순</a>
-    <a href = "/item/list?Category=${pt.list[0].i_CATEGORY}&&showhowitemlist=iPricedesc&&curPage=${pt.curPage}" id = "iPricedesc">높은가격순</a>
-    <a href = "/item/list?Category=${pt.list[0].i_CATEGORY}&&showhowitemlist=iPriceasc&&curPage=${pt.curPage}" id = "iPriceasc">낮은가격순</a>
+    <a href = "/item/list?Category=${category}&&showhowitemlist=itemsequence&&curPage=${pt.curPage}" id = "itemsequence" class = "${showhowitemlist == 'itemsequence'?'itemcss':""}">최신순</a>
+    <a href = "/item/list?Category=${category}&&showhowitemlist=iPricedesc&&curPage=${pt.curPage}" id = "iPricedesc" class = "${showhowitemlist == 'iPricedesc'?'itemcss':""}">높은가격순</a>
+    <a href = "/item/list?Category=${category}&&showhowitemlist=iPriceasc&&curPage=${pt.curPage}" id = "iPriceasc" class = "${showhowitemlist == 'iPriceasc'?'itemcss':""}">낮은가격순</a>
     </div>
 	</div>
-	
-<div id = "itemlist" class = "box-wrapper">
-	
-	<c:forEach items = "${pt.list}" var = "iteminfo">
-	<div class = "box">
-	<div class="card " style="width: 18rem;">
- <a href = "/item/read/${iteminfo.iId}">
- <div>
-  <img src="/displayfile?filename=${iteminfo.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
-  </div>
-  </a>
-  <div class="card-body">
-    <p class="card-text">상품이름:${iteminfo.iName}</p>
-    <p class="card-price">상품가격:${iteminfo.iPrice}</p>
-    <div>${pt.list[0].i_CATEGORY}</div>
-  </div>
-</div>
+
+	<div id="itemlist" class="box-wrapper">
+
+		<c:forEach items="${pt.list}" var="iteminfo">
+			<div class="box">
+				<div class="card " style="width: 18rem;">
+					<a href="/item/read/${iteminfo.iId}">
+						<div>
+							<img src="/displayfile?filename=${iteminfo.ifilename}"
+								class="card-img-top" alt="..." width="100px" height="200px">
+						</div>
+					</a>
+					<div class="card-body">
+						<p class="card-text">${iteminfo.iName}<span class = "${iteminfo.iDc > 0?'iDc':'iDchidden'}">${iteminfo.iDc}%</span></p>
+						<p class="card-price"><span class = "iPrice">${iteminfo.iPrice}원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    					  					  <span><fmt:parseNumber var = "iPrice" value = "${iteminfo.iPrice < 1000?Math.floor(iteminfo.iPrice - iteminfo.iPrice*(iteminfo.iDc/100)):Math.ceil((iteminfo.iPrice - iteminfo.iPrice*(iteminfo.iDc/100))/10)*10}" integerOnly="true"/>${iPrice}원</span>
+    					</p>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
 	</div>
-	</c:forEach>
-</div>
 
 
 
 	<center>
-<a href = "/item/list?curPage=${pt.curPage > 1? pt.curPage -1:1}&&Category=${pt.list[0].i_CATEGORY}">&laquo;</a>
+	<div id = "paging">
+<a href = "/item/list?curPage=${pt.curPage > 1? pt.curPage -1:1}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}">&laquo;</a>
 	
 	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
-	<a href = "/item/list?curPage=${i}&&Category=${pt.list[0].i_CATEGORY}" class = "${i == pt.curPage?'red':""}">
+	<a href = "/item/list?curPage=${i}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}" class = "${i == pt.curPage?'red':""}">
 	
 	${i}
 	
@@ -176,19 +101,12 @@ a{text-decoration:none;font-size:14px}
 	</a> &nbsp;&nbsp;
 	
 	</c:forEach>
-	<a href = "/item/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&Category=${pt.list[0].i_CATEGORY}">&raquo;</a>
-</center>	
+	<a href = "/item/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}">&raquo;</a>
+</center>
+	</div>	
 	<br>
-
+<jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript" src = "/resources/js/item.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-		
-	$("#showhowitemlist").on("click","a",function() {
-			$(this).attr("class","aaa");
-	})
-	
-
-</script>
+<script type="text/javascript"></script>
 </body>
 </html>

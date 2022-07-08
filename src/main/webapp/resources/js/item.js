@@ -2,22 +2,97 @@
  * 
  */
  
+ function insertitemsubimgfile3(result,itemimgfilekey){
+   let str = `
+<div id = "subcard" >
+   <div id = "subcardmain" class = "itemimgfilename text-center" >
+		<div>
+      <img src="${result}" alt="" width="100px" height="100px">
+		</div>
+      <div class="card-body">
+          <p class="card-text"></p>
+          <a href="#" data-itemimgfilekey = "${itemimgfilekey}" data-itemimgfilename = "new" class="btn btn-danger btn_del_subitem" >삭제</a>
+      </div>
+   </div>
+</div>
+   `;
+   
+   return str;
+} 
  
-  function paging(data){
+ function getupdateitemsubimg(result,itemimguploadedItems){
 	
-	let sstr = `
-	
-	<div><input class = "curPage"  value ="${data.curPage}"></div>
-	<div><input class = "beginPageNum" value ="${data.beginPageNum}"></div>
-	<div><input class = "finishPageNum" value ="${data.finishPageNum}"></div>
-	<div><input class = "totalPage" value ="${data.totalPage}"></div>
+	for(let i = 0 ; i <result.length;i++){
+		let str = insertitemsubimgfile2(result[i]);
+		itemimguploadedItems.append(str);
+	}
 	
 	
-	`;
-	return sstr;
 }
+ 
+ function insertitemsubimgfile2(result){
+   let str = `
+<div id = "subcard" >
+   <div id = "subcardmain" class = "itemimgfilename text-center" >
+		<div>
+      <img src="/displayfile?filename=${result}" alt="" width="100px" height="100px">
+		</div>
+      <div class="card-body">
+          <p class="card-text"></p>
+          <a href="#" data-itemimgfilekey = "${result}"class="btn btn-danger btn_del_subitem" >삭제</a>
+      </div>
+   </div>
+</div>
+   `;
+   
+   return str;
+} 
+ 
+ function insertitemimgfile3(result, itemimgfilename){
+   let str = `
+<div id = "card" width="300px" height="250px">
+   <div id = "cardmain" class="itemimgfilename text-center" >
+		<div>
+      <img src="${result}" alt="" width="298px" height="200px">
+		</div>
+      <div class="card-body">
+          <p class="card-text">${itemimgfilename}</p>
+          <a href="#" data-filename = "new" class="btn btn-danger btn_del_item" >삭제</a>
+      </div>
+   </div>
+</div>
+   `;
+   
+   return str;
+} 
 
- function updateitem(adminlistiId,adminlistiName,adminlistiPrice,adminlistiDc,adminlistiCount,adminlistifilename,adminlistii_CATEGORY){
+ 
+function getupdateitemimg(result,itemimguploadedItems){
+	let str = insertitemimgfile2(result);
+	itemimguploadedItems.append(str);
+}
+ 
+ function insertitemimgfile2(result){
+   let str = `
+<div id = "card" width="300px" height="250px">
+   <div id = "cardmain" class="itemimgfilename">
+		<div>
+      <img src="/displayfile?filename=${result}" alt="" width="298px" height="200px">
+		</div>
+      <div class="card-body">
+          <p class="card-text"></p>
+          <a href="#" data-itemimgfilekey = "${result}" class="btn btn-danger btn_del_item" >삭제</a>
+      </div>
+   </div>
+</div>
+   `;
+   
+   return str;
+} 
+ 
+ 
+
+function updateitem(adminlistiId,adminlistiName,adminlistiPrice,adminlistiDc,adminlistiCount,adminlistifilename,adminlistii_CATEGORY,curPage,category){
 	
 	let str = `
 			
@@ -38,19 +113,18 @@
 				<option value = "원피스">원피스</option>
 </select>
 				</td>
-				<td><button id = "item_updatefinish_btn">수정완료</button><a href = "/item/adminlist"><button id = "item_deletefinish_btn">취소</button></a></td>
+				<td><button id = "item_updatefinish_btn">수정완료</button><a href = "/item/adminlist?category=${category}&&curPage=${curPage}"><button id = "item_deletefinish_btn">취소</button></a></td>
 			
 		
 	`;
 	return str;
 }
- 
- 
+
  function insertsubphotoname(subphotoname){
 	
 	let str = `
 	 <span>
-  <img src="/displayfile?filename=${subphotoname}" alt="..." width="100px" height="100px">
+  <img  id = "aaaaa" src="/displayfile?filename=${subphotoname}" alt="..." width="100px" height="100px">
   </span>
 	
 	`;
@@ -66,7 +140,8 @@
 			let subphotoname = subphotonamelist[i];
 			
 			let str = insertsubphotoname(subphotoname);
-			subphoto.append(str);
+			
+			subphoto.slick('slickAdd',str);
 		};
 	
 		
@@ -75,11 +150,9 @@
 	
 }
  
- 
  function itemlistlist(iteminfo){
 
 	let str = `
-	<div class = "box">
 	<div class="card " style="width: 18rem;">
  <a href = "/item/read/${iteminfo.iId}">
  <div>
@@ -91,62 +164,13 @@
     <p class="card-price">상품가격:${iteminfo.iPrice}</p>
   </div>
 </div>
-	</div>
+	
 	`;
 	return str;
 }
+ 
 
-function gocategoryitem(category,itemlist,showhowitemlist,curPage,pagingaa, prefixPage) {
-	tagstr = "";
-		
-			$.getJSON("/item/category/"+category+"/"+showhowitemlist+"/"+curPage+"/all", function(data) {
-				
-				for(let i = 0 ; i < data.list.length;i++){
-					let iteminfo = data.list[i];
-					let str = itemlistlist(iteminfo);
-					tagstr += str;
-				}
-				let sstr = paging(data);
-				itemlist.html(tagstr);
-				pagingaa.append(sstr);
-				
-				let curPage = $(".curPage").attr("value");
-				let beginPageNum = $(".beginPageNum").attr("value");
-				let finishPageNuM = $(".finishPageNum").attr("value");
-				let totalPage = $(".totalPage").attr("value");
-				alert(beginPageNum);
-					
-			
-					if(curPage > 1){
-						prefixPage.attr("href","/item/list?curPage="+curPage-1);
-					}else{
-						$("#prefixPage").attr("href","/item/list?curPage="+1);
-					}
-					
-					$("c:forEach").attr("begin",beginPageNum);
-					
-					$("c:forEach").attr("end",finishPageNuM);
-					
-					if(curPage < totalPage){
-						$("#suffixPage").attr("href","/item/list?curPage="+curPage+1);
-					}else{
-						$("#suffixPage").attr("href","/item/list?curPage="+totalPage);
-					}
-				
-					
-				
-					$("#category").text(localStorage.getItem("category"));
-					
-					if(localStorage.getItem("showhowitemlist") == "itemsequence"){
-						$("#itemsequence").css({"font-weight":"bold","color":"red"});
-					}else if(localStorage.getItem("showhowitemlist") == "iPricedesc"){
-						$("#iPricedesc").css({"font-weight":"bold","color":"red"});
-					}else{
-						$("#iPriceasc").css({"font-weight":"bold","color":"red"});
-					}
 
-			});
-}
 
 function changecategory() {
 		let category = document.getElementById("category");
@@ -156,8 +180,8 @@ function changecategory() {
 
 function insertitemsubimgfile(result, itemimgfilename,itemimgfilekey){
    let str = `
-<div class="col mb-4" width="500px" height="250px">
-   <div class="card itemimgfilename border-primary text-center" >
+<div id = "subcard" width="500px" height="250px">
+   <div id = "subcardmain" class = "itemimgfilename text-center" >
 		<div>
       <img src="${result}" alt="" width="100px" height="100px">
 		</div>
@@ -174,10 +198,10 @@ function insertitemsubimgfile(result, itemimgfilename,itemimgfilekey){
 
 function insertitemimgfile(result, itemimgfilename,itemimgfilekey){
    let str = `
-<div class="col mb-4" width="500px" height="250px">
-   <div class="card itemimgfilename border-primary text-center" >
+<div id = "card" width="300px" height="250px">
+   <div id = "cardmain" class="itemimgfilename text-center" >
 		<div>
-      <img src="${result}" alt="" width="100px" height="100px">
+      <img src="${result}" alt="" width="298px" height="200px">
 		</div>
       <div class="card-body">
           <p class="card-text">${itemimgfilename}</p>

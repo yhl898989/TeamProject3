@@ -4,6 +4,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.review">
 
+	<select id="orderreviewcheck" resultType="int">
+	
+	SELECT 
+     count(*) 
+  	FROM tbl_order a
+     , tbl_orderItem b
+ 	WHERE a.mid = #{mid} and b.iId = #{iId} and a.orderState = '배송완료'
+   	   AND a.orderId = b.orderId
+	
+	</select>
+
+	<select id="reviewcount" resultType="int">
+	
+	SELECT count(*) FROM tbl_review WHERE iId = #{iId} and mid = #{mid}
+	
+	
+	</select>
+	
+	
+	<select id="getAmountBoard" resultType="Integer">
+	
+	SELECT count(*)FROM tbl_review WHERE iId = #{iId}
+	
+	</select>
+	
+	<delete id="deleterfilename">
+	
+	delete from reviewfileupload WHERE rno = #{rno}
+	
+	</delete>
+
 	<select id="getreviewimgfilename" resultType="string">
 	
 	SELECT rfilename FROM reviewfileupload WHERE rno = #{rno}
@@ -13,7 +44,7 @@
 	
 	<update id="update">
 	
-	update tbl_review set rtitle = #{replyer}, rcontent = #{replyText} WHERE rno = #{rno}  
+	update tbl_review set rtitle = #{rtitle}, rcontent = #{rcontent} WHERE rno = #{rno}  
 	
 	</update>
 	
@@ -31,7 +62,7 @@
 	</select>
 	
 	<select id="Selectrno" resultType="Integer">
-	select max(rno) from tbl_review
+	SELECT seq_review_rno.NEXTVAL FROM DUAL
 
 	
 	</select>

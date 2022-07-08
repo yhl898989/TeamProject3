@@ -1,0 +1,73 @@
+@charset "UTF-8";
+*{padding:0;margin:0}
+body{
+	width : 1920px;
+}
+li{list-style:none}
+a{text-decoration:none;font-size:14px}
+.menu {
+  overflow: hidden;
+}
+.menu > li {
+  width: 20%; /*20*5=100%*/
+  float: left;
+  text-align: center;
+  line-height: 40px;
+  background-color: #5778ff;
+}
+
+.menu a {
+  color: #fff;
+  width: 100%;
+}
+
+#itemlist{
+	margin : 10px 210px 150px 210px;
+	width : 1500px;
+	text-align: left;
+	text-align-last: left; 
+	padding-left: 94px;
+}
+.box{
+	display: inline-block;
+} 
+.card{
+	display:inline-block;
+	margin : 20px;
+	border: 0px;
+}
+.flexitem{
+	display: flex;
+	width:1312px;
+	justify-content: space-between;
+	margin-left: 304px;
+	margin-right: 210px;
+	
+}
+.red{
+	color: red;
+}
+.itemcss{
+	color: red;
+}
+.card-text{
+	display: flex;
+	justify-content: space-between;
+}
+.iDchidden{
+	display: none;
+}
+.iDc{
+	font-size: 20px;
+	
+	border: 0.5px solid black;
+	background-color: gray;
+	
+}
+.iName{
+	font-size: 30px;
+}
+.iPrice{
+	color : gray;
+	text-decoration: line-through;
+}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix ="c"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,63 +11,59 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link href = "/resources/css/itemmain.css" rel="stylesheet">
 <style type="text/css">
-.mainbanner img{
-height : 300px;
-width : 100%;
+div#carouselExampleControls div.carousel-inner div.carousel-item{
+   margin-top: 5% !important;
 }
-*{padding:0;margin:0}
-li{list-style:none}
-a{text-decoration:none;font-size:14px}
-.menu {
-  width: 1920px;
-  overflow: hidden;
-  
+@media all and (min-width:1024px){
+   .aaaaa {
+  width: 1920px !important;
+  overflow: hidden !important;
 }
-
-.menu > li {
-  width: 20%; /*20*5=100%*/
-  float: left;
-  text-align: center;
-  line-height: 40px;
-  background-color: #5778ff;
+}
+@media all and (min-width:960px) and (max-width:1023px){
+   .aaaaa {
+  width: 1024px !important;
+  overflow: hidden !important;
 }
 
-.menu a {
-  color: #fff;
-  width: 100%;
+@media all and (min-width:760px) and (max-width:959px){
+   .aaaaa {
+  width: 960px !important;
+  overflow: hidden !important;
 }
-#itemlist{
-
-	margin : 20px;
-
+@media all and (min-width:540px) and (max-width:759px){
+   .aaaaa {
+  width: 760px !important;
+  overflow: hidden !important;
+}
+@media all and (min-width:340px) and (max-width:539px){
+   .aaaaa {
+  width: 540px !important;
+  overflow: hidden !important;
+}
 }
 
 </style>
-
-
-
 </head>
 <body>
+<header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
-<center>
-<h1>쇼핑몰</h1>
-</center>
- 
-</div>
+</header>
+
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="/resources/img/1.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
+      <img style="z-index: -10;" src="/resources/img/sale.png" class="d-block w-100" alt="..." width=100% height = 100%>
     </div>
     <div class="carousel-item">
-      <img src="/resources/img/2.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
+      <img src="/resources/img/event.jpg" class="d-block w-100" alt="..." width=100% height = 100%>
     </div>
-    <div class="carousel-item">
-      <img src="/resources/img/3.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
-    </div>
+ 
   </div>
  <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -77,56 +74,81 @@ a{text-decoration:none;font-size:14px}
     <span class="sr-only">Next</span>
   </button>
 </div>
-<ul class="menu">
-      <li>
-        <a href="/item/list?Category=옷" id = "옷">옷</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=신발" id = "신발">신발</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=가방" id = "가방">가방</a>
-        
-      </li>
-      <li>
-        <a href="/item/list?Category=모자" id = "모자">모자</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=원피스" id = "원피스">원피스</a>
-       
-      </li>
-    </ul>
-<div id = "itemlist">
-<form action="/item/search" method="post">
-	<select name = "criteria">
-		<option value = "iName">상품이름</option>
-	</select>
-	<input name = "keyword">
-	<input type = "submit" value = "검색">
-	</form>
+<br> <br>
+     <div class = "flexitem">
+   
+    
+    <form action="/item/search" method="get">
+   <select name = "criteria">
+      <option value = "iName">상품이름</option>
+   </select>
+   <input name = "keyword">
+   <input type = "submit" value = "검색">
+   </form>
+    
+   </div>
+   
+<center>
+<h2>new product</h2>
+   </center>
 
+<div id = "itemlist" class = "box-wrapper slick_sd">
 <c:forEach items="${list}" var = "list">
-<div class="card " style="width: 18rem;">
+<div class = "box">
+<div class="card ">
  <a href = "/item/read/${list.iId}">
- <div>
-  <img src="/displayfile?filename=${list.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
-  </div>
+    <div>
+  <img src="/displayfile?filename=${list.ifilename}"alt="..." width="100%" height="100px">
+     </div>
   </a>
   <div class="card-body">
-    <p class="card-text">상품이름:${list.iName} </p>
-    <p class="card-price">상품가격:${list.iPrice} </p>
+    <p class="card-text"><span class = "iName">${list.iName}</span><span class = "${list.iDc > 0?'iDc':'iDchidden'}">${list.iDc}%</span></p>
+    <p class="card-price"><span class = "${list.iDc > 0?'iPrice':'iPricehidden'}">${list.iPrice}원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <span><fmt:parseNumber var = "iPrice" value = "${list.iPrice < 1000?Math.floor(list.iPrice - list.iPrice*(list.iDc/100)):Math.ceil((list.iPrice - list.iPrice*(list.iDc/100))/10)*10}" integerOnly="true"/>${iPrice}원</span>
+    </p>
   </div>
+</div>
 </div>
 </c:forEach>
 </div>
+<br> <br>
+<div class = "event1">
+   <a  href="https://www.guesskorea.com/front/promotion_detail.php?pidx=291&event_type=1" target="_blank">
+  <img src="/resources/img/event1.png"class="card-img-top" alt="..." width="100%" height="5%">
+  </a>
+     </div>
 
-
-
-<script type="text/javascript" src = "/resources/js/item.js"></script>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript">
+$(document).ready(function() {
+    $(".slick_sd").slick({
+      slidesToShow : 6,      
+      slidesToScroll : 1,
+      arrows : true, 
+      vertical : false,
+      prevArrow : "<button type='button' class='slick-prev'><</button>",
+      nextArrow : "<button type='button' class='slick-next'>></button>",
+      responsive: [ // 반응형 웹 구현 옵션
+			{  
+				breakpoint: 960, //화면 사이즈 960px
+				settings: {
+					//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+					slidesToShow:3 
+				} 
+			},
+			{ 
+				breakpoint: 768, //화면 사이즈 768px
+				settings: {	
+					//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+					slidesToShow:2 
+				} 
+			}
+		]
+   }) 
+})
+   
+   
+   
 
 
 </script>

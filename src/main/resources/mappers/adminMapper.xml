@@ -5,9 +5,62 @@
 <mapper namespace="kr.co.dw.admin">
 
 
+	<select id="search" resultType="memberDTO">
+  <if test ="criteria == 'mid'.toString()">
+  SELECT * FROM tbl_member WHERE UPPER(mid) like '%'||UPPER(#{keyword})||'%' 
+  
+  </if>
+  <if test ="criteria == 'mname'.toString()">
+  SELECT * FROM tbl_member WHERE UPPER(mname) like '%'||UPPER(#{keyword})||'%' 
+  
+  </if>
+
+  </select>
+
+	
+	<select id="getamount" resultType="Integer">
+	
+	 <if test ="criteria == 'mid'.toString()">
+  	SELECT count(*) FROM  (SELECT * FROM tbl_member WHERE UPPER(mid) like '%'||UPPER(#{keyword})||'%')
+ 	 </if>
+ 	 
+ 	  <if test ="criteria == 'mname'.toString()">
+  	SELECT count(*) FROM  (SELECT * FROM tbl_member WHERE UPPER(mname) like '%'||UPPER(#{keyword})||'%')
+ 	 </if>
+
+  </select>
+
+
+
+	<select id="mlist" resultType="memberDTO">
+  
+  SELECT * FROM tbl_member
+  
+  </select>
+  
+  <select id="getAmount" resultType="Integer">
+  
+  SELECT count(*) FROM tbl_member
+  
+  </select>
+	
 	<select id="login" resultType="AdminDTO">
 		SELECT * FROM tbl_admin WHERE aid= #{aid} AND apw = #{apw}
 	</select>
 
+	<insert id="insert">
+		INSERT INTO tbl_admin (aid, apw, aauth, aname) VALUES (#{aid}, #{apw}, 0, #{aname})
+	</insert>
 	
+	<select id="list" resultType="AdminDTO">
+		SELECT * FROM tbl_admin
+	</select>
+	
+	<select id="read" resultType="AdminDTO">
+		SELECT * FROM tbl_admin WHERE aid = #{aid}
+	</select>
+	
+	<update id="giveauth">
+		UPDATE tbl_admin SET aauth = #{aauth} WHERE aid = #{aid}
+	</update>
 </mapper>

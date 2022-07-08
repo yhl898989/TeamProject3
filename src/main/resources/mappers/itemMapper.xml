@@ -4,29 +4,78 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.item">
 
+
+	<select id="deleteimgcount" resultType="int">
+	
+	SELECT COUNT(*) FROM tbl_orderItem WHERE ifilename = #{getmainimgfilename}
+	
+	</select>
+
+	<delete id="deleteitemfilename">
+	
+	DELETE FROM itemfileupload WHERE iId = #{iId} AND ifilename = #{ifilename}
+	
+	</delete>
+
+	<update id="updateitemimg">
+	
+	UPDATE tbl_item SET ifilename = #{ifilename} WHERE iId = #{iId}
+	
+	</update>
+
+	<select id="getmainimgfilename" resultType="string">
+	
+	SELECT ifilename FROM tbl_item WHERE iId = #{iId}
+	
+	</select>
+
+
+  <select id="getamount3" resultType="Integer">
+	
+	 <if test ="criteria == 'iName'.toString()">
+  	SELECT count(*) FROM  (SELECT * FROM tbl_item WHERE UPPER(iName) like '%'||UPPER(#{keyword})||'%')
+ 	 </if>
+	
+	
+	
+  </select>
+
   <select id="categoryList" resultType="iTemDTO">
+  
+  
+  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category}
+  
   <if test ="showhowitemlist == 'itemsequence'">
-  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iId DESC
+  ORDER BY iId DESC
   </if>
   
   <if test ="showhowitemlist == 'iPricedesc'">
-   SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice DESC
+  ORDER BY iPrice - (iPrice * (iDc/100)) DESC
   </if>
   
   <if test ="showhowitemlist == 'iPriceasc'">
-  SELECT * FROM tbl_item WHERE i_CATEGORY = #{category} ORDER BY iPrice ASC
+  ORDER BY iPrice - (iPrice * (iDc/100)) ASC
   </if>
+  
   </select>
 
   <select id="adminlist" resultType="itemDTO">
   
-  SELECT * FROM tbl_item order by iId DESC
+  SELECT * FROM tbl_item 
+  <if test ="category != 'all'">
+  WHERE i_CATEGORY = #{category}
+  </if>
+  order by iId DESC
   
   </select>
   
   <select id="getAmount2" resultType="Integer">
   
-  SELECT count(*) FROM tbl_item WHERE i_CATEGORY = #{i_CATEGORY}
+  SELECT count(*) FROM tbl_item 
+  <if test ="i_CATEGORY != 'all'">
+  WHERE i_CATEGORY = #{i_CATEGORY}
+  </if>
+  
   
   </select>
   
@@ -56,9 +105,24 @@
   
   
   <select id="search" resultType="iTemDTO">
-  <if test ="criteria == 'iName'">
-  SELECT * FROM tbl_item WHERE iName like '%'||#{keyword}||'%'
+  <if test ="criteria == 'iName'.toString()">
+  
+  SELECT * FROM tbl_item WHERE UPPER(iName) like '%'||UPPER(#{keyword})||'%' 
+  <if test ="showhowitemlist == 'itemsequence'">
+  ORDER BY iId DESC
   </if>
+  
+  <if test ="showhowitemlist == 'iPricedesc'">
+  ORDER BY iPrice - (iPrice * (iDc/100)) DESC
+  </if>
+  
+  <if test ="showhowitemlist == 'iPriceasc'">
+  ORDER BY iPrice - (iPrice * (iDc/100)) ASC
+  </if>
+  
+  </if>
+  
+ 
   </select>
   
   
@@ -91,7 +155,7 @@
   
   <select id="list" resultType="ItemDTO">
   
-  SELECT * FROM tbl_item
+ SELECT * FROM tbl_item where rownum &lt; 13 order by iId desc 
   
   </select>
 

@@ -21,6 +21,7 @@
 		PW: <input name="apw"> <br>
 		<input type="submit" value="로그인 완료">
 	
+		<a href="/admin/insert">관리자 계정 생성</a>
 		
 		
 	</form>

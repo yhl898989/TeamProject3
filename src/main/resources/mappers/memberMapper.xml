@@ -4,46 +4,77 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.member">
 
+	<!-- 잔액 충전 -->
+	<update id="charge">
+		update tbl_member set mmoney = #{mmoney} where mid = #{mid}
+	</update>
+	
+	
+	<select id="id2" resultType="MemberDTO">
+		select * from tbl_member where mid=#{mid} AND memail = #{memail}
+	</select>
+	
+
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw">
+		update tbl_member set mpw = #{mpw} where mid = #{mid}
+	</update>
 
 	<!-- 비밀번호 찾기 -->
 	<select id="findpw" resultType="String">
-		select mpw from tbl_member where mid = #{mid} AND mname = #{mname} AND memail = #{memail}
+		select mpw from tbl_member where
+		mid = #{mid} AND mname = #{mname} AND memail = #{memail}
 	</select>
 
 	<!-- 아이디 찾기 -->
 	<select id="findid" resultType="String">
-		select mid from tbl_member where mname = #{mname} AND memail = #{memail}
+		select mid from tbl_member where
+		mname = #{mname} AND memail = #{memail}
 	</select>
 
 	<select id="idCheck" resultType="int">
-	select count(*)
+		select count(*)
 		from tbl_member
-	where mid=#{mid}
+		where mid=#{mid}
 	</select>
-	
+
 	<select id="login" resultType="MemberDTO">
-		SELECT * FROM tbl_member WHERE mid= #{mid} AND mpw = #{mpw}
+		SELECT * FROM tbl_member WHERE
+		mid= #{mid} AND mpw = #{mpw} AND msocial = 0
 	</select>
 
 	<delete id="delete">
-		DELETE FROM tbl_member WHERE mid = #{mid} AND mpw = #{mpw}
-
-
+		DELETE FROM tbl_member WHERE mid = #{mid} AND mpw =
+		#{mpw}
+	</delete>
+	
+	<delete id="s_delete">
+		DELETE FROM tbl_member WHERE mid = #{mid}
 	</delete>
 
 	<update id="update">
 		UPDATE tbl_member
-		SET mname = #{mname}, memail = #{memail}, mphone=#{mphone}, maddress1 = #{maddress1}, maddress2 = #{maddress2}, maddress3 = #{maddress3}, mbirth = #{mbirth}, mmoney = #{mmoney}
-		WHERE mid = #{mid} AND mpw = #{mpw}
+		SET mname = #{mname}, memail =
+		#{memail}, mphone=#{mphone}, maddress1 = #{maddress1}, maddress2 =
+		#{maddress2}, maddress3 = #{maddress3}, mbirth = #{mbirth}, mmoney =
+		#{mmoney}, mpw = #{mpw}
+		WHERE mid = #{mid} 
 	</update>
 
 	<select id="updateUI" resultType="kr.co.dw.domain.MemberDTO">
-		SELECT * FROM tbl_member WHERE mid = #{mid}
+		SELECT * FROM tbl_member WHERE
+		mid = #{mid}
 
 	</select>
+	
 	<select id="mypage" resultType="kr.co.dw.domain.MemberDTO">
-		SELECT * FROM tbl_member WHERE mid = #{mid}
-
+		SELECT * FROM tbl_member WHERE
+		mid = #{mid}
+	</select>
+	
+	<select id="s_mypage" resultType="kr.co.dw.domain.MemberDTO">
+		SELECT * FROM tbl_member WHERE
+		mid = #{mid}
 	</select>
 
 	<select id="list" resultType="kr.co.dw.domain.MemberDTO">
@@ -52,10 +83,28 @@
 
 	<insert id="insert">
 		INSERT INTO tbl_member
-		(mid, mpw, mname, memail, mphone, maddress1, maddress2, maddress3, mbirth)
+		(mid, mpw, mname, memail,
+		mphone, maddress1, maddress2, maddress3, mbirth)
 		VALUES
-		(#{mid}, #{mpw}, #{mname}, #{memail}, #{mphone}, #{maddress1}, #{maddress2}, #{maddress3}, #{mbirth})
+		(#{mid}, #{mpw},
+		#{mname}, #{memail}, #{mphone}, #{maddress1}, #{maddress2},
+		#{maddress3}, #{mbirth})
 
 
 	</insert>
+	
+	<insert id="socialInsert">
+		INSERT INTO tbl_member
+		(mid, mname, msocial)
+		VALUES
+		(#{mid}, #{mname}, 1)
+	</insert>
+	
+	<select id="socialLogin" resultType="MemberDTO">
+		SELECT * FROM tbl_member WHERE
+		mid= #{mid} AND msocial = 1
+	</select>
+	
+	
+	
 </mapper>

@@ -22,6 +22,7 @@ public class MemberDTO implements Serializable{
 	private int macount;
 	private int mmoney;
 	private int mpoint;
+	private int msocial;
 	
 	
 	public MemberDTO() {
@@ -166,7 +167,21 @@ public class MemberDTO implements Serializable{
 	public String toString() {
 		return "MemberDTO [mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", memail=" + memail + ", mphone="
 				+ mphone + ", maddress1=" + maddress1 + ", maddress2=" + maddress2 + ", maddress3=" + maddress3
-				+ ", mbirth=" + mbirth + ", macount=" + macount + ", mmoney=" + mmoney + ", mpoint=" + mpoint + "]";
+				+ ", mbirth=" + mbirth + ", macount=" + macount + ", mmoney=" + mmoney + ", mpoint=" + mpoint
+				+ ", msocial=" + msocial + "]";
+	}
+
+	public MemberDTO(int msocial) {
+		super();
+		this.msocial = msocial;
+	}
+
+	public int getMsocial() {
+		return msocial;
+	}
+
+	public void setMsocial(int msocial) {
+		this.msocial = msocial;
 	}
 
 	
