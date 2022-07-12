@@ -1,0 +1,40 @@
+@charset "UTF-8";
+.header{
+   display: flex;
+   background-color: white;
+   width: 1190px;
+   margin : 0 auto;
+   justify-content: space-between;
+}
+.header2{
+   display: flex;
+   background-color: white;
+}
+header{
+   margin: 0 auto;
+}
+body{
+   width: 1190px;
+   margin: 0 auto;
+}
+.aaaaaaa{
+   margin: auto;
+}
+h5{
+   margin: 5px;
+   display: flex;
+}
+#select{
+   display: none;
+   }
+
+.button7{
+   	border: none;
+   	background-color: white;
+   }
+.nav_back{
+   	background-color: white !important;
+   }
+a{text-decoration:none;font-size:14px}
+
+   

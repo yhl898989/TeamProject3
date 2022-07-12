@@ -1,6 +1,7 @@
 package kr.co.dw.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 
 public class MemberDTO implements Serializable{
@@ -18,7 +19,7 @@ public class MemberDTO implements Serializable{
 	private String maddress1;
 	private String maddress2;
 	private String maddress3;
-	private String mbirth;
+	private Date mbirth;
 	private int macount;
 	private int mmoney;
 	private int mpoint;
@@ -30,7 +31,7 @@ public class MemberDTO implements Serializable{
 	}
 
 	public MemberDTO(String mid, String mpw, String mname, String memail, String mphone, String maddress1,
-			String maddress2, String maddress3, String mbirth, int macount, int mmoney, int mpoint) {
+			String maddress2, String maddress3, Date mbirth, int macount, int mmoney, int mpoint) {
 		super();
 		this.mid = mid;
 		this.mpw = mpw;
@@ -110,11 +111,11 @@ public class MemberDTO implements Serializable{
 		this.maddress3 = maddress3;
 	}
 
-	public String getMbirth() {
+	public Date getMbirth() {
 		return mbirth;
 	}
 
-	public void setMbirth(String mbirth) {
+	public void setMbirth(Date mbirth) {
 		this.mbirth = mbirth;
 	}
 

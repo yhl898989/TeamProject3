@@ -7,9 +7,14 @@
 <meta charset="UTF-8">
 <title>회원 목록 화면</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 <body>
-
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <c:choose>
     	<c:when test="${empty login}">
     	<a href="/item/list">쇼핑몰가기</a> 

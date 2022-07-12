@@ -15,6 +15,7 @@
 	charset="utf-8"></script>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<link href = "/resources/css/header.css" rel="stylesheet">
 <style type="text/css">
 html, div, body, h3 {
 	margin: 0;
@@ -49,6 +50,11 @@ h3 {
 </script>
 </head>
 <body>
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <div
 		style="background-color: #15a181; width: 100%; height: 50px; text-align: center; color: white;">
 		<h3>SIST Naver_Login Success</h3>

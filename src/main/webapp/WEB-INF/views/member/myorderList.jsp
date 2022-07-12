@@ -12,16 +12,20 @@
 ﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-	<h5>내 주문 내역</h5>
-<table class="order_table">
+
+
+   <h2 align="center" style="margin-top: 5%;">내 주문 내역</h2>
+<div>
+	<table class="order_table">
 	                    	<colgroup>
-	                    		<col width="20%">
 	                    		<col width="16%">
-	                    		<col width="16%">
-	                    		<col width="16%">
+	                    		<col width="10%">
+	                    		<col width="10%">
+	                    		<col width="10%">
 	                    		
 	                    		
 	                    	</colgroup>
@@ -76,7 +80,14 @@
       <a class="page-link" href="/myorderList/${mid}?curpage=${pt.curPage >= pt.totalPage? pt.curPage:pt.curPage+1 }">&raquo;</a>
     </li>
   </ul>
-
-	
+</div>
+<div align="center" style="margin-top: 30px">
+	<a class="btn btn-outline-dark goback" href="#" style="color: black">뒤로가기</a>
+</div>	
+	<script type="text/javascript">
+	$(".goback").click(function() {
+		history.go(-1);
+	});
+	</script> 
 </body>
 </html>

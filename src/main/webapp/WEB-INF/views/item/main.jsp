@@ -14,38 +14,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <link href = "/resources/css/itemmain.css" rel="stylesheet">
+<link href = "/resources/css/header.css" rel="stylesheet">
 <style type="text/css">
-div#carouselExampleControls div.carousel-inner div.carousel-item{
-   margin-top: 5% !important;
-}
-@media all and (min-width:1024px){
-   .aaaaa {
-  width: 1920px !important;
-  overflow: hidden !important;
-}
-}
-@media all and (min-width:960px) and (max-width:1023px){
-   .aaaaa {
-  width: 1024px !important;
-  overflow: hidden !important;
-}
 
-@media all and (min-width:760px) and (max-width:959px){
-   .aaaaa {
-  width: 960px !important;
-  overflow: hidden !important;
-}
-@media all and (min-width:540px) and (max-width:759px){
-   .aaaaa {
-  width: 760px !important;
-  overflow: hidden !important;
-}
-@media all and (min-width:340px) and (max-width:539px){
-   .aaaaa {
-  width: 540px !important;
-  overflow: hidden !important;
-}
-}
+
+
+
 
 </style>
 </head>
@@ -53,6 +27,8 @@ div#carouselExampleControls div.carousel-inner div.carousel-item{
 <header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
 </header>
+<div style="height: 54.5px;">
+</div>
 
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -74,37 +50,26 @@ div#carouselExampleControls div.carousel-inner div.carousel-item{
     <span class="sr-only">Next</span>
   </button>
 </div>
-<br> <br>
-     <div class = "flexitem">
-   
-    
-    <form action="/item/search" method="get">
-   <select name = "criteria">
-      <option value = "iName">상품이름</option>
-   </select>
-   <input name = "keyword">
-   <input type = "submit" value = "검색">
-   </form>
-    
-   </div>
+<br> 
+     
    
 <center>
-<h2>new product</h2>
+<h2>NEW ARRIVALS</h2>
    </center>
-
+<br>
 <div id = "itemlist" class = "box-wrapper slick_sd">
 <c:forEach items="${list}" var = "list">
 <div class = "box">
-<div class="card ">
+<div class="card">
  <a href = "/item/read/${list.iId}">
     <div>
-  <img src="/displayfile?filename=${list.ifilename}"alt="..." width="100%" height="100px">
+  <img src="/displayfile?filename=${list.ifilename}"alt="..." width="100%" height="200px">
      </div>
   </a>
   <div class="card-body">
-    <p class="card-text"><span class = "iName">${list.iName}</span><span class = "${list.iDc > 0?'iDc':'iDchidden'}">${list.iDc}%</span></p>
-    <p class="card-price"><span class = "${list.iDc > 0?'iPrice':'iPricehidden'}">${list.iPrice}원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <span><fmt:parseNumber var = "iPrice" value = "${list.iPrice < 1000?Math.floor(list.iPrice - list.iPrice*(list.iDc/100)):Math.ceil((list.iPrice - list.iPrice*(list.iDc/100))/10)*10}" integerOnly="true"/>${iPrice}원</span>
+    <p class="card-text"><span class = "iName">${list.iName}</span></p>
+    <p class="card-price"><div class = "${list.iDc > 0?'iPrice':'iPricehidden'}">${list.iPrice}원<span class = "${list.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${list.iDc}%</span></div>
+                     <div>${list.getIsaleiPrice()}원</div>
     </p>
   </div>
 </div>
@@ -114,36 +79,33 @@ div#carouselExampleControls div.carousel-inner div.carousel-item{
 <br> <br>
 <div class = "event1">
    <a  href="https://www.guesskorea.com/front/promotion_detail.php?pidx=291&event_type=1" target="_blank">
-  <img src="/resources/img/event1.png"class="card-img-top" alt="..." width="100%" height="5%">
+  <img src="/resources/img/event1.png"class="event1" alt="..." width="100%" height="5%">
   </a>
      </div>
-
+   <br>
+   <center>
+<h2>Sweet Summer Days</h2>
+   </center>
+    <br>
+ <div class="jb-box">
+      <video muted autoplay loop style="width: 1190px;">
+        <source src="../../../resources/video/summer_main.mp4" type="video/mp4">
+        <strong>Your browser does not support the video tag.</strong>
+      </video>
+      <div class="jb-text">
+        
+      </div>
+    </div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 $(document).ready(function() {
     $(".slick_sd").slick({
-      slidesToShow : 6,      
+      slidesToShow : 4,      
       slidesToScroll : 1,
       arrows : true, 
       vertical : false,
       prevArrow : "<button type='button' class='slick-prev'><</button>",
       nextArrow : "<button type='button' class='slick-next'>></button>",
-      responsive: [ // 반응형 웹 구현 옵션
-			{  
-				breakpoint: 960, //화면 사이즈 960px
-				settings: {
-					//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-					slidesToShow:3 
-				} 
-			},
-			{ 
-				breakpoint: 768, //화면 사이즈 768px
-				settings: {	
-					//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-					slidesToShow:2 
-				} 
-			}
-		]
    }) 
 })
    

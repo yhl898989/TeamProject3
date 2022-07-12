@@ -12,6 +12,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/noticesearch.css"> 
+<style type="text/css">
+</style>
+</head>
 
 <body>
    <jsp:include page="../common/header.jsp" />
@@ -20,87 +25,17 @@
    </div>
    <br>
    <br>
-   <!-- 문맥태그. -->
-<style type="text/css">
-#btn_1{
-		border-top-left-radius:5px;
-		border-bottom-left-radius:5px;
-		margin-right: -4px;
-	}
-	
-#btn_2{
-		margin-left: -3px;
-		margin-right: -4px;
-		
-	
-}
-.list_table tbody td.title {
-   text-align: left;
-}
-
-.list_table {
-   width: 80%;
-   margin-left: 10%;
-   margin-right: 10%;
-}
-
-.list_table tbody td {
-   padding: 5px 0;
-   text-align: center;
-   border-bottom: 1px solid #e5e5e5;
-}
-
-.list_table tbody td.title {
-   text-align: left;
-}
-
-.list_table thead th {
-   border-top: 1px solid #e5e5e5;
-   border-bottom: 2px solid #000000;
-   padding: 5px 0;
-   text-align: center;
-   background: #eeeeee;
-}
-
-caption {
-   padding-bottom: 30px;
-}
-
-.btn btn-primary {
-   margin-left: 30px;
-}
-ul {
-			list-style: none;
-			width : 30%;
-			display: inline-block;
-		}
-		
-		li {
-			float: left;
-			margin-left : 5px;
-		}
-.red{
-	color : red;
-}		
-</style>
-</head>
-
 
 <div id="btn_group">
 	<button id="btn_1" onclick="noticelist()">공지사항</button>
 	<button id="btn_2" onclick="qnalist()">QNA</button>
 </div>
+<br>
+<br>
+<br>
 
-<table class="list_table" ,border="1">
-   		<c:if test="${category=='notice'}">
-   		
-   			<caption><h1>공지사항</h1></caption>
-   		</c:if>
-   		<c:if test="${category=='qna'}">
-   		
-   			<caption><h1>QNA</h1></caption>
-   		</c:if>
-   		
+<table class="table">
+	<thread style="background:#eee">
       <tr>
          <th>번호</th>
          <th>작성자</th>
@@ -109,13 +44,14 @@ ul {
          <th>조회수</th>
 
       </tr>
+     </thread>
       <c:forEach items="${pt.list}" var="blist">
          <colgroup>	
-            <col width="10%" />
-            <col width="30%" />
-            <col width="15%" />
+            <col width="12%" />
+            <col width="16%" />
+            <col width="42%" />
             <col width="20%" />
-            <col width="15%" />
+            <col width="10%" />
          </colgroup>
 
          <tr>
@@ -133,37 +69,37 @@ ul {
       	</c:if>
       <br>
       <br>
-      
 
 
-      
-<nav aria-label="...">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="/notice/search?curpage=${pt.curPage <= 1? 1 :  pt.curPage-1}&criteria=${criteria}&keyword=${keyword}">Previous</a>
+
+<div class="pagecss">
+      <nav aria-label="Page navigation example">
+      <ul class="pagination">
+       <li class="page-item disabled">
+		<a class="page-link" href = "/notice/list?curPage=${pt.curPage > 1? pt.curPage -1:1}">Previous</a>
+   	   </li>
+   <c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum }">
+    <li class="${i == pt.curPage?'page-item active':'page-item'}" aria-current = "${i == pt.curPage?'page':''}">
+   <a href = "/notice/list?curPage=${i}" class = "page-link">
+   
+   ${i}
+   
+   
+   
+   </a></li>
+   
+   </c:forEach>
+   <li class="page-item">
+   <a class="page-link" href = "/notice/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">Next</a>
     </li>
-    
-    
-    <c:forEach begin="${pt.beginPageNum}" end="${pt.finishPageNum}" var="page">
-    	<c:if test="${page == pt.curPage}">
-    	<li class="page-item active" aria-current="page">
-      		<a class="page-link" href="/notice/search?curpage=${pt.curPage}&criteria=${criteria}&keyword=${keyword}">${page}</a>
-    	</li>
-    	</c:if>
-    	
-    	<c:if test="${page != pt.curPage}">
-    	<li class="page-item">
-    		<a class="page-link" href="/notice/search?curpage=${page}&criteria=${criteria}&keyword=${keyword}">${page}</a>
-    	</li>
-    	</c:if>
-    </c:forEach>
-    
-    
-    <li class="page-item">
-      <a class="page-link" href="/notice/search?curpage=${pt.curPage >= pt.totalPage? pt.totalPage : pt.curPage+1}&criteria=${criteria}&keyword=${keyword}">Next</a>
-    </li>
-  </ul>
-</nav>
+    </ul>
+    </nav>  
+</div>
+<br>
+<br>
+<br>
+
+
       
 <%-- <c:if test="${page.startnum}">
 		<span>{ <a href="/notice/list?curPage=${page.beginPageNum - 1}">이전</a> }</span>

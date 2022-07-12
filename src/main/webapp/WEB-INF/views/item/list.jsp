@@ -11,51 +11,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 <link href = "/resources/css/itemlist.css" rel="stylesheet">
 
 </head>
 <body>
-<div id = "include">
+<header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
 </div>
-<center>
-<h1>쇼핑몰</h1>
-</center>
-
-
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="/resources/img/1.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
-    </div>
-    <div class="carousel-item">
-      <img src="/resources/img/2.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
-    </div>
-    <div class="carousel-item">
-      <img src="/resources/img/3.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
-    </div>
-  </div>
- <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </button>
-</div>
+ <img src="${category == '가방'?'/resources/img/bag.jpg': category == '옷'?'/resources/img/clothes.jpg':category == '모자'?'/resources/img/hat.jpg':category == '신발'?'/resources/img/shoes.png':category == '악세사리'?'/resources/img/accessory.png':''}" class="d-block w-100" alt="..." width=100% height = 380px>
+ 
 <br><br>
     <div id = "category"></div>
     <div class = "flexitem">
    
     
-    <form action="/item/search" method="get">
-	<select name = "criteria">
-		<option value = "iName">상품이름</option>
-	</select>
-	<input name = "keyword">
-	<input type = "submit" value = "검색">
-	</form>
+    
+	
 	 <div id = "showhowitemlist">
     <a href = "/item/list?Category=${category}&&showhowitemlist=itemsequence&&curPage=${pt.curPage}" id = "itemsequence" class = "${showhowitemlist == 'itemsequence'?'itemcss':""}">최신순</a>
     <a href = "/item/list?Category=${category}&&showhowitemlist=iPricedesc&&curPage=${pt.curPage}" id = "iPricedesc" class = "${showhowitemlist == 'iPricedesc'?'itemcss':""}">높은가격순</a>
@@ -67,7 +41,7 @@
 
 		<c:forEach items="${pt.list}" var="iteminfo">
 			<div class="box">
-				<div class="card " style="width: 18rem;">
+				<div class="card ">
 					<a href="/item/read/${iteminfo.iId}">
 						<div>
 							<img src="/displayfile?filename=${iteminfo.ifilename}"
@@ -75,9 +49,9 @@
 						</div>
 					</a>
 					<div class="card-body">
-						<p class="card-text">${iteminfo.iName}<span class = "${iteminfo.iDc > 0?'iDc':'iDchidden'}">${iteminfo.iDc}%</span></p>
-						<p class="card-price"><span class = "iPrice">${iteminfo.iPrice}원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    					  					  <span><fmt:parseNumber var = "iPrice" value = "${iteminfo.iPrice < 1000?Math.floor(iteminfo.iPrice - iteminfo.iPrice*(iteminfo.iDc/100)):Math.ceil((iteminfo.iPrice - iteminfo.iPrice*(iteminfo.iDc/100))/10)*10}" integerOnly="true"/>${iPrice}원</span>
+						<p class="card-text">${iteminfo.iName}</p>
+						<p class="card-price"><div class = "iPrice">${iteminfo.iPrice}원<span class = "${iteminfo.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${iteminfo.iDc}%</span></div>
+    					  					  <div>${iteminfo.getIsaleiPrice()}원</div>
     					</p>
 					</div>
 				</div>

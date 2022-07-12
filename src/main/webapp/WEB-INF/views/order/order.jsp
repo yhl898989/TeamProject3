@@ -13,6 +13,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 
  <!-- 다음주소 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -74,9 +75,9 @@
 										${memberInfo.maddress3}
 										<input class="selectAddress" value="T" type="hidden">
 										<input class="addressee_input" value="${memberInfo.mname}" type="hidden">
-										<input class="address1_input" type="hidden" value="${memberInfo.maddress1}">
-										<input class="address2_input" type="hidden" value="${memberInfo.maddress2}">
-										<input class="address3_input" type="hidden" value="${memberInfo.maddress3}">
+										<input id="address1_input" class="address1_input" type="hidden" value="${memberInfo.maddress1}">
+										<input id="address2_input" class="address2_input" type="hidden" value="${memberInfo.maddress2}">
+										<input id="address3_input" class="address3_input" type="hidden" value="${memberInfo.maddress3}">
 																		
 									</td>
 								</tr>
@@ -103,9 +104,9 @@
 											<th>주소</th>
 											<td>
 												<input class="selectAddress" value="F" type="hidden">
-												<input class="address1_input" readonly="readonly"> <a class="address_search_btn" onclick="execution_daum_address()">주소 찾기</a><br>
-												<input class="address2_input" readonly="readonly"><br>
-												<input class="address3_input" readonly="readonly">
+												<input id="address1_input" class="address1_input" readonly="readonly"> <a class="address_search_btn" onclick="execution_daum_address()">주소 찾기</a><br>
+												<input id="address2_input" class="address2_input" readonly="readonly"><br>
+												<input id="address3_input" class="address3_input" readonly="readonly">
 											</td>
 										</tr>
 									</tbody>
@@ -157,7 +158,9 @@
 											<img>
 										</div> --%>
 									</td>
-									<td>${ol.iName}</td>
+									
+									<td style="text-align: center;" >${ol.iName}</td>
+									
 									<td class="goods_table_price_td">
 										${ol.salePrice} 원 | 수량 ${ol.iCount}개
 										<br>${ol.totalPrice} 원
@@ -481,6 +484,14 @@ function execution_daum_address(){
 	 
 	 /* 주문 요청 */
 	 $(".order_btn").on("click",function(){
+		 
+		 let arr1 = document.getElementById("address1_input");
+		 let arr2 = document.getElementById("address2_input");
+		 let arr3 = document.getElementById("address3_input");
+		 if (arr1.value == '' || arr1.value == '' || arr1.value == '') {
+			alert("주소가 누락되어있습니다. 주소를 지정해주세요.");
+			return false;
+		}
 		 
 		 /* 주소 정보 & 받는 이 */
 		 $(".addressInfo_input_div").each(function(i,obj){

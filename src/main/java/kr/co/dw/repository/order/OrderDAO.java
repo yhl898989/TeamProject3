@@ -70,6 +70,14 @@ public interface OrderDAO {
 
 	public List<Integer> gettodaytotal();
 
+	public void orderItemUpdate(String orderId);
+
+	public void orderItemCancle(String orderId);
+
+	public List<OrderItemDTO> getOrderItem();
+
+	public Integer pietotals(String string);
+
 
 
 

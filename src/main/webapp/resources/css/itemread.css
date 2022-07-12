@@ -1,20 +1,18 @@
 @charset "UTF-8";
-body{
-   width : 1920px;
-}
+
 .itemread{
    display : flex;
-   width : 1920px;
+  
    height : 500px;
 }
 .itemreadphoto{
-   width: 960px;
+   width: 595px;
    
    height: 400px;
    text-align : center;
 }
 .itemreadinfo{
-   width : 960px;
+   width : 595px;
 
    height: 500px;   
 }

@@ -8,10 +8,11 @@ create table tbl_order(
     orderState varchar2(30) not null,
     deliveryCost NUMBER not null,
     usePoint NUMBER not null,
+    i_CATEGORY VARCHAR2(100),
     orderDate DATE DEFAULT SYSDATE,
     orderFinalSalePrice NUMBER not null,
     CONSTRAINT pk_order_orderId PRIMARY KEY(orderId)
-);
+)
 
 create table tbl_orderItem(
     oid NUMBER,
@@ -21,11 +22,14 @@ create table tbl_orderItem(
       iCount NUMBER not null,
     iPrice NUMBER not null,
     iDc NUMBER not null,
+    orderState VARCHAR2(30),
+    orderDate DATE DEFAULT SYSDATE,
+    i_CATEGORY VARCHAR2(100),
     ifilename VARCHAR2(100),
     savePoint NUMBER not null,
     CONSTRAINT pk_orderItem_oid PRIMARY KEY(oid),
     CONSTRAINT fk_orderItem_orderId FOREIGN KEY (orderId) REFERENCES tbl_order(orderId)
-);
+)
 
 
 select o.iName, o.icount from tbl_item i, tbl_orderItem o where i.iName = o.iName 

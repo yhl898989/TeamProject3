@@ -194,5 +194,30 @@ public class OrderDAOImpl  implements OrderDAO{
 		// TODO Auto-generated method stub
 		return sqlsession.selectList(NAMESPACE+".gettotal");
 	}
-
+	
+	@Override
+	public void orderItemUpdate(String orderId) {
+		// TODO Auto-generated method stub
+		sqlsession.update(NAMESPACE+".orderItemUpdate", orderId);
+	}
+	
+	@Override
+	public void orderItemCancle(String orderId) {
+		// TODO Auto-generated method stub
+		sqlsession.update(NAMESPACE+".orderItemCancle", orderId);
+	}
+	
+	@Override
+	public List<OrderItemDTO> getOrderItem() {
+		// TODO Auto-generated method stub
+		return sqlsession.selectList(NAMESPACE+".getOrderItem");
+	}
+	
+	@Override
+	public Integer pietotals(String string) {
+		// TODO Auto-generated method stub
+	
+		return sqlsession.selectOne(NAMESPACE+".pietotals", string) ;
+	}
+	
 }
