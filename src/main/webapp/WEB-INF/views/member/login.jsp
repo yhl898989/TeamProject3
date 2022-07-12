@@ -12,6 +12,69 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/itemmain.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
+<style type="text/css">
+.joinForm {
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	padding: 30px, 20px;
+	text-align: center;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 15px;
+}
+
+h1 {
+  text-align: center;
+ 
+}
+
+
+.textForm {
+  border-bottom: 2px solid #adadad;
+  padding: 15px 15px;
+  text-align: left;
+}
+
+.insertInfo2 {
+  width: 76%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.infobtn {
+  position:relative;
+  left:40%;
+  transform: translateX(-50%);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width:80%;
+  height:40px;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}
+
+.infobtn:hover {
+  background-position: right;
+}
+
+
+</style>
+
+
 <script>
 	$(function() {
 		$("#find_id_btn").click(function() {
@@ -29,16 +92,30 @@
 </script>
 </head>
 <body>
-<div style="position: fixed; z-index: 10;">
+
 <jsp:include page="../common/header.jsp"></jsp:include>
-</div>
+
+
 <div>
-<br>
-<br>
-<br>
-<br>
-<br>
 <h1>일반 회원 로그인</h1>
+
+	
+		<form class="joinForm" action="/member/login" method="post">
+		<div class="textForm">
+		ID :	<input id="mid" name="mid" class="insertInfo2" placeholder="아이디" type="text">
+		</div>
+		<div class="textForm">
+		PW :	<input type="password" name="mpw" id="mpw" class="insertInfo2" placeholder="비밀번호"><br>
+		</div>
+		<input id="OK" type="submit" class="infobtn" value="로그인 완료"><br>
+		<a href="#" id="find_id_btn">아이디 찾기</a> | <a href="#" id="find_pw_btn">비밀번호 찾기</a><br>
+     	<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/resources/img/naver_login.png"/></a></div>
+	</form>
+</div>
+
+
+
+<!-- <h1>일반 회원 로그인</h1>
 	<form action="/member/login" method="post">
 	
 		ID: <input name="mid"> <br>
@@ -52,6 +129,6 @@
 	
 
 	</form>
-
+ -->
 </body>
 </html>

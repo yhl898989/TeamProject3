@@ -38,6 +38,10 @@ public interface ReviewDAO {
 
 	int orderreviewcheck(Map<String, Object> map);
 
+	List<Integer> getRno(int iId);
+
+	String getreviewimgfilename(Integer rno);
+
 	
 
 

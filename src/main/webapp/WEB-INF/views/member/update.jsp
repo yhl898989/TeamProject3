@@ -6,40 +6,159 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보 수정 화면</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"	crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
+<style type="text/css">
+.joinForm {
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	padding: 30px, 20px;
+	text-align: center;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 15px;
+}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+input[type='date']::before {
+	content: attr(data-placeholder);
+	width: 100%;
+	color: #636e72;
+}
+
+input[type='date']:focus::before, input[type='date']:valid::before {
+	display: none;
+}
+
+input[type="date"] {
+	width: 320px;
+	content: attr(data-placeholder);
+}
+
+h1 {
+  text-align: center;
+}
+
+.textForm {
+  border-bottom: 2px solid #adadad;
+  padding: 15px 15px;
+  text-align: left;
+}
+
+.insertInfo {
+  width: 55%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.infobtn {
+  position:relative;
+  left:40%;
+  transform: translateX(-50%);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width:80%;
+  height:40px;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}
+
+.infobtn:hover {
+  background-position: right;
+}
+
+.checkBtn {
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+}
+
+.checkBtn:hover {
+  background-position: right;
+}
+</style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
-<h1>회원 정보 수정 화면</h1>
-<form action="/member/update" method="post" onsubmit="return formCheck()">
-	ID : <input name="mid" value="${dto.mid}" readonly="readonly"> <br>
-	PW : <input  name="mpw" value="${dto.mpw}" id="mpw"><br>
-	PW 재확인 : <input  id="mpwCheck" value="${dto.mpw}"><br>
-	이름 : <input name="mname" value="${dto.mname}"><br>
-	이메일 : <input name="memail" value="${dto.memail}"><br>
-	번호 : <input name="mphone" value="${dto.mphone}"><br>
-	우편번호 :<input id="maddress1" name="maddress1" value="${dto.maddress1}"> <button type="button" onclick="findAddr()">주소찾기</button> <br>
-    주소 :  <input size="50" id="maddress2"  name="maddress2" value="${dto.maddress2}"><br>
-    상세주소 : <input size="50" id="maddress3"  name="maddress3" value="${dto.maddress3}"><br>
-	생일 : <input name="mbirth" type="date" value="${dto.mbirth}"><br>
-	<input type="submit" value="입력 완료">
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
+<h1>회원 정보 수정</h1>
+<form class="joinForm" action="/member/update" method="post" onsubmit="return formCheck()">
+	<div class="textForm">
+		아이디 : <input name="mid" class="insertInfo" value="${dto.mid}" readonly="readonly"> <br>
+	</div>
+	<div class="textForm">
+		비밀번호 : <input name="mpw" value="${dto.mpw}" id="mpw" class="insertInfo"><br>
+	</div>
+	<div class="textForm">
+		비밀번호 확인 : <input id="mpwCheck" class="insertInfo" value="${dto.mpw}"><br>
+	</div>
+	<div class="textForm">
+		이름 : <input name="mname" class="insertInfo" value="${dto.mname}"><br>
+	</div>
+	<div class="textForm">
+		이메일 : <input name="memail" class="insertInfo" value="${dto.memail}"><br>
+	</div>
+	<div class="textForm">
+		번호 : <input name="mphone" class="insertInfo" value="${dto.mphone}"><br>
+	</div>
+	<div class="textForm">
+		우편번호 : <input id="maddress1" name="maddress1" class="insertInfo" value="${dto.maddress1}"> <button type="button" class="checkBtn" onclick="findAddr()">주소찾기</button> <br>
+	</div>
+	<div class="textForm">
+   		주소 : <input  id="maddress2"  name="maddress2" class="insertInfo" value="${dto.maddress2}"><br>
+    </div>
+    <div class="textForm">
+    	상세주소 : <input id="maddress3"  name="maddress3" class="insertInfo" value="${dto.maddress3}"><br>
+    </div>
+    <div class="textForm" class="insertInfo">
+		생일 : <input name="mbirth" type="date" value="${dto.mbirth}"><br>
+	</div>
+	<input type="submit" class="infobtn" value="입력 완료">
 </form>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 function findAddr() {
-	   new daum.Postcode({
-	      
-	       oncomplete: function(data) {
-	    	   document.querySelector("#maddress1").value = data.zonecode;
-	            document.querySelector("#maddress2").value =  data.address;
-	             }
-	      }).open();   
-	   }
+   new daum.Postcode({
+   
+       oncomplete: function(data) {
+    	   document.querySelector("#maddress1").value = data.zonecode;
+            document.querySelector("#maddress2").value =  data.address;
+             }
+      }).open();   
+   }
 
 function formCheck() {
 	let mpw = document.getElementById("mpw");
 	let mpwCheck = document.getElementById("mpwCheck");
+	
+	if (mpw.value == '') {
+		alert("비밀번호를 입력하세요");
+		mpw.focus();
+		return false;
+	}
 	
 	if (mpw.value != mpwCheck.value) {
 		alert("비밀번호가 일치하지 않습니다");

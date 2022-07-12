@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+
+#btn_1{
+      border-top-left-radius:5px;
+      border-bottom-left-radius:5px;
+
+   }
+   
+
+caption {
+   padding-bottom: 30px;
+}
+
+.red{
+   color : red;
+}
+#btn_group{
+   display:flex;
+   justify-content:center;
+   align-items:center;
+}
+
+#btn_group button{
+   font-weight: bold; 
+   border-top-left-radius:5px;
+   border-bottom-left-radius:5px;
+   border-top-left-radius:5px;
+   margin-right: -4px;
+   height: 100px;
+   width: 150px;
+   font-size : 20px;
+}
+
+
+
+.text-center{
+   font-size:40px;
+}
+.searchcss{
+	align-items: center;
+	margin-left: 30%;
+	margin-right: 40%;
+	width:30%;
+}
+
+.pagecss{
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   
+}

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import kr.co.dw.domain.ItemDTO;
 import kr.co.dw.domain.itemPageTO;
 import kr.co.dw.service.item.itemService;
+import kr.co.dw.service.review.ReviewService;
 import kr.co.dw.utils.DWUtils;
 
 @Controller
@@ -34,6 +36,8 @@ public class itemController {
 	@Autowired
 	private itemService iService;
 	
+	@Inject
+	private ReviewService rService;
 	
 	private String uploadPath = "C:"+File.separator+"upload";
 	
@@ -149,6 +153,16 @@ public class itemController {
 			
 			List<String> list = iService.getitemfilelist(iId);
 			
+			List<Integer> rno = rService.getRno(iId);
+			
+			List<String> filelist = rService.getreviewimgfilename(rno);
+			
+			for(int i = 0 ; i < filelist.size(); i++) {
+				if(filelist.get(i) != null) {
+					DWUtils.deleteFile(uploadPath, filelist.get(i));
+				}
+			}
+			
 			for(int i = 0 ; i < list.size();i++) {
 				String deleteifilename = list.get(i);
 				DWUtils.deleteFile(uploadPath, deleteifilename);
@@ -218,7 +232,18 @@ public class itemController {
 		int curPage = Integer.parseInt(ScurPage);
 		
 		itemPageTO<ItemDTO> pt = iService.search(criteria,keyword,curPage,showhowitemlist);
-	
+		for(int i = 0 ; i <pt.getList().size();i++) {	        
+	         int iPrice =  pt.getList().get(i).getiPrice();
+	         Double iDC = (double) pt.getList().get(i).getiDc();	     	       
+	         double iSale = iPrice - ((iPrice*(iDC/100)));
+	         if(iPrice < 1000) {
+	        	 iSale = Math.floor(iSale);
+	         }else {
+	        	 iSale = Math.ceil(iSale);
+	         }	        
+	         int a =(int)Math.round(iSale);	       
+	         pt.getList().get(i).setIsaleiPrice(a);
+	      }
 		model.addAttribute("criteria", criteria);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("showhowitemlist", showhowitemlist);
@@ -249,7 +274,18 @@ public class itemController {
 	public String main(Model model) {
 		
 		List<ItemDTO> list = iService.main();
-		
+		for(int i = 0 ; i <list.size();i++) {	        
+	         int iPrice =  list.get(i).getiPrice();
+	         Double iDC = (double) list.get(i).getiDc();	     	       
+	         double iSale = iPrice - ((iPrice*(iDC/100)));
+	         if(iPrice < 1000) {
+	        	 iSale = Math.floor(iSale);
+	         }else {
+	        	 iSale = Math.ceil(iSale);
+	         }	        
+	         int a =(int)Math.round(iSale);	       
+	         list.get(i).setIsaleiPrice(a);
+	      }
 		model.addAttribute("list", list);
 		
 		return "/item/main";
@@ -276,6 +312,16 @@ public class itemController {
 	public String read(@PathVariable("iId") int iId, Model model) {
 		
 		ItemDTO item = iService.read(iId);
+		int iPrice = item.getiPrice();
+		double iDc = item.getiDc();
+		double iSale = iPrice - ((iPrice*(iDc/100)));
+		if(iPrice < 1000) {
+       	 iSale = Math.floor(iSale);
+        }else {
+       	 iSale = Math.ceil(iSale);
+        }	        
+        int a =(int)Math.round(iSale);	       
+        item.setIsaleiPrice(a);
 		model.addAttribute("item", item);
 		return "/item/read";
 	}
@@ -290,7 +336,18 @@ public class itemController {
 		int curPage = Integer.parseInt(ScurPage);
 	
 		itemPageTO<ItemDTO> pt = iService.categoryList(Catrgory, showhowitemlist,curPage);
-
+		for(int i = 0 ; i <pt.getList().size();i++) {	        
+	         int iPrice =  pt.getList().get(i).getiPrice();
+	         Double iDC = (double) pt.getList().get(i).getiDc();	     	       
+	         double iSale = iPrice - ((iPrice*(iDC/100)));
+	         if(iPrice < 1000) {
+	        	 iSale = Math.floor(iSale);
+	         }else {
+	        	 iSale = Math.ceil(iSale);
+	         }	        
+	         int a =(int)Math.round(iSale);	       
+	         pt.getList().get(i).setIsaleiPrice(a);
+	      }
 		model.addAttribute("category", Catrgory);
 		model.addAttribute("showhowitemlist", showhowitemlist);
 		model.addAttribute("pt", pt);

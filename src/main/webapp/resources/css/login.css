@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.main {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+#id{
+
+   width: 250px;
+}
+
+#password{
+
+   width: 250px;
+}
+
+#login{
+
+   width: 250px;
+}
+
+.logo {
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
+
+#login {
+    width: 250px;
+    background-color: skyblue;
+    border-color: transparent;
+    color: white;
+}
+
+.account {
+   
+    display: block;
+    margin-bottom: 3px;
+    padding: 3px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+}
+
+#alert {
+    border-color: transparent;
+}

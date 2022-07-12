@@ -36,4 +36,8 @@ public interface ReviewService {
 
 	int orderreviewcheck(Map<String, Object> map);
 
+	List<Integer> getRno(int iId);
+
+	List<String> getreviewimgfilename(List<Integer> rno);
+
 }

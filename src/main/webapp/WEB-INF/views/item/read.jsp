@@ -15,6 +15,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <link href = "/resources/css/itemread.css" rel="stylesheet">
+<link href = "/resources/css/header.css" rel="stylesheet">
 <style type="text/css">
 #formFileMultiple{
    padding-left: 0%;
@@ -30,8 +31,11 @@
 
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
-
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <div class="jumbotron">
    <h1 class="text-center">상품 상세 보기</h1>
 </div>
@@ -39,7 +43,7 @@
 <div class = "itemread">
 <div class = "itemreadphoto">
 
-<img id = "mainphoto" alt="" src="/displayfile?filename=${item.ifilename}" width = "50%" height = "400px">
+<img id = "mainphoto" alt="" src="/displayfile?filename=${item.ifilename}" width = "400px" height = "400px">
 
 <div class = "slick_sd" id = "subphoto">
 <span>
@@ -73,7 +77,7 @@
 <div class="form-group row">
     <label for="saleiPrice" class="col-sm-2 col-form-label col-form-label-lg">판매가</label>
     <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="saleiPrice" value="">
+      <input readonly class="form-control form-control-lg"  id="saleiPrice" value="${item.getIsaleiPrice()}원">
     </div>  
   </div>
   
@@ -240,10 +244,15 @@ $(".slick_sd").slick({
 
 	
 $(".btn_buy").on("click" , function () {
+	if( mid== ""){
+		location.assign("/member/loginui"); 
+	}else{
 		   let itemCount =$("#oqty").val();
 		   
 		   $(".order_form").find("input[name='orders[0].iCount']").val(itemCount);
 		   $(".order_form").submit();
+	}
+
 		});
 
 $("#item_btn_update_submit").on("click",function() {

@@ -50,8 +50,8 @@ public interface OrderService {
 
 	public List<Integer> gettodaytotal();
 
-	
+	public java.util.List<OrderItemDTO> orderItem();
 
-	
+	public List<Integer> pietotal(java.util.List<String> arr);
 
 }

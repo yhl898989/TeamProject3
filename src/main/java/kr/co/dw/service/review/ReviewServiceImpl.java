@@ -1,5 +1,6 @@
 package kr.co.dw.service.review;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +78,13 @@ public class ReviewServiceImpl implements ReviewService {
 		// TODO Auto-generated method stub
 		rDao.deleterfilename(map);
 	}
-
+	
+	@Override
+	public List<Integer> getRno(int iId) {
+		// TODO Auto-generated method stub
+		return rDao.getRno(iId);
+	}
+	
 	@Override
 	public PageTO<ReviewDTO> list(int iId,int curpage) {
 		PageTO<ReviewDTO> pt = new PageTO<ReviewDTO>(curpage); 
@@ -103,6 +110,18 @@ public class ReviewServiceImpl implements ReviewService {
 	public int orderreviewcheck(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return rDao.orderreviewcheck(map);
+	}
+	
+	@Override
+	public List<String> getreviewimgfilename(List<Integer> rno) {
+		// TODO Auto-generated method stub
+		List<String> list2 = new ArrayList<String>();
+		for(int i = 0 ; i < rno.size(); i++) {
+		String list = rDao.getreviewimgfilename(rno.get(i));
+		list2.add(list);
+		}
+		
+		return list2;
 	}
 	
 }
