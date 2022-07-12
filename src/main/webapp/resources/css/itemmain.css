@@ -1,10 +1,8 @@
 @charset "UTF-8";
 *{padding:0;margin:0}
-body{
-   width : 100%;
-}
+
 li{list-style:none}
-a{text-decoration:none;font-size:14px}
+
 
 .menu > li {
   width: 20%; /*20*5=100%*/
@@ -34,73 +32,66 @@ a{text-decoration:none;font-size:14px}
    margin-left: 5px;
    margin-right: 5px;
 }
-.flexitem{
-	display: flex;
-	width:1312px;
-	justify-content: space-between;
-	margin-left: 304px;
-	margin-right: 210px;
-}
+
+
 .card-text{
 	display: flex;
 	justify-content: space-between;
 }
 .iDchidden{
-	display: none;
+   display: none;
 }
 .iDc{
-	font-size: 20px;
-	
-	border: 0.5px solid black;
-	background-color: gray;
-	
+   font-size: 15px;
+   color : red;
+   background-color: white;
+   
 }
 .iName{
-	font-size: 30px;
+   font-size: 30px;
 }
 .iPricehidden{
-	display: none;
+   display: none;
 }
 .iPrice{
-	color : gray;
-	text-decoration: line-through;
+   color : gray;
+   text-decoration: line-through;
+   display: flex;
+   justify-content: space-between;
 }
 
 .card-img-top{
-	width: auto;
+   width: auto;
 }
 .card-body{
-	width: auto;
+   width: auto;
+   padding: 20px;
 }
 .draggable{
-	width: 80%;
-	margin : auto;
-	text-align: center;
-	
+   width: 1090px;
+   margin-left : 50px;
+   margin-right : 50px;
+   text-align: center;
+   
 }
 .slick-prev{
-	position : absolute;
-	top: 50%;
-	font-size: 50px;
-	right : 100%;
-	transform:translate(+300%, -75%);
-	border: 0px;
-	background-color: white;
+   position : absolute;
+   top: 50%;
+   font-size: 50px;
+   right : 100%;
+   transform:translate(+100%, -75%);
+   border: 0px;
+   background-color: white;
 }
 .slick-next{
-	position : absolute;
-	left: 100%;
-	bottom: 50%;
-	font-size: 50px;
-	transform:translate(-300%, +25%);
-	border: 0px;
-	background-color: white;
+   position : absolute;
+   left: 100%;
+   bottom: 50%;
+   font-size: 50px;
+   transform:translate(-100%, +25%);
+   border: 0px;
+   background-color: white;
 }
-
-
-
-
-
 
 
 

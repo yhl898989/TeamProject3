@@ -109,4 +109,18 @@ public class ReviewDAOImpl implements ReviewDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE+".orderreviewcheck", map);
 	}
+	
+	@Override
+	public List<Integer> getRno(int iId) {
+		// TODO Auto-generated method stub
+		System.out.println(iId);
+		return sqlSession.selectList(NAMESPACE+".getRno", iId);
+	}
+	
+	@Override
+	public String getreviewimgfilename(Integer rno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".getreviewimgfilename", rno);
+	}
+	
 }

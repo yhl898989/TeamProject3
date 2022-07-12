@@ -3,7 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.order">
-
+	
+	<!-- pietotals파이그래프 -->
+	<select id="pietotals" resultType="Integer">
+		SELECT SUM(orderFinalSalePrice) FROM tbl_order WHERE TO_CHAR(orderDate, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') and orderstate ='배송완료' and i_category = #{string}
+	</select>
+	
+	<!-- getOrderItem -->
+	<select id="getOrderItem" resultType="OrderItemDTO">
+		select * from tbl_orderItem where orderstate = '배송완료' AND TO_CHAR(OrderDATE,'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-MM-dd')
+	</select>
+	
+	<!-- orderItemCancle -->
+	<update id="orderItemCancle">
+		UPDATE tbl_orderItem SET orderState = '주문취소' WHERE orderId = #{orderId}
+	</update>
+	
+	<!-- orderItemUpdate -->
+	<update id="orderItemUpdate">
+		UPDATE tbl_orderItem SET orderState = '배송완료' where orderid = #{orderId} 
+	</update>
+	
 	<!-- 오늘 팔린 물건들 -->
 	<select id="gettotal" resultType="Integer">
 		select orderFinalSalePrice FROM tbl_order WHERE TO_CHAR(orderDate, 'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-mm-dd') 
@@ -44,7 +64,7 @@
 
 	<select id="myOrderList" resultType="OrderDTO">
 	
-		SELECT * FROM tbl_order WHERE mid = #{mid}
+		SELECT * FROM tbl_order WHERE mid = #{mid}  ORDER BY orderDate DESC
 	</select>
 
 
@@ -96,23 +116,23 @@
 
   
   <select id="getItemsInfo" resultType="OrderPageItemDTO">
-  	SELECT iId,ifilename, iName, iPrice, iDc 
+  	SELECT iId,ifilename, iName, iPrice, iDc ,i_CATEGORY
   	FROM tbl_item WHERE iId =#{iId}
   
   </select>
   
   <select id="getOrderInfo" resultType="OrderItemDTO">
-    	SELECT iId,iName, iPrice, iDc, ifilename
+    	SELECT iId,iName, iPrice, iDc, ifilename , i_CATEGORY
   		FROM tbl_item WHERE iId =#{iId}
  
   </select>
   
   	<insert id="enrollOrder">
 	
-		insert into tbl_order(orderId, addressee, mId, memberAddr1, memberAddr2, memberAddr3, orderState, deliveryCost, usePoint, orderFinalSalePrice )
+		insert into tbl_order(orderId, addressee, mId, memberAddr1, memberAddr2, memberAddr3, orderState, deliveryCost, usePoint, i_CATEGORY ,orderFinalSalePrice )
     	values 
-    	(#{orderId},#{addressee}, #{mid}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, '배송준비', #{deliveryCost}, #{usePoint}, #{orderFinalSalePrice})
-	
+    	(#{orderId},#{addressee}, #{mid}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, '배송준비', #{deliveryCost}, #{usePoint} , #{i_CATEGORY} , #{orderFinalSalePrice})
+
 	</insert>
   	<insert id="enrollOrderItem">
 	

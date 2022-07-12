@@ -110,7 +110,7 @@ function updateitem(adminlistiId,adminlistiName,adminlistiPrice,adminlistiDc,adm
 				<option value = "신발">신발</option>
 				<option value = "가방">가방</option>
 				<option value = "모자">모자</option>
-				<option value = "원피스">원피스</option>
+				<option value = "악세사리">악세사리</option>
 </select>
 				</td>
 				<td><button id = "item_updatefinish_btn">수정완료</button><a href = "/item/adminlist?category=${category}&&curPage=${curPage}"><button id = "item_deletefinish_btn">취소</button></a></td>

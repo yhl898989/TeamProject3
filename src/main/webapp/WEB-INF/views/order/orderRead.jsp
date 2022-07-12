@@ -12,6 +12,7 @@
 ﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
@@ -74,10 +75,10 @@
 				<!--상품 테이블  -->
 				<table class="goods_subject_table">
 						<colgroup>
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
+							<col width="25%">
+							<col width="25%">
+							<col width="25%">
+							<col width="25%">
 						
 							
 						</colgroup>
@@ -94,15 +95,15 @@
 				
 				<table class="goods_table" style="center-align">
 						<colgroup>
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
+							<col width="25%">
+							<col width="25%">
+							<col width="25%">
+							<col width="25%">
 						
 							
 						</colgroup>					
 						<tbody>
-							<tr>
+							<tr style="text-align: center;">
 								<td>${oidto.orderId}</td>				 								
 								<td>${oidto.iName}</td> 
 								<td>${oidto.iPrice}</td>
@@ -112,10 +113,9 @@
 					</table>
 			</div>			
 			
-			
-			<!-- 주문 종합 정보 -->
+
 				<div class="total_info_div">
-					<!-- 가격 종합 정보 -->
+
 				
 						<img src="/displayfile?filename=${oidto.ifilename}" alt="${oidto.ifilename}" style="height: 250px; width: 350px;">
 					
@@ -125,13 +125,13 @@
 				
 					<div class="total_info_btn_div">
 							<c:if test="${odto.orderState == '배송준비' }">
-								<a class="order_btn" href="/order/updateUI/${oidto.orderId}" id="btn_oupdate">배송정보 수정하기</a> 
+								<a class="btn btn-outline-dark" href="/order/updateUI/${oidto.orderId}" id="btn_oupdate">배송정보 수정하기</a> 
 							</c:if>
 							<c:if test="${odto.orderState == '배송준비' }">
-								<a class="order_btn " href="#" id="btn_odelete">배송취소</a> 
+								<a class="btn btn-outline-dark " href="#" id="btn_odelete">배송취소</a> 
 							</c:if>
-							<a class="order_btn goback" href="#" >목록</a> 
-				
+							<a class="btn btn-outline-dark goback" href="#" >목록</a> 
+							
 					</div>
 				</div>	
 			

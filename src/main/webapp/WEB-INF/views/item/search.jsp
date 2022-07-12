@@ -12,26 +12,27 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/itemsearch.css" rel="stylesheet">
+<link href = "/resources/css/header.css" rel="stylesheet">
 
 </head>
 
 <body>
 
+<header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
-
-
+</header>
+<div style="height: 54.5px;">
+</div>
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="/resources/img/1.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
+      <img style="z-index: -10;" src="/resources/img/sale.png" class="d-block w-100" alt="..." width=100% height = 100%>
     </div>
     <div class="carousel-item">
-      <img src="/resources/img/2.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
+      <img src="/resources/img/event.jpg" class="d-block w-100" alt="..." width=100% height = 100%>
     </div>
-    <div class="carousel-item">
-      <img src="/resources/img/3.jpg" class="d-block w-100" alt="..." width=100% height = 300px>
-    </div>
+ 
   </div>
  <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -42,41 +43,14 @@
     <span class="sr-only">Next</span>
   </button>
 </div>
-<ul class="menu">
-      <li>
-        <a href="/item/list?Category=옷" id = "옷">옷</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=신발" id = "신발">신발</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=가방" id = "가방">가방</a>
-        
-      </li>
-      <li>
-        <a href="/item/list?Category=모자" id = "모자">모자</a>
-       
-      </li>
-      <li>
-        <a href="/item/list?Category=원피스" id = "원피스">원피스</a>
-       
-      </li>
-    </ul>
+<br>
     <center>
 <h1>검색 결과</h1>
 </center>
 <div class = "flexitem">
    
     
-    <form action="/item/search" method="get">
-	<select name = "criteria">
-		<option value = "iName">상품이름</option>
-	</select>
-	<input name = "keyword">
-	<input type = "submit" value = "검색">
-	</form>
+   
 	 <div id = "showhowitemlist">
     <a href = "/item/search?showhowitemlist=itemsequence&&curPage=${pt.curPage}&&criteria=${criteria}&&keyword=${keyword}" id = "itemsequence" class = "${showhowitemlist == 'itemsequence'?'itemcss':''}">최신순</a>
     <a href = "/item/search?showhowitemlist=iPricedesc&&curPage=${pt.curPage}&&criteria=${criteria}&&keyword=${keyword}" id = "iPricedesc" class = "${showhowitemlist == 'iPricedesc'?'itemcss':''}">높은가격순</a>
@@ -85,18 +59,20 @@
 	</div>
 <div id = "itemlist" class="box-wrapper">
 <c:forEach items = "${pt.list}" var = "list">
-<div class="card " style="width: 18rem;">
+<div class="box">
+<div class="card ">
  <a href = "/item/read/${list.iId}">
  <div>
   <img src="/displayfile?filename=${list.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
   </div>
   </a>
   <div class="card-body">
-    <p class="card-text">${list.iName}<span class = "${list.iDc > 0?'iDc':'iDchidden'}">${list.iDc}%</span></p>
-    <p class="card-price"><span class = "iPrice">${list.iPrice}원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	<span><fmt:parseNumber var = "iPrice" value = "${list.iPrice < 1000?Math.floor(list.iPrice - list.iPrice*(list.iDc/100)):Math.ceil((list.iPrice - list.iPrice*(list.iDc/100))/10)*10}" integerOnly="true"/>${iPrice}원</span>
+    <p class="card-text">${list.iName}</p>
+    <p class="card-price"><div class = "iPrice">${list.iPrice}원<span class = "${list.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${list.iDc}%</span></div>
+    	<div>${list.getIsaleiPrice()}원</div>
     </p>
   </div>
+</div>
 </div>
 </c:forEach>
 </div>

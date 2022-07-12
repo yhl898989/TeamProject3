@@ -1,6 +1,7 @@
 package kr.co.dw.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 public class OrderItemDTO implements Serializable{
@@ -16,6 +17,9 @@ public class OrderItemDTO implements Serializable{
 	private int iCount;
 	private int iPrice;
 	private int iDc;
+	private String orderState;
+	private Date orderDate;
+	private String i_CATEGORY;
 	private String ifilename;
 	private int savePoint;
 	private int salePrice;
@@ -29,7 +33,8 @@ public class OrderItemDTO implements Serializable{
 
 
 	public OrderItemDTO(int oid, String orderId, int iId, String iName, int iCount, int iPrice, int iDc,
-			String ifilename, int savePoint, int salePrice, int totalPrice, int totalSavePoint) {
+			String orderState, Date orderDate, String i_CATEGORY, String ifilename, int savePoint, int salePrice,
+			int totalPrice, int totalSavePoint) {
 		super();
 		this.oid = oid;
 		this.orderId = orderId;
@@ -38,6 +43,9 @@ public class OrderItemDTO implements Serializable{
 		this.iCount = iCount;
 		this.iPrice = iPrice;
 		this.iDc = iDc;
+		this.orderState = orderState;
+		this.orderDate = orderDate;
+		this.i_CATEGORY = i_CATEGORY;
 		this.ifilename = ifilename;
 		this.savePoint = savePoint;
 		this.salePrice = salePrice;
@@ -131,6 +139,49 @@ public class OrderItemDTO implements Serializable{
 
 
 
+
+	public String getOrderState() {
+		return orderState;
+	}
+
+
+
+
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
+	}
+
+
+
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+
+
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+
+
+	public String getI_CATEGORY() {
+		return i_CATEGORY;
+	}
+
+
+
+
+	public void setI_CATEGORY(String i_CATEGORY) {
+		this.i_CATEGORY = i_CATEGORY;
+	}
+
+
+
+
 	public String getIfilename() {
 		return ifilename;
 	}
@@ -195,8 +246,6 @@ public class OrderItemDTO implements Serializable{
 		return serialVersionUID;
 	}
 	
-	
-
 
 	@Override
 	public int hashCode() {
@@ -223,9 +272,10 @@ public class OrderItemDTO implements Serializable{
 	@Override
 	public String toString() {
 		return "OrderItemDTO [oid=" + oid + ", orderId=" + orderId + ", iId=" + iId + ", iName=" + iName + ", iCount="
-				+ iCount + ", iPrice=" + iPrice + ", iDc=" + iDc + ", ifilename=" + ifilename + ", savePoint="
-				+ savePoint + ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + ", totalSavePoint="
-				+ totalSavePoint + "]";
+				+ iCount + ", iPrice=" + iPrice + ", iDc=" + iDc + ", orderState=" + orderState + ", orderDate="
+				+ orderDate + ", i_CATEGORY=" + i_CATEGORY + ", ifilename=" + ifilename + ", savePoint=" + savePoint
+				+ ", salePrice=" + salePrice + ", totalPrice=" + totalPrice + ", totalSavePoint=" + totalSavePoint
+				+ "]";
 	}
 
 

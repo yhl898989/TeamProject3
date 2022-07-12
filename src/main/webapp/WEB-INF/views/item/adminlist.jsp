@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
 <link href = "/resources/css/itemadminlist.css" rel="stylesheet">
-
+<link href = "/resources/css/header.css" rel="stylesheet">
 <style type="text/css">
 
 #icategoryadmimlist{
@@ -23,6 +23,11 @@ text-align: center;
 
 </head>
 <body>
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <h1>관리자 상품관리</h1>
 <div id = "icategoryadmimlist">
 <span><a href="/item/adminlist?category=all" class = "${category == 'all'?'menucss':''}">전체</a></span>&nbsp;&nbsp;
@@ -30,7 +35,7 @@ text-align: center;
 <span><a href="/item/adminlist?category=신발" class = "${category == '신발'?'menucss':''}">신발</a></span>&nbsp;&nbsp;
 <span><a href="/item/adminlist?category=가방" class = "${category == '가방'?'menucss':''}">가방</a></span>&nbsp;&nbsp;
 <span><a href="/item/adminlist?category=모자" class = "${category == '모자'?'menucss':''}">모자</a></span>&nbsp;&nbsp;
-<span><a href="/item/adminlist?category=원피스" class = "${category == '원피스'?'menucss':''}">원피스</a></span>
+<span><a href="/item/adminlist?category=악세사리" class = "${category == '악세사리'?'menucss':''}">악세사리</a></span>
 </div>
 <table class="table table-striped">
   <thead>

@@ -54,9 +54,6 @@ public class MemberServiceImpl implements MemberService{
 		
 		MemberDTO dto = mDao.updateUI(mid);
 		
-		String mbirth = dto.getMbirth().substring(0, 10);
-		dto.setMbirth(mbirth);
-		
 		return dto;
 	}
 

@@ -10,20 +10,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
-<center>
-<h1>관리자 페이지</h1>
+<div align="center" style="margin-top: 5%;">
+<h1 style="margin-bottom: 5%;">관리자 페이지</h1>
 
-<a href="/admin/mlist">회원관리</a> <br>
-<a href="/item/adminlist">상품관리</a> <br>
-<a href="/notice/list">공지사항 </a> <br>
-<a href="/orderList"> 주문관리 </a><br>
-<c:if test="${alogin.aauth == 2}">
-<a href="/order/orderSale"> 매출현황 </a>
-</c:if>
+ <a href="/admin/mlist"><img src="/resources/img/회원관리.png" width="200px"  height="200px"></a> <br>
+<a href="/notice/list"><img src="/resources/img/공지사항.png" width="200px"  height="200px"></a>
+ <img src="/resources/img/라인2.png" width="300px"  height="300px">
+<a href="/item/adminlist"> <img src="/resources/img/상품관리.png" width="200px"  height="200px"> </a><br>
+<a href="/orderList"> <img src="/resources/img/주문관리.png" width="200px"  height="200px"> </a>
+<c:if test="${alogin.aauth == 2}">  
+<a href="/order/orderSale">  <img src="/resources/img/매출현황.png" width="200px"  height="200px"> </a>
+</c:if> 
 
-</center>
+
+</div>
+ 
 </body>
 </html>

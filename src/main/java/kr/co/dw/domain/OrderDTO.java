@@ -21,6 +21,7 @@ public class OrderDTO implements Serializable{
 	private List<OrderItemDTO> orders;
 	private int deliveryCost;
 	private int usePoint;
+	private String i_CATEGORY;
 	private Date orderDate;
 	private int orderSalePrice;
 	private int orderSavePoint;
@@ -32,7 +33,7 @@ public class OrderDTO implements Serializable{
 	
 	public OrderDTO(String orderId, String addressee, String mid, String memberAddr1, String memberAddr2,
 			String memberAddr3, String orderState, List<OrderItemDTO> orders, int deliveryCost, int usePoint,
-			Date orderDate, int orderSalePrice, int orderSavePoint, int orderFinalSalePrice) {
+			String i_CATEGORY, Date orderDate, int orderSalePrice, int orderSavePoint, int orderFinalSalePrice) {
 		super();
 		this.orderId = orderId;
 		this.addressee = addressee;
@@ -132,6 +133,14 @@ public class OrderDTO implements Serializable{
 		this.usePoint = usePoint;
 	}
 
+	public String getI_CATEGORY() {
+		return i_CATEGORY;
+	}
+
+	public void setI_CATEGORY(String i_CATEGORY) {
+		this.i_CATEGORY = i_CATEGORY;
+	}
+
 	public Date getOrderDate() {
 		return orderDate;
 	}
@@ -197,8 +206,8 @@ public class OrderDTO implements Serializable{
 		return "OrderDTO [orderId=" + orderId + ", addressee=" + addressee + ", mid=" + mid + ", memberAddr1="
 				+ memberAddr1 + ", memberAddr2=" + memberAddr2 + ", memberAddr3=" + memberAddr3 + ", orderState="
 				+ orderState + ", orders=" + orders + ", deliveryCost=" + deliveryCost + ", usePoint=" + usePoint
-				+ ", orderDate=" + orderDate + ", orderSalePrice=" + orderSalePrice + ", orderSavePoint="
-				+ orderSavePoint + ", orderFinalSalePrice=" + orderFinalSalePrice + "]";
+				+ ", i_CATEGORY=" + i_CATEGORY + ", orderDate=" + orderDate + ", orderSalePrice=" + orderSalePrice
+				+ ", orderSavePoint=" + orderSavePoint + ", orderFinalSalePrice=" + orderFinalSalePrice + "]";
 	}
 
 	public void getOrderPriceInfo() {

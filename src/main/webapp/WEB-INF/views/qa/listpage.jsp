@@ -8,152 +8,55 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-
+<link rel="stylesheet" href="/resources/css/qalistpage.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-<body>
-   <jsp:include page="../common/header.jsp" />
-   <div class="jumbotron">
-      <h1 class="text-center">QnA</h1>
-   </div>
-   <br>
-   <br>
+<link href = "/resources/css/header.css" rel="stylesheet">
+
+
    <!-- 문맥태그. -->
 <style type="text/css">
-
-table {
-	border-collapse: collapse;
-	width: 100%;
-	text-align:center;
-	border:2px solid;
-	}
-th, td {
-padding: 10px;
-border-bottom: 1px solid #CD5C5C;
-}
-tr:nth-child(2n+0){backgroundcolor-color:green;}
-
-tr:hover { background-color: #F5F5F5; }
-
-#btn_1{
-		border-top-left-radius:5px;
-		border-bottom-left-radius:5px;
-		margin-right: -4px;
-	}
-	
-#btn_2{
-		margin-left: -3px;
-		margin-right: -4px;
-		
-	
-}
-.list_table tbody td.title {
-   text-align: left;
-}
-
-.list_table {
-   width: 80%;
-   margin-left: 10%;
-   margin-right: 10%;
-}
-
-.list_table tbody td {
-   padding: 5px 0;
-   text-align: center;
-   border-bottom: 1px solid #e5e5e5;
-}
-
-.list_table tbody td.title {
-   text-align: left;
-}
-
-.list_table thead th {
-   border-top: 1px solid #e5e5e5;
-   border-bottom: 2px solid #000000;
-   padding: 5px 0;
-   text-align: center;
-   background: #eeeeee;
-}
-
-caption {
-   padding-bottom: 30px;
-}
-
-.btn btn-primary {
-   margin-left: 30px;
-}
-ul {
-			list-style: none;
-			width : 30%;
-			display: inline-block;
-		}
-		
-		li {
-			float: left;
-			margin-left : 5px;
-		}
-.red{
-	color : red;
-}
-#btn_group{
-	left:700px;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
-.th{
-	left:100px;
-}
-#btn_group button{
-	border-top-left-radius:5px;
-	border-bottom-left-radius:5px;
-	margin-right: -4px;
-	height: 100px;
-	width: 150px;
-	font-size : 20px;
-}
-#searchcenter{
-	left:700px;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	text-align: center;
-}
-.th{
-font-size : 12px;
-}
-
-.searchcss{
-	align-items: center;
-	margin-left: 40%;
-	margin-right: 20%;
+body{
+	width:1190px:
 }
 </style>
 
 </head>
 
+<body>
+<jsp:include page="../common/header.jsp" />	
+	
+   <div class="jumbotron">
+   <div class="question">
+   	  <div id="questionposition">
+   	  <img src="../../../resources/img/questionpicture.jpg" alt="물음표" width="150px" height="150px", align="middle">
+	<br>
+	<br>
+	<br>
+<h1 class="text-center">QnA</h1>
+      </div>
+   </div>
+   </div>
+
+   <br>
+   <br>
+
+
 <div id="btn_group">
-	<button id="btn_1" onclick="noticelist()">공지사항</button>
-	<button id="btn_2" onclick="qnalist()">QNA</button>
+   <button id="btn_1" onclick="noticelist()">공지사항</button>
+   <button id="btn_2" onclick="qnalist()">QNA</button>
 </div>
 <br>
 <br>
 <br>
 
-<table class="list_table" ,border="1">
-   		<c:if test="${category=='notice'}">
-   		
-   			<h1>공지사항</h1>
-   		</c:if>
-   		<c:if test="${category=='qna'}">
-   		
-   			<h1>QNA</h1>
-   		</c:if>
-   		
+
+         
+         
 
   
- <table class="list_table" border="1">
+ <table class="table">
       <tr>
          <th>번호</th>
          <th>작성자</th>
@@ -163,12 +66,12 @@ font-size : 12px;
 
       </tr>
       <c:forEach items="${pt.list}" var="blist">
-         <colgroup>	
-            <col width="10%" />
-            <col width="30%" />
-            <col width="15%" />
+         <colgroup>   
+            <col width="12%" />
+            <col width="16%" />
+            <col width="42%" />
             <col width="20%" />
-            <col width="15%" />
+            <col width="10%" />
          </colgroup>
 
          <tr>
@@ -180,91 +83,110 @@ font-size : 12px;
             <td>${blist.qreadcnt}</td>
          </tr>
       </c:forEach>
-   </table>
+</table>
 	<br>
-      <a class="btn btn-primary" href="/qa/insert" style="margin-left: 1032px"> 글 쓰 기 </a>
+
+	<div class="text-right">
+
+        <a class="btn btn-primary" href="/qa/insert"> 글 쓰 기 </a>
+
+        </div>
+
       <br>
+
       <br>
-      
-      <center>
-<a href = "/qa/list?curPage=${pt.curPage > 1? pt.curPage -1:1}">&laquo;</a>
-   
+   <br>
+   <br>
+
+<div class="pagecss">
+      <nav aria-label="...">
+      <ul class="pagination">
+       <li class="page-item disabled">
+      <a class="page-link" href = "/qa/list?curPage=${pt.curPage > 1? pt.curPage -1:1}">Previous</a>
+         </li>
    <c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum }">
-   <a href = "/qa/list?curPage=${i}" class = "${i == pt.curPage?'red':""}">
+    <li class="${i == pt.curPage?'page-item active':'page-item'}" aria-current = "${i == pt.curPage?'page':''}">
+   <a href = "/qa/list?curPage=${i}" class = "page-link">
    
    ${i}
    
    
-   
-   </a> &nbsp;&nbsp;
+
+   </a></li>
    
    </c:forEach>
-   <a href = "/qa/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">&raquo;</a>
-</center> 
+   <li class="page-item">
+   <a class="page-link" href = "/qa/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">Next</a>
+    </li>
+    </ul>
+    </nav>  
+</div>
+
+
 <br>
 <br>
 <br>
 
 
 <form action="/qa/search" method="get">
-<div class="searchcss">
-<div class="input-group mb-3">
+<div class="searchcsss">
+<div class="input-group mb-35">
   <select name="criteria">
-  	<option selected>검색 조건</option>
-  	<option value="mid">작성자</option>
-  	<option value="qtitle">제목</option>
-  	<option value="qcontent">내용</option>
+     <option selected>검색 조건</option>
+     <option value="mid">작성자</option>
+     <option value="qtitle">제목</option>
+     <option value="qcontent">내용</option>
   </select>
-  <input type="form-control" name="keyword">
+  <input class="form-control" name="keyword">
   <div class="input-group-append">
-    <button class="btn btn-info" type="submit">검색</span>
+    <button class="btn btn-info" type="submit">검색</button>
   </div>
 </div>
 </div>
 </form>
-      
+
 <%-- <c:if test="${page.startnum}">
-		<span>{ <a href="/notice/list?curPage=${page.beginPageNum - 1}">이전</a> }</span>
-	</c:if>
-	
-	<c:forEach begin="${page.beginPageNum}" end="${page.finishedPageNum}" var="num">
+      <span>{ <a href="/notice/list?curPage=${page.beginPageNum - 1}">이전</a> }</span>
+   </c:if>
+   
+   <c:forEach begin="${page.beginPageNum}" end="${page.finishedPageNum}" var="num">
 
-	</c:forEach>
+   </c:forEach>
 
-	
-	<c:if test="${page.next}">
-		<span>{ <a href="/notice/listPage?num=${page.endPageNum + 1}">다음</a> }</span>
-	</c:if> --%>
-		
-	<script type="text/javascript">
-	
-		$("body").on("click", ".qtitle", function(event) {
-			event.preventDefault();
-			
-			
-			let mid = "${login.mid}";
-			let alogin = "${alogin}";
-			let userId = $(this).attr("data-mid");
-			let qno = $(this).attr("data-qno");
-			
-			
-			
-			
-			if(mid == userId || alogin != ""){
-				location.href="/qa/read/"+qno;
-			}else{
-				location.href="/member/loginui";
-			}
-			
-		});
+   
+   <c:if test="${page.next}">
+      <span>{ <a href="/notice/listPage?num=${page.endPageNum + 1}">다음</a> }</span>
+   </c:if> --%>
+      
+   <script type="text/javascript">
+   
+      $("body").on("click", ".qtitle", function(event) {
+         event.preventDefault();
+         
+         
+         let mid = "${login.mid}";
+         let alogin = "${alogin}";
+         let userId = $(this).attr("data-mid");
+         let qno = $(this).attr("data-qno");
+         
+         
+         
+         
+         if(mid == userId || alogin != ""){
+            location.href="/qa/read/"+qno;
+         }else{
+            location.href="/member/loginui";
+         }
+         
+      });
 
-		function noticelist(){
-			location.assign("/notice/list?category=free");
-		}
-		function qnalist(){
-			location.assign("/qa/list?category=qna");
-		}
- 	</script>
+      function noticelist(){
+         location.assign("/notice/list?category=free");
+      }
+      function qnalist(){
+         location.assign("/qa/list?category=qna");
+      }
+    </script>
  
 </body>
 </html>

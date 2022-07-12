@@ -1,9 +1,12 @@
 package kr.co.dw.controller.order;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -190,6 +193,9 @@ public class OrderController {
 			cal.add(Calendar.DATE, -1);
 		}
 		// System.out.println(list);
+		
+		list.sort(Comparator.naturalOrder());
+		
 		List<Integer> salesday = new ArrayList<Integer>();
 
 		salesday = oService.weekSale(list);
@@ -208,7 +214,7 @@ public class OrderController {
 		List<String> Month = new ArrayList<String>();
 		SimpleDateFormat formonth = new SimpleDateFormat("yyyy-MM");
 
-		cal.add(Calendar.MONTH, 6);
+		cal.add(Calendar.MONTH, 5);
 		Month.add(formonth.format(cal.getTime()));
 		for (int i = 0; i < 11; i++) {
 			cal.add(Calendar.MONTH, -1);
@@ -231,6 +237,57 @@ public class OrderController {
 		System.out.println(todaytotal);
 
 		model.addAttribute("todaytotal", todaytotal);
+		
+		
+		List<OrderItemDTO> oiDTO = new ArrayList<OrderItemDTO>();
+		oiDTO = oService.orderItem();
+		
+		System.out.println(oiDTO);
+		
+		List<Integer> s = new ArrayList<Integer>(); 
+		
+		for(int i = 0 ; i < oiDTO.size(); i++) { 
+			s.add(i, oiDTO.get(i).getiCount() + oiDTO.get(i).getiPrice()); 
+		}
+		
+		model.addAttribute("oiDTO",oiDTO);
+		model.addAttribute("s",s);
+		
+		System.out.println("오류문제없음을 확인해주세요");
+		
+//		String [] arr = {"옷","가방","신발","악세사리","모자"};
+		List<String> arr = new ArrayList<String>();
+		  arr.add("옷");
+	      arr.add("신발");
+	      arr.add("가방");
+	      arr.add("모자");
+	      arr.add("악세사리");
+	   
+		
+		List<Integer> pietotal = oService.pietotal(arr);
+		
+	
+		
+		for(int i=0 ;i < pietotal.size(); i++) {
+			if(pietotal.get(i) == null) {
+				pietotal.set(i, 0);
+			}
+		}
+		
+		model.addAttribute("arr", arr);
+		model.addAttribute("category", pietotal);
+		
+		System.err.println(arr);
+		System.out.println(pietotal);
+		
+		Integer toprice = oService.gettodayPrice();
+
+	    Integer allprice = oService.getAllPrice();
+
+
+	    model.addAttribute("allprice", allprice);
+
+	    model.addAttribute("toprice", toprice);
 
 		return "/order/orderSale";
 	}

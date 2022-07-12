@@ -11,6 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<link href = "/resources/css/header.css" rel="stylesheet">
 <script>
 	$(function(){
 		$("#loginBtn").click(function(){
@@ -21,6 +22,11 @@
 <title>아이디 찾기</title>
 </head>
 <body>
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">

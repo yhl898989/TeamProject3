@@ -11,12 +11,17 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/iteminsert.css" rel="stylesheet">
+<link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 
 
 
 <body>
+<header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <center>
 <h1>상품등록</h1>
 </center>
@@ -33,7 +38,7 @@
 <option value = "신발">신발</option>
 <option value = "가방">가방</option>
 <option value = "모자">모자</option>
-<option value = "원피스">원피스</option>
+<option value = "악세사리">악세사리</option>
 </select>
 </form>
 <input id = "cateogoryname" type = "hidden" value = "옷">
