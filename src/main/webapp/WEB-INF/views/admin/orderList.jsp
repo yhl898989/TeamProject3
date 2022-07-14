@@ -18,12 +18,14 @@
 <header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
 </header>
-<div style="height: 54.5px;">
-</div>
-<div style="text-align: center;">
-<h5 style="margin-top: 2%; text-align: center"> 전체 주문 내역 </h5>
-</div>
-<div style="margin: 1% 15% 1% 15%;">
+<div style="height: 54.5px;"></div>
+<br>
+<center>
+
+<h4 style="margin-top: 2%; text-align: center;"> 전체 주문 내역 </h4>
+
+</center>
+<div>
    <table class="order_table">
                           <colgroup>
                              <col width="300px;">
@@ -46,34 +48,33 @@
                              <tbody class="order_body">
                            <c:forEach items="${olist}" var="list">
                               <tr>
-                                 <td class="th_column_1">${list.orderId}</td>
+                                 <td class="th_column_1"><a href="/order/orderRead2/${list.orderId}">${list.orderId}</a></td>
                                  <td class="th_column_2">${list.mid}</td>
                                  <td class="th_column_3"><fmt:formatDate pattern="yyyy-MM-dd" value="${list.orderDate}"></fmt:formatDate></td>
                                  <td class="th_column_4">${list.orderState}</td>
                                  <td class="th_column_5">
                                     <c:if test="${list.orderState == '배송준비' }">
-                                    <button data-orderId = "${list.orderId}" id = "order_update_btn">완료</button>
+                                    <button data-orderId = "${list.orderId}"  data-savePoint = "${list.savePoint}" data-mid = "${list.mid}"  id = "order_update_btn">완료</button>
                                     </c:if>
                                  </td>
                                  <td class="th_column_6">
-                                    <c:if test="${list.orderState == '배송준비' }">
+                                    <c:if test="${list.orderState == '배송준비'&& list.mid !='탈퇴한회원' }">
+                                    
                                         <button data-orderId = "${list.orderId}" data-mid = "${list.mid }"  id = "order_delete_btn">삭제</button> 
-            
                                     </c:if>
                                  </td>
-                                 
-                                 
                               </tr>
                            </c:forEach>
                         </tbody>
          </table>
-         
+
 
 
   <ul class="pagination nav justify-content-center bg-light">
     <li class="page-item">
       <a class="page-link" href="/orderList?curpage=${pt.curPage <=1? 1: pt.curPage-1}">&laquo;</a>
     </li>
+    
     
     <c:forEach begin="${pt.beginPageNum }" end="${pt.finishPageNum}" var="page">
        <c:if test="${page == pt.curPage }">
@@ -85,9 +86,7 @@
           <li class="page-item">
              <a class="page-link" href="/orderList?curpage=${page }">${page}</a>
           </li>
-
        </c:if>         
-    
     </c:forEach>
     
 
@@ -184,7 +183,7 @@ $("#order_btn_delete_submit").click(function() {
    let formData = new FormData();
    formData.append("orderId",orderId);
    formData.append("mid",mid);
-   console.log(formData)
+
 $.ajax({
       
       type : "post",
@@ -195,8 +194,8 @@ $.ajax({
       dataType : "text",
       success : function(result) {
          if(result == "SUCCESS"){
-            location.assign("/admin/orderList");
-         }      
+            location.assign("/orderList");
+         }
       }
    
    })
@@ -238,10 +237,13 @@ $.ajax({
 
 $(".order_body").on("click","#order_update_btn", function() {
    let orderId = $(this).attr("data-orderId");
+   let savePoint = $(this).attr("data-savePoint");
+   let mid = $(this).attr("data-mid");
    let formData = new FormData();
    formData.append("orderId",orderId);
+   formData.append("savePoint",savePoint);
+   formData.append("mid",mid);
 $.ajax({
-      
       type : "post",
       url : "/order/check",
       data : formData,
@@ -253,19 +255,21 @@ $.ajax({
             location.assign("/orderList");
          }      
       }
-   
    })
+
 })
+
+
 
 let t1 = ${allprice};
 let Newt1 = t1.toLocaleString('ko-KR'); 
 let td1 = document.getElementById("td1");
-td1.innerText = Newt1;
+td1.innerText = Newt1+"원";
 
 let t2 = ${toprice};
 let Newt2 = t2.toLocaleString('ko-KR');
 let td2 = document.getElementById("td2");
-td2.innerText = Newt2; 
+td2.innerText = Newt2+"원"; 
 </script>
 
 

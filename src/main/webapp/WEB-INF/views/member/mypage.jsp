@@ -7,39 +7,37 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"	integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"	crossorigin="anonymous"></script>
+<script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script   src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"   integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"   crossorigin="anonymous"></script>
 <link href = "/resources/css/header.css" rel="stylesheet">
 <style type="text/css">
 
 .mybody{
 
-	position: absolute;
-	width: 400px;
-	height: 400px;
-	padding: 30px, 20px;
-	text-align: center;
-	top: 37%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	border-radius: 15px;
-	
+   width: 450px;
+   height: 400px;
+   padding: 30px, 20px;
+   text-align: center;
+   top: 37%;
+   left: 50%;
+   border-radius: 15px;
+   
 }
 
 input[type='date']::before {
-	content: attr(data-placeholder);
-	width: 100%;
-	color: #636e72;
+   content: attr(data-placeholder);
+   width: 100%;
+   color: #636e72;
 }
 
 input[type='date']:focus::before, input[type='date']:valid::before {
-	display: none;
+   display: none;
 }
 
 input[type="date"] {
-	width: 320px;
-	content: attr(data-placeholder);
+   width: 320px;
+   content: attr(data-placeholder);
 }
 
 h1 {
@@ -102,110 +100,147 @@ h1 {
 
 </head>
 <body>
-	<jsp:include page="../common/header.jsp" />
-	<h1>내 정보</h1>
-	
+   <header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
+   <h1>내 정보</h1>
+   
 
-	
+   <center>
 <div class="mybody">
 
-		<div class="form-group row textForm">
-		    <label for="staticEmail" class="col-sm-3 col-form-label text-left">이름</label>
-		    <div class="col-sm-9">
-		      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.mname}">
-		    </div>
-		  </div>
-		  
-  		<div class="form-group row textForm">
-		    <label for="staticEmail" class="col-sm-3 col-form-label text-left">이메일</label>
-		    <div class="col-sm-9">
-		      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.memail}">
-		    </div>
-		  </div>
-		  
-    		<div class="form-group row textForm">
-		    <label for="staticEmail" class="col-sm-3 col-form-label text-left">번호</label>
-		    <div class="col-sm-9">
-		      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.mphone}">
-		    </div>
-		  </div>
-		  
-    		<div class="form-group row textForm">
-		    <label for="staticEmail" class="col-sm-3 col-form-label text-left">우편번호</label>
-		    <div class="col-sm-9">
-		      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.maddress1}">
-		    </div>
-		  </div>
-		  
-    		<div class="form-group row textForm">
-		    <label for="staticEmail" class="col-sm-3 col-form-label text-left">주소</label>
-		    <div class="col-sm-9">
-		      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.maddress2}">
-		    </div>
-		  </div>
-		  
-    		<div class="form-group row textForm">
-		    <label for="staticEmail" class="col-sm-3 col-form-label text-left">상세주소</label>
-		    <div class="col-sm-9">
-		      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.maddress3}">
-		    </div>
-		  </div>
-		  
-      		<div class="form-group row textForm">
-			    <label for="staticEmail" class="col-sm-3 col-form-label text-left">생일</label>
-			    <div class="col-sm-9">
-			      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.mbirth}">
-			    </div>
-			  </div>   
-			   		
-  			<div class="form-group row textForm">
-			    <label for="staticEmail" class="col-sm-3 col-form-label text-left">잔액</label>
-			    <div class="col-sm-9">
-			      <input type="text" readonly class="form-control-plaintext insertInfo " id="staticEmail" value="${dto.mmoney}">
-			      <input name="chargemmoney" id="chargemmoney"> <input id="charge" type="submit" value="충전">
-			    </div>
-			  </div>
-			  
-			  		<a class="btn btn-outline-dark" href="/member/update/${dto.mid}">수정</a>
-				<a class="btn btn-outline-dark" href="/member/delete/${dto.mid}">삭제</a>
+      <div class="form-group row textForm">
+          <label for="staticEmail" class="col-sm-3 col-form-label text-left">이름</label>
+          <div class="col-sm-9">
+            <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.mname}">
+          </div>
+        </div>
+        
+        <div class="form-group row textForm">
+          <label for="staticEmail" class="col-sm-3 col-form-label text-left">이메일</label>
+          <div class="col-sm-9">
+            <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.memail}">
+          </div>
+        </div>
+        
+          <div class="form-group row textForm">
+          <label for="staticEmail" class="col-sm-3 col-form-label text-left">번호</label>
+          <div class="col-sm-9">
+            <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.mphone}">
+          </div>
+        </div>
+        
+          <div class="form-group row textForm">
+          <label for="staticEmail" class="col-sm-3 col-form-label text-left">주소</label>
+         <div class="col-sm-9">
+            <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.maddress1}">
+          </div>
+          <div class="col-sm-12">
+            <input style="margin-left: 110px;" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.maddress2}">
+          </div>
+        </div>
+        
+          <div class="form-group row textForm">
+          <label for="staticEmail" class="col-sm-3 col-form-label text-left">상세주소</label>
+          <div class="col-sm-9">
+            <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.maddress3}">
+          </div>
+        </div>
+        
+            <div class="form-group row textForm">
+             <label for="staticEmail" class="col-sm-3 col-form-label text-left">생일</label>
+             <div class="col-sm-9">
+               <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" value="${dto.mbirth}">
+             </div>
+           </div>   
+                  
+           <div class="form-group row textForm">
+             <label for="staticEmail" class="col-sm-3 col-form-label text-left">잔액</label>
+             <div class="col-sm-9">
+               <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" id="mmoney2">
+               <input name="chargemmoney" id="chargemmoney" type="number"> <input id="charge" type="submit" value="충전">
+             </div>
+           </div>
+           
+               <div class="form-group row textForm">
+             <label for="staticEmail" class="col-sm-3 col-form-label text-left">포인트</label>
+             <div class="col-sm-9">
+               <input type="text" readonly class="form-control-plaintext insertInfo " class="staticEmail" id="mpoint">
+             </div>
+           </div>   
+           
+                 <a class="btn btn-outline-dark" href="/member/update/${dto.mid}">수정</a>
+            <a class="btn btn-outline-dark" href="/member/delete/${dto.mid}">회원탈퇴</a>
 
 
   
 
-	
+   
 
 
-	<input id="mmoney" type="hidden" value="${dto.mmoney}">
-	</div>
+   <input id="mmoney" type="hidden" value="${dto.mmoney}">
+   </div>
+   </center>
+   
+   <script type="text/javascript">
+   
+   
+   
+   
+   
+   $(document).ready(function() {
+      
+      //let mbirth = document.getElementById("mbirth");
+      
+      $("#charge").on("click", function() {
+         let formdata = new FormData();
+         
+         let mmoney = $("#mmoney").val();
+         let cargemmoney = $("#chargemmoney").val();
+         let plusmoney = Number(mmoney) + Number(cargemmoney);
 
-	
-	<script type="text/javascript">
-	
-	
-	
-	let formdata = new FormData();
-	
-	$(document).ready(function() {
-		$("#charge").on("click", function() {
-			let mmoney = $("#mmoney").val();
-			let cargemmoney = $("#chargemmoney").val();
-			let plusmoney = Number(mmoney) + Number(cargemmoney);
-			formdata.append('mmoney',plusmoney);
-			$.ajax({
-				url:'/member/charge',
-				type:'post',
-				data: formdata,
-				processData : false,
-		         contentType : false,
-		         dataType : "text",
-				success:function(result){
-					alert("충전 완료");
-					location.assign("/member/mypage/"+${dto.mid});
-				}
-			});
-		});
-	});
-
+         
+         if (chargemmoney.value == '') {
+            alert("충전 할 금액을 입력하세요.");
+            chargemmoney.focus();
+            return false;
+         }
+         
+         if (chargemmoney.value <= 0) {
+            alert("충전 할 수 없는 금액입니다.");
+            chargemmoney.focus();
+            return false;
+         }
+         
+         formdata.append('mmoney',plusmoney);
+         $.ajax({
+            url:'/member/charge',
+            type:'post',
+            data: formdata,
+            processData : false,
+               contentType : false,
+               dataType : "text",
+            success:function(result){
+               alert("충전 완료");
+               location.assign("/member/mypage/"+${dto.mid});
+            }
+         });
+      });
+   });
+   
+   let t1 = ${dto.mmoney};
+   let newt1 = t1.toLocaleString('ko-KR');
+   console.log(newt1);
+   let mmoney2 = document.getElementById("mmoney2");
+   mmoney2.value = newt1+"원";
+   
+   let t2 = ${dto.mpoint};
+   let newt2 = t2.toLocaleString('ko-KR');
+   console.log(newt2);
+   let mpoint = document.getElementById("mpoint");
+   mpoint.value = newt2+" P";
 </script>
 
 </body>

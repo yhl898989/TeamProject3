@@ -39,298 +39,323 @@ import kr.co.dw.service.order.OrderService;
 
 @Controller
 public class OrderController {
-	@Autowired
-	private OrderService oService;
-	@Autowired
-	private MemberService mService;
+   @Autowired
+   private OrderService oService;
+   @Autowired
+   private MemberService mService;
 
-	// 여기는 url 값을 가져오는 값을 쓰면 된다. 주소창에서 가져옴.
-	@RequestMapping(value = "/order/orderRead/{orderId}", method = RequestMethod.GET)
-	public String orderRead(@PathVariable("orderId") String orderId, Model model) {
-		// 그리고 정보를 가져오려면 get방식을 이용해서 가져와야함. return 쪽에는 파일을 가져와서 jsp 파일만 쓰면 된다ㅓ.
+   // 여기는 url 값을 가져오는 값을 쓰면 된다. 주소창에서 가져옴.
+   @RequestMapping(value = "/order/orderRead/{orderId}", method = RequestMethod.GET)
+   public String orderRead(@PathVariable("orderId") String orderId, Model model) {
+      // 그리고 정보를 가져오려면 get방식을 이용해서 가져와야함. return 쪽에는 파일을 가져와서 jsp 파일만 쓰면 된다ㅓ.
 
-		System.out.println(orderId);
-		OrderDTO ODto = oService.orderRead(orderId);
+      System.out.println(orderId);
+      OrderDTO ODto = oService.orderRead(orderId);
 
-		OrderItemDTO OIDto = oService.orderItemRead(orderId);
+      OrderItemDTO OIDto = oService.orderItemRead(orderId);
 
-		model.addAttribute("odto", ODto);
-		model.addAttribute("oidto", OIDto);
+      model.addAttribute("odto", ODto);
+      model.addAttribute("oidto", OIDto);
 
-		return "/order/orderRead"; // jsp의 파일을 갖고오는 위치 (이름을 쓰면되고 servlet에서 prifix와 surfix 들어가는 값에서 나옴.)
-	}
+      return "/order/orderRead"; // jsp의 파일을 갖고오는 위치 (이름을 쓰면되고 servlet에서 prifix와 surfix 들어가는 값에서 나옴.)
+   }
 
-	// 내 주문 찾기
-	@RequestMapping(value = "/myorderList/{mid}", method = RequestMethod.GET)
-	public String OrderList(@PathVariable("mid") String mid, Integer curpage, Model model) {
-		// @PathVariable 은 @RequestMapping 의value = "/orderList/{mid}에서 mid를 가져올수 있게해줌.
+   // 내 주문 찾기
+   @RequestMapping(value = "/myorderList/{mid}", method = RequestMethod.GET)
+   public String OrderList(@PathVariable("mid") String mid, Integer curpage, Model model) {
+      // @PathVariable 은 @RequestMapping 의value = "/orderList/{mid}에서 mid를 가져올수 있게해줌.
 
-		if (curpage == null) {
-			curpage = 1;
+      if (curpage == null) {
+         curpage = 1;
 
-		}
+      }
 
-		PageTO<OrderDTO> pt = oService.myorderList(curpage, mid);
+      PageTO<OrderDTO> pt = oService.myorderList(curpage, mid);
 
-//		
-//		List<OrderDTO> orderList = new ArrayList<OrderDTO>();
-//		
-//		orderList = oService.orderList(mid);
+//      
+//      List<OrderDTO> orderList = new ArrayList<OrderDTO>();
+//      
+//      orderList = oService.orderList(mid);
 
-		model.addAttribute("mid", mid);
+      model.addAttribute("mid", mid);
 
-		model.addAttribute("olist", pt.getList());
+      model.addAttribute("olist", pt.getList());
 
-		model.addAttribute("pt", pt);
+      model.addAttribute("pt", pt);
 
-		return "/member/myorderList";
-	}
+      return "/member/myorderList";
+   }
 
-	@RequestMapping(value = "/order/{mid}", method = RequestMethod.GET)
-	public String orderPage(@PathVariable("mid") String mid, OrderPageDTO opd, Model model) {
+   @RequestMapping(value = "/order/{mid}", method = RequestMethod.GET)
+   public String orderPage(@PathVariable("mid") String mid, OrderPageDTO opd, Model model) {
 
-		model.addAttribute("orderList", oService.getItemsInfo(opd.getOrders()));
-		model.addAttribute("memberInfo", mService.mypage(mid));
+      model.addAttribute("orderList", oService.getItemsInfo(opd.getOrders()));
+      model.addAttribute("memberInfo", mService.mypage(mid));
 
-		return "/order/order";
+      return "/order/order";
 
-	}
+   }
 
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public String orderPagePost(OrderDTO od, HttpServletRequest request) {
+   @RequestMapping(value = "/order", method = RequestMethod.POST)
+   public String orderPagePost(OrderDTO od, HttpServletRequest request) {
 
-		oService.order(od);
+      oService.order(od);
 
-		return "redirect:/";
-	}
+      return "redirect:/";
+   }
 
-	@RequestMapping(value = "/order/check", method = RequestMethod.POST)
-	public ResponseEntity<String> orderupdate(HttpServletRequest request) {
-		ResponseEntity<String> entity = null;
+   @RequestMapping(value = "/order/check", method = RequestMethod.POST)
+   public ResponseEntity<String> orderupdate(HttpServletRequest request) {
+      ResponseEntity<String> entity = null;
 
-		String orderId = request.getParameter("orderId");
+      String orderId = request.getParameter("orderId");
+      String SsavePoint = request.getParameter("savePoint");
+      String mid = request.getParameter("mid");
+      int savePoint = Integer.parseInt(SsavePoint);
+      
+      System.out.println(orderId);
+      System.out.println(SsavePoint);
+      System.out.println(mid);
+      System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      
+      try {
 
-		try {
+         oService.orderUpdate(orderId, savePoint, mid);
+         
 
-			oService.orderUpdate(orderId);
+         entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+      } catch (Exception e) {
+         e.printStackTrace();
+         entity = new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+      }
 
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
-		}
+      return entity;
+   }
 
-		return entity;
-	}
+   @RequestMapping(value = "/order/orderCancle", method = RequestMethod.POST)
+   public ResponseEntity<String> orderCancle(HttpServletRequest request) {
+      ResponseEntity<String> entity = null;
 
-	@RequestMapping(value = "/order/orderCancle", method = RequestMethod.POST)
-	public ResponseEntity<String> orderCancle(HttpServletRequest request) {
-		ResponseEntity<String> entity = null;
+      try {
 
-		try {
+         String orderId = request.getParameter("orderId");
+         String mid = request.getParameter("mid");
 
-			String orderId = request.getParameter("orderId");
-			String mid = request.getParameter("mid");
+         OrderCancelDTO dto = new OrderCancelDTO(mid, orderId);
+         
+         oService.orderCancle(dto);
 
-			OrderCancelDTO dto = new OrderCancelDTO(mid, orderId);
+         entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+      } catch (Exception e) {
+         e.printStackTrace();
+         entity = new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+      }
 
-			oService.orderCancle(dto);
+      return entity;
+   }
 
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
-		}
+   @RequestMapping(value = "/order/orderCancle2", method = RequestMethod.POST)
+   public String orderCancle(OrderCancelDTO dto) {
 
-		return entity;
-	}
+      System.out.println(dto);
 
-	@RequestMapping(value = "/order/orderCancle2", method = RequestMethod.POST)
-	public String orderCancle(OrderCancelDTO dto) {
+      oService.orderCancle(dto);
 
-		System.out.println(dto);
+      return "redirect:/myorderList/" + dto.getMid();
+   }
 
-		oService.orderCancle(dto);
+   @RequestMapping(value = "/order/updateUI/{orderId}", method = RequestMethod.GET)
+   public String orderUpdateUI(@PathVariable("orderId") String orderId, Model model) {
 
-		return "redirect:/myorderList/" + dto.getMid();
-	}
+      OrderDTO ODto = oService.orderRead(orderId);
 
-	@RequestMapping(value = "/order/updateUI/{orderId}", method = RequestMethod.GET)
-	public String orderUpdateUI(@PathVariable("orderId") String orderId, Model model) {
+      OrderItemDTO OIDto = oService.orderItemRead(orderId);
 
-		OrderDTO ODto = oService.orderRead(orderId);
+      model.addAttribute("odto", ODto);
+      model.addAttribute("oidto", OIDto);
 
-		OrderItemDTO OIDto = oService.orderItemRead(orderId);
-
-		model.addAttribute("odto", ODto);
-		model.addAttribute("oidto", OIDto);
-
-		return "/order/orderUpdate";
-	}
-
-	@RequestMapping(value = "/order/update", method = RequestMethod.POST)
-	public String orderUpdate(OrderDTO odto) {
-
-		System.out.println(odto);
-
-		oService.orderAddUpdate(odto);
-
-		return "redirect:/order/orderRead/" + odto.getOrderId();
-
-	}
-
-	
-	@RequestMapping(value = "/order/orderSale", method = RequestMethod.GET)
-	public String Ordersale(Model model) {
-
-		Calendar cal = new GregorianCalendar();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-		List<String> list = new ArrayList<String>();
-
-		for (int i = 0; i < 7; i++) {
-			list.add(format.format(cal.getTime()));
-			cal.add(Calendar.DATE, -1);
-		}
-		// System.out.println(list);
-		
-		list.sort(Comparator.naturalOrder());
-		
-		List<Integer> salesday = new ArrayList<Integer>();
-
-		salesday = oService.weekSale(list);
-
-		for (int i = 0; i < salesday.size(); i++) {
-			if (salesday.get(i) == null) {
-				salesday.set(i, 0);
-			}
-		}
-
-		model.addAttribute("list", list);
-		System.out.println(list.size());
-		model.addAttribute("salesday", salesday);
-		System.out.println(salesday.size());
-
-		List<String> Month = new ArrayList<String>();
-		SimpleDateFormat formonth = new SimpleDateFormat("yyyy-MM");
-
-		cal.add(Calendar.MONTH, 5);
-		Month.add(formonth.format(cal.getTime()));
-		for (int i = 0; i < 11; i++) {
-			cal.add(Calendar.MONTH, -1);
-			Month.add(formonth.format(cal.getTime()));
-		}
-
-		List<Integer> MonthSales = oService.monthSale(Month);
-
-		for (int i = 0; i < MonthSales.size(); i++) {
-			if (MonthSales.get(i) == null) {
-				MonthSales.set(i, 0);
-			}
-		}
+      return "/order/orderUpdate";
+   }
 
-		model.addAttribute("MonthSales", MonthSales);
-		model.addAttribute("Month", Month);
+   @RequestMapping(value = "/order/update", method = RequestMethod.POST)
+   public String orderUpdate(OrderDTO odto) {
 
-		List<Integer> todaytotal = oService.gettodaytotal();
+      System.out.println(odto);
 
-		System.out.println(todaytotal);
+      oService.orderAddUpdate(odto);
 
-		model.addAttribute("todaytotal", todaytotal);
-		
-		
-		List<OrderItemDTO> oiDTO = new ArrayList<OrderItemDTO>();
-		oiDTO = oService.orderItem();
-		
-		System.out.println(oiDTO);
-		
-		List<Integer> s = new ArrayList<Integer>(); 
-		
-		for(int i = 0 ; i < oiDTO.size(); i++) { 
-			s.add(i, oiDTO.get(i).getiCount() + oiDTO.get(i).getiPrice()); 
-		}
-		
-		model.addAttribute("oiDTO",oiDTO);
-		model.addAttribute("s",s);
-		
-		System.out.println("오류문제없음을 확인해주세요");
-		
-//		String [] arr = {"옷","가방","신발","악세사리","모자"};
-		List<String> arr = new ArrayList<String>();
-		  arr.add("옷");
-	      arr.add("신발");
-	      arr.add("가방");
-	      arr.add("모자");
-	      arr.add("악세사리");
-	   
-		
-		List<Integer> pietotal = oService.pietotal(arr);
-		
-	
-		
-		for(int i=0 ;i < pietotal.size(); i++) {
-			if(pietotal.get(i) == null) {
-				pietotal.set(i, 0);
-			}
-		}
-		
-		model.addAttribute("arr", arr);
-		model.addAttribute("category", pietotal);
-		
-		System.err.println(arr);
-		System.out.println(pietotal);
-		
-		Integer toprice = oService.gettodayPrice();
+      return "redirect:/order/orderRead/" + odto.getOrderId();
 
-	    Integer allprice = oService.getAllPrice();
+   }
 
+   @RequestMapping(value = "/order/orderSale", method = RequestMethod.GET)
+   public String Ordersale(Model model, HttpSession session) {
+      AdminDTO aDto = (AdminDTO) session.getAttribute("alogin");
 
-	    model.addAttribute("allprice", allprice);
+      if (aDto == null || aDto.getAauth() < 2) {
+         return "redirect:/item/main";
+      }
 
-	    model.addAttribute("toprice", toprice);
+      Calendar cal = new GregorianCalendar();
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-		return "/order/orderSale";
-	}
+      List<String> list = new ArrayList<String>();
 
-	@ResponseBody
-	@RequestMapping(value = "/order/sale", method = RequestMethod.POST)
-	public String test(SaleDTO sdto) {
+      for (int i = 0; i < 7; i++) {
+         list.add(format.format(cal.getTime()));
+         cal.add(Calendar.DATE, -1);
+      }
+      // System.out.println(list);
 
-		Integer sale = oService.getsale(sdto);
+      list.sort(Comparator.naturalOrder());
 
-		if (sale == null) {
-			sale = 0;
-		}
+      List<Long> salesday = new ArrayList<Long>();
 
-		return "" + sale;
+      salesday = oService.weekSale(list);
 
-	}
+      for (int i = 0; i < salesday.size(); i++) {
+         if (salesday.get(i) == null) {
+            salesday.set(i, (long) 0);
+         }
+      }
 
-	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
-	public String OrderList(Model model, HttpSession session, Integer curpage) {
-		AdminDTO aDto = (AdminDTO) session.getAttribute("alogin");
+      model.addAttribute("list", list);
+      System.out.println(list.size());
+      model.addAttribute("salesday", salesday);
+      System.out.println(salesday.size());
 
-		if (aDto == null || aDto.getAauth() < 1) {
-			return "redirect:/item/main";
-		}
-		if (curpage == null) {
-			curpage = 1;
-		}
+      List<String> Month = new ArrayList<String>();
+      SimpleDateFormat formonth = new SimpleDateFormat("yyyy-MM");
 
-		Integer toprice = oService.gettodayPrice();
+      cal.add(Calendar.MONTH, 5);
+      Month.add(formonth.format(cal.getTime()));
+      for (int i = 0; i < 11; i++) {
+         cal.add(Calendar.MONTH, -1);
+         Month.add(formonth.format(cal.getTime()));
+      }
 
-		Integer allprice = oService.getAllPrice();
+      List<Long> MonthSales = oService.monthSale(Month);
 
-		PageTO<OrderDTO> pt = oService.list(curpage);
+      for (int i = 0; i < MonthSales.size(); i++) {
+         if (MonthSales.get(i) == null) {
+            MonthSales.set(i, (long) 0);
+         }
+      }
 
-		model.addAttribute("allprice", allprice);
+      model.addAttribute("MonthSales", MonthSales);
+      model.addAttribute("Month", Month);
 
-		model.addAttribute("toprice", toprice);
+      List<Integer> todaytotal = oService.gettodaytotal();
 
-		model.addAttribute("olist", pt.getList());
+      System.out.println(todaytotal);
 
-		model.addAttribute("pt", pt);
+      model.addAttribute("todaytotal", todaytotal);
 
-		return "/admin/orderList";
-	}
+      List<OrderItemDTO> oiDTO = new ArrayList<OrderItemDTO>();
+      oiDTO = oService.orderItem();
+
+      System.out.println(oiDTO);
+
+      List<Integer> s = new ArrayList<Integer>();
+
+      for (int i = 0; i < oiDTO.size(); i++) {
+         s.add(i, (int) (oiDTO.get(i).getiCount() + oiDTO.get(i).getiPrice()));
+      }
+
+      model.addAttribute("oiDTO", oiDTO);
+      model.addAttribute("s", s);
+
+      System.out.println("오류문제없음을 확인해주세요");
+
+//      String [] arr = {"옷","가방","신발","악세사리","모자"};
+      List<String> arr = new ArrayList<String>();
+      arr.add("옷");
+      arr.add("신발");
+      arr.add("가방");
+      arr.add("모자");
+      arr.add("악세사리");
+
+      List<Long> pietotal = oService.pietotal(arr);
+
+      for (int i = 0; i < pietotal.size(); i++) {
+         if (pietotal.get(i) == null) {
+            pietotal.set(i, (long) 0);
+         }
+      }
+
+      model.addAttribute("arr", arr);
+      model.addAttribute("category", pietotal);
+
+      System.err.println(arr);
+      System.out.println(pietotal);
+
+      long toprice = oService.gettodayPrice();
+
+      long allprice = oService.getAllPrice();
+       
+       if(allprice == 0) {
+          allprice = 0;
+       }
+       
+       if(toprice == 0) {
+          toprice = 0;                  
+       }
+
+       model.addAttribute("allprice", allprice);
+
+       model.addAttribute("toprice", toprice);
+
+      return "/order/orderSale";
+   }
+
+   @ResponseBody
+   @RequestMapping(value = "/order/sale", method = RequestMethod.POST)
+   public String test(SaleDTO sdto) {
+
+      long sale = oService.getsale(sdto);
+
+      if (sale == 0) {
+         sale = 0;
+      }
+
+      return "" + sale;
+
+   }
+
+   @RequestMapping(value = "/orderList", method = RequestMethod.GET)
+   public String OrderList(Model model, HttpSession session, Integer curpage) {
+      AdminDTO aDto = (AdminDTO) session.getAttribute("alogin");
+
+      if (aDto == null || aDto.getAauth() < 1) {
+         return "redirect:/item/main";
+      }
+      if (curpage == null) {
+         curpage = 1;
+      }
+
+      long toprice = oService.gettodayPrice();
+
+      long allprice = oService.getAllPrice();
+
+      PageTO<OrderDTO> pt = oService.list(curpage);
+
+      if (toprice == 0) {
+         toprice = 0;
+      }
+
+      if (allprice == 0) {
+         allprice = 0;
+      }
+
+      model.addAttribute("allprice", allprice);
+
+      model.addAttribute("toprice", toprice);
+
+      model.addAttribute("olist", pt.getList());
+
+      model.addAttribute("pt", pt);
+
+      return "/admin/orderList";
+   }
+
 }

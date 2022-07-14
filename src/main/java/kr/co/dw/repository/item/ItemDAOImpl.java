@@ -89,7 +89,6 @@ public class ItemDAOImpl implements ItemDAO{
 	}
 	@Override
 	public Integer getamount(String i_CATEGORY) {
-		System.out.println(i_CATEGORY);
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("i_CATEGORY", i_CATEGORY);
@@ -144,5 +143,9 @@ public class ItemDAOImpl implements ItemDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE+".deleteimgcount", getmainimgfilename);
 	}
-	
+	@Override
+	public Integer ordercheck(int iId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".ordercheck", iId);
+	}
 }

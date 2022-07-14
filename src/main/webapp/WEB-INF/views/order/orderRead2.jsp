@@ -105,7 +105,7 @@
 					</table>
 
 
-					<table class="goods_table" >
+					<table class="goods_table" style="">
 						<colgroup>
 							<col width="20%">
 							<col width="20%">
@@ -137,14 +137,7 @@
 			
 
 			<div class="total_info_btn_div">
-				<c:if test="${odto.orderState == '배송준비' }">
-					<a class="btn btn-outline-dark"
-						href="/order/updateUI/${oidto.orderId}" id="btn_oupdate">배송정보
-						수정하기</a>
-				</c:if>
-				<c:if test="${odto.orderState == '배송준비' }">
-					<a class="btn btn-outline-dark " href="#" id="btn_odelete">배송취소</a>
-				</c:if>
+
 				<a class="btn btn-outline-dark goback" href="#">목록</a>
 
 			</div>
@@ -168,10 +161,6 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-
-			$("#btn_odelete").click(function() {
-				$(".delete_form").submit();
-			});
 
 			$(".goback").click(function() {
 				history.go(-1);

@@ -62,15 +62,19 @@
 <div class="box">
 <div class="card ">
  <a href = "/item/read/${list.iId}">
- <div>
-  <img src="/displayfile?filename=${list.ifilename}"class="card-img-top" alt="..." width="100px" height="200px">
-  </div>
+ 	<c:if test="${list.iCount==0 }">
+       <img src="/resources/img/soldout.png" width="100%"  height="200px">
+    </c:if>
+    
+    <c:if test="${list.iCount!=0 }">
+  		<img src="/displayfile?filename=${list.ifilename}"alt="..." width="100%" height="200px">
+  	</c:if>
   </a>
   <div class="card-body">
-    <p class="card-text">${list.iName}</p>
-    <p class="card-price"><div class = "iPrice">${list.iPrice}원<span class = "${list.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${list.iDc}%</span></div>
-    	<div>${list.getIsaleiPrice()}원</div>
-    </p>
+    <div class="card-text">${list.iName}</div>
+    <div class="card-price"><div class = "iPrice"><span class = "${list.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${list.iDc}%</span></div>
+    	<div><span class ="${list.iDc > 0?'':'iPricehidden'}" style="text-decoration: line-through; color: gray; font-size: 12px;"><fmt:formatNumber value = "${list.iPrice}" var = "realiPrice" pattern="#,###"/>${realiPrice}원</span> <span style="font-size: 12px;"> <fmt:formatNumber value = "${list.getIsaleiPrice()}" var = "saleprice" pattern="#,###"/>${saleprice}원</span></div>
+    </div>
   </div>
 </div>
 </div>
@@ -78,21 +82,26 @@
 </div>
 <br>
 
-<center>
-<a href = "/item/search?curPage=${pt.curPage > 1? pt.curPage -1:1}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}">&laquo;</a>
-	
-	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
-	<a href = "/item/search?curPage=${i}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}" class = "${i == pt.curPage?'red':""}">
+<ul class="pagination nav justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href = "/item/search?curPage=${pt.curPage > 1? pt.curPage -1:1}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}">&laquo;</a>
+    </li>
+    <c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
+    <li class="${i == pt.curPage?'page-item active':'page-item'}" aria-current="${i == pt.curPage?'page':''}">
+	<a  href = "/item/search?curPage=${i}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}" class = "page-link">
 	
 	${i}
 	
 	
 	
-	</a> &nbsp;&nbsp;
-	
+	</a>
+	</li>
 	</c:forEach>
-	<a href = "/item/search?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}">&raquo;</a>
-</center>	
+    
+    <li class="page-item">
+      <a class="page-link" href = "/item/search?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&showhowitemlist=${showhowitemlist}&&criteria=${criteria}&&keyword=${keyword}">&raquo;</a>
+    </li>
+  </ul>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 
 <script type="text/javascript"></script>

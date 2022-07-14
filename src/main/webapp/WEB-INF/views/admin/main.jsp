@@ -13,7 +13,11 @@
 <link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 <body>
+ <header style="position: fixed; z-index: 10;">
 <jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <div align="center" style="margin-top: 5%;">
 <h1 style="margin-bottom: 5%;">관리자 페이지</h1>
 
@@ -28,6 +32,6 @@
 
 
 </div>
- 
+ <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

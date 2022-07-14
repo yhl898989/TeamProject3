@@ -5,6 +5,12 @@
 <mapper namespace="kr.co.dw.item">
 
 
+	<select id="ordercheck" resultType="integer">
+	
+	SELECT COUNT(*) FROM tbl_orderItem WHERE iId = #{iId} and orderState = '배송준비'
+	
+	</select>
+
 	<select id="deleteimgcount" resultType="int">
 	
 	SELECT COUNT(*) FROM tbl_orderItem WHERE ifilename = #{getmainimgfilename}

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +22,19 @@
    padding-left: 0%;
 }
 .red{
-	color: red;
+   color: red;
 }  
 .hidden{
-	display : none;
+   display : none;
+}
+.Productinfo{
+   font-size: 30px;
+}
+#itemiName{
+   word-break:break-all;
+}
+.hidden{
+   display: none;
 }
 </style>
 
@@ -47,69 +57,70 @@
 
 <div class = "slick_sd" id = "subphoto">
 <span>
-  <img id = "aaaaa" src="/displayfile?filename=${item.ifilename}" alt="..." width="100px" height="100px">
+  <img id = "aaaaa" src="/displayfile?filename=${item.ifilename}" alt="..." width="125px" height="100px">
   </span>
 </div>
 </div>
 <div class = "itemreadinfo">
- <div class="form-group row">
-    <label for="iId" class="col-sm-2 col-form-label col-form-label-lg">상품아이디</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="itemiId" value="${item.iId}">
-    </div>
+<div class = "Productinfo">Product info</div>
+ <div class="">
+    <label for="iId" class="">No.</label>
+    <span id="itemiId">
+      ${item.iId}
+    </span>
   </div>
   
   
-  <div class="form-group row">
-    <label for="iName" class="col-sm-2 col-form-label col-form-label-lg">상품명</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="itemiName" value="${item.iName}">
-    </div>
+  <div id="itemiName" style="font-size: 25px; width: 595px; display: inline;">
+    
+      ${item.iName}
+   
   </div>
+ <br>
+ <br>
+<div class="" style="display: flex; justify-content: space-between; width: 170px; font-size: 15px;" >
+    <label for="iPrice">소비자가</label>
+    <span id="itemiPrice">
+     <fmt:formatNumber value = "${item.iPrice}" var = "iPrice" pattern="#,###"/>${iPrice}원
+    </span>
+  </div>
+  <br>
+<div style="width: 170px; display: flex;justify-content: space-between; font-size: 15px;">
+    <span>판매가</span>
+    <span id="saleiPrice">
+    <strong> <fmt:formatNumber value = "${item.getIsaleiPrice()}" var = "isale" pattern="#,###" />${isale}원</strong>
+    </span>  
+     
+    
+  </div>
+  <br>
+  <span id="itemiDc" style="color: red;">
+     sale&nbsp;${item.iDc}%
+    </span>
+   <br>
+   <br>
+   <div>
+    <span>남은 개수</span>
+    <span id="itemiCount">
+      ${item.iCount}개
+    </span>
+  </div>
+  <br>
+  <br>
+     <select name="oqty" id="oqty" class = "${item.iCount == 0?'hidden':''}">
 
-<div class="form-group row">
-    <label for="iPrice" class="col-sm-2 col-form-label col-form-label-lg">소비자가</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="itemiPrice" value="${item.iPrice}원">
-    </div>
-  </div>
-  
-<div class="form-group row">
-    <label for="saleiPrice" class="col-sm-2 col-form-label col-form-label-lg">판매가</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="saleiPrice" value="${item.getIsaleiPrice()}원">
-    </div>  
-  </div>
-  
- <div class="form-group row">
-    <label for="iDc" class="col-sm-2 col-form-label col-form-label-lg">할인율</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="itemiDc" value="${item.iDc}%">
-    </div>
-  </div>
-  
-   <div class="form-group row">
-    <label for="iDc" class="col-sm-2 col-form-label col-form-label-lg">수량</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="itemiCount" value="${item.iCount}개">
-    </div>
-  </div>
-  
-     <select name="oqty" id="oqty" >
-
-         <c:forEach begin="1" end="${item.iCount >50 ? 50: item.iCount }" var="iCount">
+         <c:forEach begin="1" end="${item.iCount >50 ? 50: item.iCount }" var="iCount" >
             <option value="${iCount}">${iCount}</option>
           </c:forEach>
 
-   </select>
-  
+   </select>&nbsp;&nbsp;
+  <a class="btn btn-success btn_buy">${item.iCount == 0?"솔드아웃":"바로구매"}</a>
   </div>
   </div>
 <br>
 <br>
 
 <a class="btn btn-success reply">리뷰</a>
-<a class="btn btn-success btn_buy">${item.iCount == 0?"솔드아웃":"바로구매"}</a>
 <form action="/order/${login.mid}" method="get" class="order_form">
    <input type="hidden" name="orders[0].iId" value="${item.iId}">
    <input type="hidden" name="orders[0].iCount" value="">
@@ -125,7 +136,7 @@
 
 <div class="form-group row">
   <label for="rcontent" class="form-label">상품평</label>
-  <textarea class="form-control" id="rcontent" placeholder="내용을 입력해 주세요." rows="10"></textarea>
+  <textarea class="form-control" id="rcontent" placeholder="내용을 입력해 주세요." rows="10" style="resize: none;"></textarea>
 </div>
 
 <form id="upload" action="/review/uploadform" method="post" enctype="multipart/form-data">
@@ -154,7 +165,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">rno: <span id="modal_rno">5</span></h5>
+        <h5 class="modal-title" id="staticBackdropLabel">댓글번호&nbsp; <span id="modal_rno">5</span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -164,22 +175,24 @@
            <input id="item_input_update_rtitle" class="form-control" placeholder="제목을 입력해 주세요." value = "">
         </div>
         <div class="form-group">
-           <input id="item_input_update_rcontent" class="form-control" placeholder="내용을 입력해 주세요." value = "">
+           <textarea id="item_input_update_rcontent" class="form-control" placeholder="내용을 입력해 주세요." value = "" style="resize: none;"></textarea>
         </div>
       </div>
-      <form id="upload2" action="/review/uploadform2" method="post" enctype="multipart/form-data">
+      <center>
+      <form id="upload2" action="/review/uploadform2" method="post" enctype="multipart/form-data" style="width: 90%;">
       <div class="form-group row">
-   <label for="formFileMultiple" class="form-label">사진첨부</label>
+   <label for="formFileMultiple" class="form-label" style="margin-left: 2%;">사진첨부</label>
   <input class="form-control" type="file" name="file" id="formFileMultiple1" multiple>
   <input type = "hidden" name = "iId" value = "${item.iId}">
   <input id = "rnorno" type = "hidden" name = "rno" value ="">
 </div>
 </form>
+</center>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
         <button id="item_btn_update_submit" type="button" data-dismiss="modal" class="btn btn-primary">리뷰 수정 완료</button>
       </div>
-    </div>
+    </div>   
   </div>
 </div>
 
@@ -201,102 +214,94 @@ let iId = ${item.iId};
 
 let iPrice = ${item.iPrice};
 
+let iCount = ${item.iCount};
+
 let curpage = 1;
 
 $("#pageing").on("click","a",function() {
-	
-	let nowpagenum = $(this).attr("id");
-	getAllReply3(iId, $("#review"),nowpagenum, $("#pageing"), mid, aid);
-})	
+   
+   let nowpagenum = $(this).attr("id");
+   getAllReply3(iId, $("#review"),nowpagenum, $("#pageing"), mid, aid);
+})   
 
-if(iPrice < 1000){
-    let iPrice = ${item.iPrice};
-    let iDc = ${item.iDc};
-    let savePrice = iPrice*(iDc/100);
-    let saleiPrice = Math.floor(iPrice - savePrice);  
-    $("#saleiPrice").val(saleiPrice+"원");
- }else{
-	 let iPrice = ${item.iPrice};
-	    let iDc = ${item.iDc};
-	    let savePrice = iPrice*(iDc/100);
-	    let saleiPrice = Math.ceil((iPrice - savePrice)/10)*10;  
-	    $("#saleiPrice").val(saleiPrice+"원");
- }
 
 $("#subphoto").on("mouseenter","#aaaaa", function() {
-	let htmlimgsrc = $(this).attr("src");
-	$("#mainphoto").attr("src",htmlimgsrc);
+   let htmlimgsrc = $(this).attr("src");
+   $("#mainphoto").attr("src",htmlimgsrc);
 })
 
 
 
 
 getitemfilelist(iId,$("#subphoto"));
-	
+   
 $(".slick_sd").slick({
-	slidesToShow : 4,		
-	slidesToScroll : 1,
-	arrows : true, 
-	vertical : false,
-	prevArrow : "<button type='button' class='slick-prev'><</button>",
-	nextArrow : "<button type='button' class='slick-next'>></button>",
+   slidesToShow : 4,      
+   slidesToScroll : 1,
+   arrows : true, 
+   vertical : false,
+   prevArrow : "<button type='button' class='slick-prev'><</button>",
+   nextArrow : "<button type='button' class='slick-next'>></button>",
 })
 
-	
+   
 $(".btn_buy").on("click" , function () {
-	if( mid== ""){
-		location.assign("/member/loginui"); 
-	}else{
-		   let itemCount =$("#oqty").val();
-		   
-		   $(".order_form").find("input[name='orders[0].iCount']").val(itemCount);
-		   $(".order_form").submit();
-	}
+   if( mid== ""){
+      location.assign("/member/loginui"); 
+   }else if(iCount == "0"){
+      alert("품절입니다.");
+      return;
+   }else{
+         let itemCount =$("#oqty").val();
+         
+         $(".order_form").find("input[name='orders[0].iCount']").val(itemCount);
+         $(".order_form").submit();
+   }
 
-		});
+      });
 
 $("#item_btn_update_submit").on("click",function() {
-	
+   
     let rtitle = $("#item_input_update_rtitle").val();
     
     let rcontent = $("#item_input_update_rcontent").val();
     
-	let file = $("#formFileMultiple1")[0];
-	console.log(file);
-	let rfile = file.files;
-	console.log(rfile);
+   let file = $("#formFileMultiple1")[0];
+   
+   let rfile = file.files;
+   
     
     let rno = $("#modal_rno").text();
     $("#rnorno").val(rno);
     $.ajax({
-   	 type : "put", 
-   	 url : "/review",
-   	 headers : {
-   		 "Content-Type" : "application/json; charset=UTF-8",
-   		 "X-HTTP-Method-Override" : "PUT"
-   	 },
-   	 data : JSON.stringify({
-   		rtitle : rtitle,
-   		rcontent : rcontent,
-   		 rno : rno,
-   	 }),
-   	 dataType: "text",
-   	 success : function(result) {
-   		
-   		 if(result=="SUCCESS"){
-   			 
-   			 $(".modalimg").remove();
-   		 	
-   		 	
-   		 }
-		}
+       type : "put", 
+       url : "/review",
+       headers : {
+          "Content-Type" : "application/json; charset=UTF-8",
+          "X-HTTP-Method-Override" : "PUT"
+       },
+       data : JSON.stringify({
+         rtitle : rtitle,
+         rcontent : rcontent,
+          rno : rno,
+       }),
+       dataType: "text",
+       success : function(result) {
+         
+          if(result=="SUCCESS"){
+             
+             $(".modalimg").remove();
+             
+             
+          }
+      }
     });
     if(rfile.length != 0){
-    	
-    	$("#upload2").submit();
-    	
+       
+       $("#upload2").submit();
+       
     }
-  	  
+       
  
     
     getAllReply3(iId, $("#review"),curpage, $("#pageing"), mid, aid);
@@ -313,7 +318,7 @@ $("#review").on("click", ".item_btn_update", function() {
     
     let rno = $(this).attr("data-rno");
     
-	
+   
     
     
     $("#modal_rno").text(rno);
@@ -343,7 +348,7 @@ $("#review").on("click", ".item_btn_update", function() {
        }),
        dataType : 'text',
        success : function(result) {
-    	   
+          
           
           location.assign("/item/read/"+iId);
        }
@@ -353,11 +358,11 @@ $("#review").on("click", ".item_btn_update", function() {
 
 
 $("#reply_btn_submit").on("click", function() {
-	
-	let file = $("#formFileMultiple")[0];
-	
-	let rfile = file.files;
-	
+   
+   let file = $("#formFileMultiple")[0];
+   
+   let rfile = file.files;
+   
     let rtitle = $("#rtitle").val();
     
     let rcontent = $("#rcontent").val();
@@ -366,22 +371,22 @@ $("#reply_btn_submit").on("click", function() {
        type : 'post',
        url : '/review',
        headers : {
-  		 "Content-Type" : "application/json; charset=UTF-8",
-  		 "X-HTTP-Method-Override" : "POST"
-  	 },
+         "Content-Type" : "application/json; charset=UTF-8",
+         "X-HTTP-Method-Override" : "POST"
+      },
        data : JSON.stringify({
-    	   mid : mid,
-    	   iId : iId,
-    	   rtitle : rtitle,
-    	   rcontent : rcontent,
-    	  
+          mid : mid,
+          iId : iId,
+          rtitle : rtitle,
+          rcontent : rcontent,
+         
        }),
        dataType : 'text',
        success : function(result) {
           if(result =='SUCCESS') {
 
-        	  $("#rtitle").val("");
-        	  $("#rcontent").val("");
+             $("#rtitle").val("");
+             $("#rcontent").val("");
             
           }else {
              alert("입력 실패했습니다.");
@@ -390,12 +395,12 @@ $("#reply_btn_submit").on("click", function() {
        }
       
     });
-    		 
+           
     if(rfile.length != 0){ //
-    	  $("#upload").submit();
+         $("#upload").submit();
     }
   
-    $(".collapse").collapse("hide");	
+    $(".collapse").collapse("hide");   
     getAllReply3(iId, $("#review"),curpage, $("#pageing"), mid, aid);
   
     
@@ -407,36 +412,36 @@ $("#reply_btn_submit").on("click", function() {
 
  
 $(".reply").on("click", function() {
-	if($("#mid").val() == ""){
-		location.assign("/member/loginui"); //비로그인 리뷰작성 막는코드
-	}
-	
-	$.ajax({
-	       type : 'post',
-	       url : '/review/reviewcheck',
-	       headers : {
-	  		 "Content-Type" : "application/json; charset=UTF-8",
-	  		 "X-HTTP-Method-Override" : "POST"
-	  	 },
-	       data : JSON.stringify({
-	    	   mid : mid,
-	    	   iId : iId,
-	    	   	    	  
-	       }),
-	       dataType : 'text',
-	       success : function(result) {
-	          if(result =='SUCCESS') {
-	        	  $(".collapse").collapse("toggle");
-	        	 
-	          }else if (result == 'fail') {
-				  alert('상품을 구매 후 작성해주세요.');
-			}
-	         
-	       }
-	      
-	    });
-		
-	
+   if($("#mid").val() == ""){
+      location.assign("/member/loginui"); //비로그인 리뷰작성 막는코드
+   }
+   
+   $.ajax({
+          type : 'post',
+          url : '/review/reviewcheck',
+          headers : {
+            "Content-Type" : "application/json; charset=UTF-8",
+            "X-HTTP-Method-Override" : "POST"
+         },
+          data : JSON.stringify({
+             mid : mid,
+             iId : iId,
+                         
+          }),
+          dataType : 'text',
+          success : function(result) {
+             if(result =='SUCCESS') {
+                $(".collapse").collapse("toggle");
+               
+             }else if (result == 'fail') {
+              alert('상품을 구매 후 작성해주세요.');
+         }
+            
+          }
+         
+       });
+      
+   
          
       });
       

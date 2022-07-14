@@ -21,8 +21,8 @@ public class MemberDTO implements Serializable{
 	private String maddress3;
 	private Date mbirth;
 	private int macount;
-	private int mmoney;
-	private int mpoint;
+	private long mmoney;
+	private long mpoint;
 	private int msocial;
 	
 	
@@ -31,7 +31,7 @@ public class MemberDTO implements Serializable{
 	}
 
 	public MemberDTO(String mid, String mpw, String mname, String memail, String mphone, String maddress1,
-			String maddress2, String maddress3, Date mbirth, int macount, int mmoney, int mpoint) {
+			String maddress2, String maddress3, Date mbirth, int macount, long mmoney, long mpoint) {
 		super();
 		this.mid = mid;
 		this.mpw = mpw;
@@ -127,19 +127,19 @@ public class MemberDTO implements Serializable{
 		this.macount = macount;
 	}
 
-	public int getMmoney() {
+	public long getMmoney() {
 		return mmoney;
 	}
 
-	public void setMmoney(int mmoney) {
+	public void setMmoney(long mmoney) {
 		this.mmoney = mmoney;
 	}
 
-	public int getMpoint() {
+	public long getMpoint() {
 		return mpoint;
 	}
 
-	public void setMpoint(int mpoint) {
+	public void setMpoint(long mpoint) {
 		this.mpoint = mpoint;
 	}
 

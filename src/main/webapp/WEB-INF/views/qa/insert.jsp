@@ -12,43 +12,47 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/header.css" rel="stylesheet">
+<link href="/resources/css/noticeqa.css" rel="stylesheet" type="text/css"/>
+
 </head>
+<style>
+
+</style>
 <body>
    <jsp:include page="../common/header.jsp" />
    <div class="jumbotron">
-      <h1 class="text-center">qna 입력</h1>
+      <h1 class="text-center">QnA 입력</h1>
    </div>
    
-   <form action="/qa/insert" method="post">
-      <div class="form-group row">
-         <label for="qtitle" class="col-sm-2 col-form-label col-form-label-lg">제목</label>
-         <div class="col-sm-10">
-            <input name="qtitle" class="form-control form-control-lg" id="qtitle"
-               placeholder="제목 입력">
-         </div>
-      </div>
+    <form action="/qa/insert" method="post">
 
-      <div class="form-group row">
-         <label for="qwriter" class="col-sm-2 col-form-label col-form-label-lg">작성자</label>
-         <div class="col-sm-10">
-            <input name="qwriter" class="form-control form-control-lg"
-               id="mid" placeholder="작성자 입력" value="${login.mid}" readonly="readonly">
-         </div>
-      </div>
-
-      <div class="form-group row">
-         <label for="qcontent"
-            class="col-sm-2 col-form-label col-form-label-lg">내용</label>
-         <div class="col-sm-10">
-            <textarea name="qcontent" class="form-control" id="qcontent" rows="5"></textarea>
-         </div>
-      </div>
-      
-   </form>
-   
+                <table width="100%" class="table02">
+                <caption style="height:100px"><strong><span class="t_red">*</span> 표시는 필수입력 항목입니다.</strong></caption>
+                    <colgroup>
+                        <col width="20%">
+                        <col width="*">
+                    </colgroup>
+                    <tbody id="tbody">
+                        <tr>
+                            <th>제목<span class="t_red">*</span></th>
+                            <td><input name="qtitle" class="form-control form-control-lg" id="qtitle" placeholder="제목 입력"></td>
+                        </tr>
+                        <tr>
+                            <th>작성자<span class="t_red">*</span></th>
+                            <td> <input name="nwriter" class="form-control form-control-lg" id="mid" placeholder="작성자 입력" value="${login.mid}" readonly="readonly"></td>
+                        </tr>
+                        <tr>
+                            <th>내용<span class="t_red">*</span></th>
+                            <td><textarea name="qcontent" class="form-control" id="qcontent" rows="7"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+</form>
+<br>
+<br>
    <div class="form-group row">
       <input class="form-control btn btn-primary col-sm-2 offset-sm-5"
-         type="submit" value="공지사항 작성 완료" id="qa_btn_submit">
+         type="submit" value="QnA 작성 완료" id="qa_btn_submit">
    </div>
   
    <script type="text/javascript" src="/resources/js/tl.js"></script>

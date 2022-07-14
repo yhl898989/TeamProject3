@@ -135,4 +135,10 @@ public class itemServiceImpl implements itemService{
 		return iDao.deleteimgcount(getmainimgfilename);
 	}
 
+	@Override
+	public Integer ordercheck(int iId) {
+		// TODO Auto-generated method stub
+		return iDao.ordercheck(iId);
+	}
+
 }

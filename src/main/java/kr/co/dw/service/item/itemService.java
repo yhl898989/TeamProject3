@@ -35,6 +35,8 @@ public interface itemService {
 
 	int deleteimgcount(String getmainimgfilename);
 
+	Integer ordercheck(int iId);
+
 	
 
 	

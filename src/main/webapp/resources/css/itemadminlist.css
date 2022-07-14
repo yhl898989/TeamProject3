@@ -1,8 +1,4 @@
 @charset "UTF-8";
-body{
-	width:1920px;
-}
-
 thead{
 text-align: center;
 }
@@ -37,8 +33,9 @@ text-align: center;
 #itemimguploadFile2{
    width : 350px;
    height : 300px;
-   border: 1px solid red;
+   border: 2px solid black;
    padding : 0px;
+   font-size: 30px; 
   	
 }
 #subcard{
@@ -49,8 +46,14 @@ text-align: center;
 	display: inline-block;
    width : 446px;
    height : 100px;
-   border: 1px solid red; 
+   border: 2px solid black;
+   font-size: 30px; 
 }
 .menucss{
 	color: red;
+}
+.adminlistiName{
+	
+ 	width: 139px;
+ 	word-break:break-all;
 }

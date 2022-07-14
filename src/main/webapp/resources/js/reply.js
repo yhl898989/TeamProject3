@@ -5,53 +5,53 @@
  
   // 리뷰 불러오는 코드
  function getAllReply3(iId, el){
-	el.html("");
-	
-	$.getJSON("/review/"+iId+"/all", function(result){
-			console.log(result);
-		for(let i = 0 ; i <result.length; i++){
-			let tagstr = "";
-			let item = result[i];
-			let rfilename = item.rfilenamelist;
-			for(let j = 0 ; j < rfilename.length;j++){
-				let rfile = rfilename[j];
-				let itemstr = makeItemTag3(rfile);
-				tagstr += itemstr;
-				
-			}
-			let str = makeItemTag2(item,tagstr);
-			el.append(str);
-		}
-		
-	})
+   el.html("");
+   
+   $.getJSON("/review/"+iId+"/all", function(result){
+         console.log(result);
+      for(let i = 0 ; i <result.length; i++){
+         let tagstr = "";
+         let item = result[i];
+         let rfilename = item.rfilenamelist;
+         for(let j = 0 ; j < rfilename.length;j++){
+            let rfile = rfilename[j];
+            let itemstr = makeItemTag3(rfile);
+            tagstr += itemstr;
+            
+         }
+         let str = makeItemTag2(item,tagstr);
+         el.append(str);
+      }
+      
+   })
 };
 
 
 //이미지 크기 조절
 function makeItemTag3(rfile){
-	
-	
-	let str = `
-	
+   
+   
+   let str = `
+   
 <span class="modalimg"><img src="/displayfile?filename=${rfile}"alt="..." width="300px" height="250px"></span>
 
-	
-	`;
-	return str;
+   
+   `;
+   return str;
 
 }
 
 // 리뷰 수정삭제 버튼
 function makeItemTag2(item,tagstr){
-	
-	
-	
-	let str = `
-	
+   
+   
+   
+   let str = `
+   
 <div class="card item my-5">
   <div class="card-header">
     <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span> &nbsp;&nbsp;&nbsp;
-	<span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+   <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
     <h5 class="card-title">${item.rtitle}</h5>
@@ -62,9 +62,9 @@ function makeItemTag2(item,tagstr){
   </div>
 </div>
 
-	
-	`;
-	return str;
+   
+   `;
+   return str;
 
 }
  
@@ -278,13 +278,13 @@ function getAllReply2(bno, el){
    })
 };
 
-function getAllReplyqa(qno, el){
+function getAllReplyqa(qno, el,mid,aid){
    el.html("");
    
    $.getJSON("/replies/"+qno+"/all", function(result){
       for(let i = 0 ; i <result.length; i++){
          let item = result[i];
-         let str = makeItemTag(item);
+         let str = makeItemTag(item,mid,aid);
          el.append(str);
       }
    })
@@ -308,7 +308,7 @@ function getAllReply(bno, el){
    el.html("");
    
    $.getJSON("/review/"+bno+"/all", function(result){
-	
+   
       for(let i = 0 ; i <result.length; i++){
          let item = result[i];
          let str = makeItemTag(item);
@@ -318,20 +318,21 @@ function getAllReply(bno, el){
 };
 
 
-function makeItemTag(item){
+function makeItemTag(item,mid,aid){
    
    
    let str = `
    
 <div class="card item my-5">
   <div class="card-header">
-    <span>작성자 : ${item.mid}</span> <span>댓글 번호 : ${item.rno}</span>  <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+    <span>작성자 :${item.replyer}</span> <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
-    <h5 class="card-title">${item.replyer}</h5>
+     <input type = "hidden" value = "${item.replyer}" ></input>
     <p class="card-text">${item.replyText}</p>
-    <a data-rno ="${item.rno}" href="#" class="btn btn-primary item_btn_update">수정</a>
-    <a data-rno ="${item.rno}" href="#" class="btn btn-primary item_btn_delete">삭제</a>
+   <br>
+    <a data-rno ="${item.rno}" href="#" class="${item.replyer==mid||aid !=''?'btn btn-warning item_btn_update':'hidden'}">수정</a>
+    <a data-rno ="${item.rno}" href="#" class="${item.replyer==mid||aid !=''?'btn btn-danger delete item_btn_delete':'hidden'}">삭제</a>
   </div>
 </div>
 

@@ -1,6 +1,8 @@
 package kr.co.dw.repository.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -131,4 +133,15 @@ public class MemberDAOImpl implements MemberDAO{
 		sqlsession.update(NAMESPACE+".charge", dto);
 		
 	}
+	
+	@Override
+	public void pointGet(int savePoint, String mid) {
+		// TODO Auto-generated method stub
+		Map<String,Object > map = new HashMap<String,Object >();
+		map.put("savePoint", savePoint);
+		map.put("mid", mid);
+		System.out.println(map);
+		sqlsession.update(NAMESPACE+".pointGet" , map);
+	}
+	
 }

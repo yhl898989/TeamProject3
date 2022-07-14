@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+*{padding:0;margin:0}
 
 #btn_1{
       border-top-left-radius:5px;
@@ -37,11 +37,11 @@ caption {
 .text-center{
    font-size:40px;
 }
-.searchcss{
-	align-items: center;
-	margin-left: 30%;
-	margin-right: 40%;
-	width:30%;
+.searchcsss{
+   align-items: center;
+   margin-left: 30%;
+   margin-right: 40%;
+   width:30%;
 }
 
 .pagecss{

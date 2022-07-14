@@ -43,16 +43,19 @@
 			<div class="box">
 				<div class="card ">
 					<a href="/item/read/${iteminfo.iId}">
-						<div>
-							<img src="/displayfile?filename=${iteminfo.ifilename}"
-								class="card-img-top" alt="..." width="100px" height="200px">
-						</div>
+						<c:if test="${iteminfo.iCount==0 }">
+       						<img src="/resources/img/soldout.png" width="100%"  height="200px">
+    					</c:if>
+    
+    					<c:if test="${iteminfo.iCount!=0 }">
+  							<img src="/displayfile?filename=${iteminfo.ifilename}"alt="..." width="100%" height="200px">
+  						</c:if>
 					</a>
 					<div class="card-body">
-						<p class="card-text">${iteminfo.iName}</p>
-						<p class="card-price"><div class = "iPrice">${iteminfo.iPrice}원<span class = "${iteminfo.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${iteminfo.iDc}%</span></div>
-    					  					  <div>${iteminfo.getIsaleiPrice()}원</div>
-    					</p>
+						<div class="card-text">${iteminfo.iName}</div>
+						<div class="card-price"><div class = "iPrice"><span class = "${iteminfo.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${iteminfo.iDc}%</span></div>
+    					  					  <div><span class ="${iteminfo.iDc > 0?'':'iPricehidden'}" style="text-decoration: line-through; color: gray; font-size: 12px;"><fmt:formatNumber value = "${iteminfo.iPrice}" var = "realiPrice" pattern="#,###"/>${realiPrice}원</span><span style="font-size: 12px;"> <fmt:formatNumber value = "${iteminfo.getIsaleiPrice()}" var = "saleprice" pattern="#,###"/>${saleprice}원</span></div>
+    					</div>
 					</div>
 				</div>
 			</div>
@@ -61,23 +64,28 @@
 
 
 
-	<center>
-	<div id = "paging">
-<a href = "/item/list?curPage=${pt.curPage > 1? pt.curPage -1:1}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}">&laquo;</a>
-	
-	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
-	<a href = "/item/list?curPage=${i}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}" class = "${i == pt.curPage?'red':""}">
+
+<ul class="pagination nav justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href = "/item/list?curPage=${pt.curPage > 1? pt.curPage -1:1}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}">&laquo;</a>
+    </li>
+    <c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
+    <li class="${i == pt.curPage?'page-item active':'page-item'}" aria-current="${i == pt.curPage?'page':''}">
+	<a href = "/item/list?curPage=${i}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}" class = "page-link" ">
 	
 	${i}
 	
 	
 	
-	</a> &nbsp;&nbsp;
-	
+	</a>
+	</li>
 	</c:forEach>
-	<a href = "/item/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}">&raquo;</a>
-</center>
-	</div>	
+    
+    <li class="page-item">
+      <a class="page-link" href = "/item/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}&&showhowitemlist=${showhowitemlist}&&Category=${pt.list[0].i_CATEGORY}">&raquo;</a>
+    </li>
+  </ul>
+	
 	<br>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript" src = "/resources/js/item.js"></script>

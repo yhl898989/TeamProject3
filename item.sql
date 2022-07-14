@@ -35,3 +35,5 @@ select * from tbl_item where iId = 762
 select * from itemfileupload where iId = 762
 alter system set processes=450 scope=spfile;
 select * from v$resource_limit where resource_name = 'processes';
+
+select count(*) from tbl_orderItem whree
