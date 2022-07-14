@@ -83,7 +83,7 @@ public class ReviewController {
          
           MultipartFile file = list.get(i);
           
-          String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+          String uploadedFilename = DWUtils.itemuploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
           
           filenameList.add(uploadedFilename);
        }
@@ -101,7 +101,6 @@ public class ReviewController {
        
        String iId = request.getParameter("iId");
       
-       
       
        List<MultipartFile>list= request.getFiles("file");
       
@@ -112,7 +111,7 @@ public class ReviewController {
         
           MultipartFile file = list.get(i);
         
-          String uploadedFilename = DWUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+          String uploadedFilename = DWUtils.itemuploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
         
           filenameList.add(uploadedFilename);
        }

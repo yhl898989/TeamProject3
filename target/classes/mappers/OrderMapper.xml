@@ -3,177 +3,181 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.order">
-	
-	<!-- pietotals파이그래프 -->
-	<select id="pietotals" resultType="Integer">
-		SELECT SUM(orderFinalSalePrice) FROM tbl_order WHERE TO_CHAR(orderDate, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') and orderstate ='배송완료' and i_category = #{string}
-	</select>
-	
-	<!-- getOrderItem -->
-	<select id="getOrderItem" resultType="OrderItemDTO">
-		select * from tbl_orderItem where orderstate = '배송완료' AND TO_CHAR(OrderDATE,'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-MM-dd')
-	</select>
-	
-	<!-- orderItemCancle -->
-	<update id="orderItemCancle">
-		UPDATE tbl_orderItem SET orderState = '주문취소' WHERE orderId = #{orderId}
-	</update>
-	
-	<!-- orderItemUpdate -->
-	<update id="orderItemUpdate">
-		UPDATE tbl_orderItem SET orderState = '배송완료' where orderid = #{orderId} 
-	</update>
-	
-	<!-- 오늘 팔린 물건들 -->
-	<select id="gettotal" resultType="Integer">
-		select orderFinalSalePrice FROM tbl_order WHERE TO_CHAR(orderDate, 'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-mm-dd') 
-	</select>
+   
+   <!-- pietotals파이그래프 -->
+   <select id="pietotals" resultType="long">
+      SELECT NVL(SUM(orderFinalSalePrice),0) FROM tbl_order WHERE TO_CHAR(orderDate, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') and orderstate ='배송완료' and i_category = #{string}
+   </select>
+   
+   <!-- getOrderItem -->
+   <select id="getOrderItem" resultType="OrderItemDTO">
+      select * from tbl_orderItem where orderstate = '배송완료' AND TO_CHAR(OrderDATE,'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-MM-dd')
+   </select>
+   
+   <!-- orderItemCancle -->
+   <update id="orderItemCancle">
+      UPDATE tbl_orderItem SET orderState = '주문취소' WHERE orderId = #{orderId}
+   </update>
+   
+   <!-- orderItemUpdate -->
+   <update id="orderItemUpdate">
+      UPDATE tbl_orderItem SET orderState = '배송완료' where orderid = #{orderId} 
+   </update>
+   
+   <!-- 오늘 팔린 물건들 -->
+   <select id="gettotal" resultType="Integer">
+      select orderFinalSalePrice FROM tbl_order WHERE TO_CHAR(orderDate, 'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-mm-dd') 
+   </select>
 
-	<!-- 월별 가격임 -->
-	<select id="monthsale" resultType="Integer">
-		select sum(orderFinalSalePrice) from tbl_order where TO_CHAR(orderDate, 'YYYY-MM') = #{sos} and orderstate ='배송완료'
-	</select>
+   <!-- 월별 가격임 -->
+   <select id="monthsale" resultType="long">
+      select NVL(sum(orderFinalSalePrice),0) from tbl_order where TO_CHAR(orderDate, 'YYYY-MM') = #{sos} and orderstate ='배송완료'
+   </select>
 
-	<!-- chart30일에 대한 각각의 값들 -->
-	<select id="weekSale" resultType="Integer">
-		select SUM(orderFinalSalePrice) FROM tbl_order WHERE TO_CHAR(orderDate, 'yyyy-mm-dd') = #{lis} and orderstate = '배송완료'
-	</select>
+   <!-- chart30일에 대한 각각의 값들 -->
+   <select id="weekSale" resultType="long">
+      select NVL(SUM(orderFinalSalePrice),0) FROM tbl_order WHERE TO_CHAR(orderDate, 'yyyy-mm-dd') = #{lis} and orderstate = '배송완료'
+   </select>
 
-	<!-- iid에 해당하는 상품을 샀는지 카운트 여부 -->
-	<select id="count" resultType="Integer">
-		select count(*) from tbl_orderItem where orderId = #{orderId} and iid = #{iId}
-	</select>
+   <!-- iid에 해당하는 상품을 샀는지 카운트 여부 -->
+   <select id="count" resultType="Integer">
+      select count(*) from tbl_orderItem where orderId = #{orderId} and iid = #{iId}
+   </select>
 
-	<!-- 주문번호들 조회 -->
-	<select id="checkOid" resultType="OrderDTO">
-		select orderId from tbl_order where mid = #{mid} and orderState = '배송완료'
-	</select>
+   <!-- 주문번호들 조회 -->
+   <select id="checkOid" resultType="OrderDTO">
+      select orderId from tbl_order where mid = #{mid} and orderState = '배송완료'
+   </select>
 
-	<select id="getAllPrice" resultType="integer">
-		select sum(orderFinalSalePrice) from tbl_order 
-		where orderstate ='배송완료'
-	</select>
-
-
-	<select id="gettodayPrice" resultType="integer">
-		select sum(orderFinalSalePrice) from tbl_order 
-		where TO_CHAR(orderDate, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') and orderstate ='배송완료'
-	
-	</select>
+   <select id="getAllPrice" resultType="long">
+      select sum(orderFinalSalePrice) from tbl_order 
+      where orderstate ='배송완료'
+   </select>
 
 
-	<select id="myOrderList" resultType="OrderDTO">
-	
-		SELECT * FROM tbl_order WHERE mid = #{mid}  ORDER BY orderDate DESC
-	</select>
+   <select id="gettodayPrice" resultType="long">
+      select NVL(sum(orderFinalSalePrice),0) from tbl_order 
+      where TO_CHAR(orderDate, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') and orderstate ='배송완료'
+   
+   </select>
 
 
-	
-	<select id="getAmountmyOrder" resultType="integer">
-		SELECT COUNT(mid) FROM tbl_order WHERE mid = #{mid}
-	</select>
+   <select id="myOrderList" resultType="OrderDTO">
+   
+      SELECT * FROM tbl_order WHERE mid = #{mid}  ORDER BY orderDate DESC
+   </select>
 
 
-	<select id="getAmountOrder" resultType="integer">
-		SELECT COUNT(orderId) FROM tbl_order
-	</select>
+   
+   <select id="getAmountmyOrder" resultType="integer">
+      SELECT COUNT(mid) FROM tbl_order WHERE mid = #{mid}
+   </select>
 
 
-	<update id="orderAddUpdate">
-		UPDATE tbl_order set 
-		addressee =#{addressee}, memberAddr1 =#{memberAddr1}, memberAddr2 = #{memberAddr2},
-		memberAddr3 = #{memberAddr3} WHERE orderId = #{orderId}
-	</update>
+   <select id="getAmountOrder" resultType="integer">
+      SELECT COUNT(orderId) FROM tbl_order
+   </select>
 
 
-	<update id="orderCancle">
-		update tbl_order set orderState = '주문취소' where orderId = #{orderId}
-	</update>	
-
-	<!-- 주문 상품 정보(주문취소) -->
-	<select id="getOrderItemInfo" resultType="OrderItemDTO">
-	
-		select * from tbl_orderItem
-		where orderId = #{orderId}
-	
-	</select>
-	
-	<!-- 주문 정보(주문 취소) -->
-	<select id="getOrder" resultType="OrderDTO">
-	
-		select * from tbl_order
-		where orderId = #{orderId}
-	
-	</select>
+   <update id="orderAddUpdate">
+      UPDATE tbl_order set 
+      addressee =#{addressee}, memberAddr1 =#{memberAddr1}, memberAddr2 = #{memberAddr2},
+      memberAddr3 = #{memberAddr3} WHERE orderId = #{orderId}
+   </update>
 
 
+   <update id="orderCancle">
+      update tbl_order set orderState = '주문취소' where orderId = #{orderId}
+   </update>   
+
+   <!-- 주문 상품 정보(주문취소) -->
+   <select id="getOrderItemInfo" resultType="OrderItemDTO">
+   
+      select * from tbl_orderItem
+      where orderId = #{orderId}
+   
+   </select>
+   
+   <!-- 주문 정보(주문 취소) -->
+   <select id="getOrder" resultType="OrderDTO">
+   
+      select * from tbl_order
+      where orderId = #{orderId}
+   
+   </select>
 
 
-	<update id="orderUpdate">
-		UPDATE tbl_order SET orderState = '배송완료' WHERE orderId = #{orderId}
-	</update>
+
+
+   <update id="orderUpdate">
+      UPDATE tbl_order SET orderState = '배송완료' WHERE orderId = #{orderId}
+   </update>
 
 
   
   <select id="getItemsInfo" resultType="OrderPageItemDTO">
-  	SELECT iId,ifilename, iName, iPrice, iDc ,i_CATEGORY
-  	FROM tbl_item WHERE iId =#{iId}
+     SELECT iId,ifilename, iName, iPrice, iDc ,i_CATEGORY
+     FROM tbl_item WHERE iId =#{iId}
   
   </select>
   
   <select id="getOrderInfo" resultType="OrderItemDTO">
-    	SELECT iId,iName, iPrice, iDc, ifilename , i_CATEGORY
-  		FROM tbl_item WHERE iId =#{iId}
+       SELECT iId,iName, iPrice, iDc, ifilename , i_CATEGORY
+        FROM tbl_item WHERE iId =#{iId}
  
   </select>
   
-  	<insert id="enrollOrder">
-	
-		insert into tbl_order(orderId, addressee, mId, memberAddr1, memberAddr2, memberAddr3, orderState, deliveryCost, usePoint, i_CATEGORY ,orderFinalSalePrice )
-    	values 
-    	(#{orderId},#{addressee}, #{mid}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, '배송준비', #{deliveryCost}, #{usePoint} , #{i_CATEGORY} , #{orderFinalSalePrice})
+     <insert id="enrollOrder">
+   
+      insert into tbl_order(orderId, addressee, mId, memberAddr1, memberAddr2, memberAddr3, orderState, deliveryCost, usePoint, savePoint , i_CATEGORY ,orderFinalSalePrice )
+       values 
+       (#{orderId},#{addressee}, #{mid}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, '배송준비', #{deliveryCost}, #{usePoint} , #{savePoint} , #{i_CATEGORY} , #{orderFinalSalePrice})
 
-	</insert>
-  	<insert id="enrollOrderItem">
-	
-		insert into tbl_orderItem(oId,orderId ,iId,iName, iCount, iPrice, iDc, ifilename, savePoint)
-		values(seq_orderItem_oid.NEXTVAL, #{orderId},#{iId},#{iName}, #{iCount}, #{iPrice}, #{iDc}, #{ifilename}, #{savePoint})
-	
-	</insert>
-	
-	<update id="deductMoney">
-	
-		update tbl_member set mmoney = #{mmoney}, mpoint = #{mpoint} where mid = #{mid}
-		
-	</update>
-	
+   </insert>
+     <insert id="enrollOrderItem">
+   
+      insert into tbl_orderItem(oId,orderId ,iId,iName, iCount, iPrice, iDc, ifilename, savePoint, orderState)
+      values(seq_orderItem_oid.NEXTVAL, #{orderId},#{iId},#{iName}, #{iCount}, #{iPrice}, #{iDc}, #{ifilename}, #{savePoint}, '배송준비')
+   
+   </insert>
+   
+   <update id="deductMoney">
+   
+      update tbl_member set mmoney = #{mmoney}, mpoint = #{mpoint} where mid = #{mid}
+      
+   </update>
+   
 
-	
-	<update id="deductStock">
-	
-		update tbl_item set iCount = #{iCount} where iId = #{iId}
-	
-	</update>
-	
-	<select id="orderList" resultType="OrderDTO">
-		SELECT * FROM tbl_order ORDER BY orderDate DESC
-	</select>
-	
-		<select id="orderRead" resultType="orderDTO">
-		SELECT * FROM tbl_order WHERE orderId = #{orderId}
-	</select>
-	
-	<select id="orderItemRead" resultType="orderItemDTO">
-		SELECT * FROM tbl_orderItem WHERE orderId = #{orderId}
-	</select>
-	
-	  <select id="ordermemberList" resultType="OrderDTO">
-	  	SELECT * FROM tbl_order WHERE mId = #{mid}  ORDER BY orderDate DESC
-	  </select>
-		
-   <select id="getsale" resultType="integer">
-      SELECT SUM(orderFinalSalePrice) FROM tbl_order where TO_CHAR(orderDate, 'yyyy-mm-dd') BETWEEN TO_DATE(#{start},'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd') AND orderState = '배송완료' 
+   
+   <update id="deductStock">
+   
+      update tbl_item set iCount = #{iCount} where iId = #{iId}
+   
+   </update>
+   
+   <select id="orderList" resultType="OrderDTO">
+      SELECT * FROM tbl_order ORDER BY orderDate DESC
    </select>
-	
+   
+      <select id="orderRead" resultType="orderDTO">
+      SELECT * FROM tbl_order WHERE orderId = #{orderId}
+   </select>
+   
+   <select id="orderItemRead" resultType="orderItemDTO">
+      SELECT * FROM tbl_orderItem WHERE orderId = #{orderId}
+   </select>
+   
+     <select id="ordermemberList" resultType="OrderDTO">
+        SELECT * FROM tbl_order WHERE mId = #{mid}  ORDER BY orderDate DESC
+     </select>
+      
+   <select id="getsale" resultType="long">
+      SELECT NVL(SUM(orderFinalSalePrice),0) FROM tbl_order where TO_CHAR(orderDate, 'yyyy-mm-dd') BETWEEN TO_DATE(#{start},'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd') AND orderState = '배송완료' 
+   </select>
+   
+   <update id="deleteMid">
+         update tbl_order set mid = '탈퇴한회원' where mid = #{mid}
+   </update>
+   
 
 </mapper>

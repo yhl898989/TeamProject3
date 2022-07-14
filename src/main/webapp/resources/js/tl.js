@@ -2,115 +2,124 @@
  *
  */
   function getAllReply4(iId, el, curpage, pageing, mid, aid){
-	el.html("");
-	
-	
-	
-	$.getJSON("/review/"+iId+"/"+curpage+"/all", function(result){
-		console.log(result);
-		for(let i = 0 ; i <result.list.length; i++){
-			let tagstr = "";
-			let item = result.list[i];	
-			let rfilename = item.rfilenamelist;
-			for(let j = 0 ; j < rfilename.length;j++){
-				let rfile = rfilename[j];
-				let itemstr = makeItemTag3(rfile);
-				tagstr += itemstr;
-				
-			}
-			let str = makeItemTag22(item,tagstr, mid, aid);
-			el.append(str);
-		}
-		let str2 = paging(result);
-		pageing.html(str2);
-	})
+   el.html("");
+   
+   
+   
+   $.getJSON("/review/"+iId+"/"+curpage+"/all", function(result){
+      console.log(result);
+      for(let i = 0 ; i <result.list.length; i++){
+         let tagstr = "";
+         let item = result.list[i];   
+         let rfilename = item.rfilenamelist;
+         for(let j = 0 ; j < rfilename.length;j++){
+            let rfile = rfilename[j];
+            let itemstr = makeItemTag3(rfile);
+            tagstr += itemstr;
+            
+         }
+         let str = makeItemTag22(item,tagstr, mid, aid);
+         el.append(str);
+      }
+      let str2 = paging(result);
+      pageing.html(str2);
+   })
 };
  
  
  
   // 리뷰 불러오는 코드
  function getAllReply3(iId, el, curpage, pageing, mid, aid){
-	el.html("");
-	
-	
-	
-	$.getJSON("/review/"+iId+"/"+curpage+"/all", function(result){
-		console.log(result);
-		for(let i = 0 ; i <result.list.length; i++){
-			let tagstr = "";
-			let item = result.list[i];	
-			let rfilename = item.rfilenamelist;
-			for(let j = 0 ; j < rfilename.length;j++){
-				let rfile = rfilename[j];
-				let itemstr = makeItemTag3(rfile);
-				tagstr += itemstr;
-				
-			}
-			let str = makeItemTag2(item,tagstr, mid, aid);
-			el.append(str);
-		}
-		let str2 = paging(result);
-		pageing.html(str2);
-	})
+   el.html("");
+   
+   
+   
+   $.getJSON("/review/"+iId+"/"+curpage+"/all", function(result){
+      console.log(result);
+      for(let i = 0 ; i <result.list.length; i++){
+         let tagstr = "";
+         let item = result.list[i];   
+         let rfilename = item.rfilenamelist;
+         for(let j = 0 ; j < rfilename.length;j++){
+            let rfile = rfilename[j];
+            let itemstr = makeItemTag3(rfile);
+            tagstr += itemstr;
+            
+         }
+         let str = makeItemTag2(item,tagstr, mid, aid);
+         el.append(str);
+      }
+      let str2 = paging(result);
+      pageing.html(str2);
+   })
 };
 
 function paging(pt){
-	
-	let page = "";
-	let prev = pt.curPage -1;
-	let next = pt.curPage +1;
-	
-	if(pt.curPage > 1){
-		
-		page += "<a href = '#' id = '"+prev+"'>&laquo;</a>";
-	}else{
-		page += "<a href = '#' id = '1'>&laquo;</a>";
-	}
-	for(let i = pt.beginPageNum ; i < pt.finishPageNum+1 ; i++){
-		if(i == pt.curPage){
-			page += "<a href = '#' id = '"+i+"' class = 'red'>"+i+"</a>&nbsp;&nbsp";
-		}else{
-			page += "<a href = '#' id = '"+i+"'>"+i+"</a>&nbsp;&nbsp";
-		}
-		
-	}
-	if(pt.curPage < pt.totalPage){
-		
-		page += "<a href = '#' id = '" + next + "'>&raquo;</a>";
-	}else{
-		page += "<a href = '#' id = '"+pt.totalPage+"'>&raquo;</a>";
-	}
-	
-	return page;
+   
+   let page = "";
+   let prev = pt.curPage -1;
+   let next = pt.curPage +1;
+   
+   page += "<ul class='pagination nav justify-content-center'>";
+   page += " <li class='page-item'>" 
+   if(pt.curPage > 1){
+      
+      page += "<a class='page-link' href = '#' id = '"+prev+"'>&laquo;</a>";
+   }else{
+      page += "<a class='page-link' href = '#' id = '1'>&laquo;</a>";
+   }
+   page += "</li>" 
+   for(let i = pt.beginPageNum ; i < pt.finishPageNum+1 ; i++){
+      if(i == pt.curPage){
+         page += " <li class='page-item active' aria-current='page'>"
+         page += "<a class='page-link' href = '#' id = '"+i+"' class = 'red'>"+i+"</a>&nbsp;&nbsp";
+         page += " </li>";
+      }else{
+         page += "<li class='page-item'>"
+         page += "<a class='page-link' href = '#' id = '"+i+"'>"+i+"</a>&nbsp;&nbsp";
+         page += "</li>";
+      }
+      
+   }
+   page += "<li class='page-item'>"
+   if(pt.curPage < pt.totalPage){
+      
+      page += "<a class='page-link' href = '#' id = '" + next + "'>&raquo;</a>";
+   }else{
+      page += "<a class='page-link' href = '#' id = '"+pt.totalPage+"'>&raquo;</a>";
+   }
+   page += "</li>";
+   page += "</ul>";
+   return page;
 }
 
 
 //이미지 크기 조절
 function makeItemTag3(rfile){
-	
-	
-	let str = `
-	
+   
+   
+   let str = `
+   
 <span class="modalimg"><img src="/displayfile?filename=${rfile}"alt="..." width="300px" height="250px"></span>
 
-	
-	`;
-	return str;
+   
+   `;
+   return str;
 
 }
 
 // 리뷰 수정삭제 버튼
 function makeItemTag2(item,tagstr, mid, aid){
-	
-	console.log(aid);
-	
-	
-	let str = `
-	
+   
+   console.log(aid);
+   
+   
+   let str = `
+   
 <div class="card item my-5">
   <div class="card-header">
     <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span> &nbsp;&nbsp;&nbsp;
-	<span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+   <span class = "float-right">작성일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
     <h5 class="card-title">${item.rtitle}</h5>
@@ -121,9 +130,9 @@ function makeItemTag2(item,tagstr, mid, aid){
   </div>
 </div>
 
-	
-	`;
-	return str;
+   
+   `;
+   return str;
 
 }
  
@@ -131,15 +140,15 @@ function makeItemTag2(item,tagstr, mid, aid){
 
 // 댓글 제버튼
 function makeItemTag22(item,tagstr){
-	
-	
-	
-	let str = `
-	
+   
+   
+   
+   let str = `
+   
 <div class="card item my-5">
   <div class="card-header">
     <span>댓글 번호 : ${item.rno}</span>  &nbsp; &nbsp; <span> ID : ${item.mid} </span> &nbsp;&nbsp;&nbsp;
-	<span class = "float-right">최종 수정일 : ${item.updateDay}</span>
+   <span class = "float-right">최종 수정일 : ${item.updateDay}</span>
   </div>
   <div class="card-body">
     <h5 class="card-title">${item.rtitle}</h5>
@@ -150,9 +159,9 @@ function makeItemTag22(item,tagstr){
   </div>
 </div>
 
-	
-	`;
-	return str;
+   
+   `;
+   return str;
 
 }
  
@@ -394,7 +403,7 @@ function getAllReply(bno, el){
    el.html("");
    
    $.getJSON("/review/"+bno+"/all", function(result){
-	
+   
       for(let i = 0 ; i <result.length; i++){
          let item = result[i];
          let str = makeItemTag(item);

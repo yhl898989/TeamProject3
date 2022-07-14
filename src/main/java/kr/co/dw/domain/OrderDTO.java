@@ -24,7 +24,7 @@ public class OrderDTO implements Serializable{
 	private String i_CATEGORY;
 	private Date orderDate;
 	private int orderSalePrice;
-	private int orderSavePoint;
+	private int savePoint;
 	private int orderFinalSalePrice;
 	
 	public OrderDTO() {
@@ -33,7 +33,8 @@ public class OrderDTO implements Serializable{
 	
 	public OrderDTO(String orderId, String addressee, String mid, String memberAddr1, String memberAddr2,
 			String memberAddr3, String orderState, List<OrderItemDTO> orders, int deliveryCost, int usePoint,
-			String i_CATEGORY, Date orderDate, int orderSalePrice, int orderSavePoint, int orderFinalSalePrice) {
+			String i_CATEGORY, Date orderDate, int orderSalePrice, int savePoint,
+			int orderFinalSalePrice) {
 		super();
 		this.orderId = orderId;
 		this.addressee = addressee;
@@ -45,13 +46,12 @@ public class OrderDTO implements Serializable{
 		this.orders = orders;
 		this.deliveryCost = deliveryCost;
 		this.usePoint = usePoint;
+		this.i_CATEGORY = i_CATEGORY;
 		this.orderDate = orderDate;
 		this.orderSalePrice = orderSalePrice;
-		this.orderSavePoint = orderSavePoint;
+		this.savePoint = savePoint;
 		this.orderFinalSalePrice = orderFinalSalePrice;
 	}
-
-	
 
 	public String getOrderId() {
 		return orderId;
@@ -157,12 +157,12 @@ public class OrderDTO implements Serializable{
 		this.orderSalePrice = orderSalePrice;
 	}
 
-	public int getOrderSavePoint() {
-		return orderSavePoint;
+	public int getSavePoint() {
+		return savePoint;
 	}
 
-	public void setOrderSavePoint(int orderSavePoint) {
-		this.orderSavePoint = orderSavePoint;
+	public void setSavePoint(int savePoint) {
+		this.savePoint = savePoint;
 	}
 
 	public int getOrderFinalSalePrice() {
@@ -180,7 +180,7 @@ public class OrderDTO implements Serializable{
 	@Override
 	public int hashCode() {
 		return Objects.hash(addressee, deliveryCost, memberAddr1, memberAddr2, memberAddr3, mid, orderDate,
-				orderFinalSalePrice, orderId, orderSalePrice, orderSavePoint, orderState, orders, usePoint);
+				orderFinalSalePrice, orderId, orderSalePrice,savePoint, orderState, orders, usePoint);
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class OrderDTO implements Serializable{
 				&& Objects.equals(memberAddr3, other.memberAddr3) && Objects.equals(mid, other.mid)
 				&& Objects.equals(orderDate, other.orderDate) && orderFinalSalePrice == other.orderFinalSalePrice
 				&& Objects.equals(orderId, other.orderId) && orderSalePrice == other.orderSalePrice
-				&& orderSavePoint == other.orderSavePoint && Objects.equals(orderState, other.orderState)
+				&& savePoint == other.savePoint && Objects.equals(orderState, other.orderState)
 				&& Objects.equals(orders, other.orders) && usePoint == other.usePoint;
 	}
 
@@ -207,13 +207,13 @@ public class OrderDTO implements Serializable{
 				+ memberAddr1 + ", memberAddr2=" + memberAddr2 + ", memberAddr3=" + memberAddr3 + ", orderState="
 				+ orderState + ", orders=" + orders + ", deliveryCost=" + deliveryCost + ", usePoint=" + usePoint
 				+ ", i_CATEGORY=" + i_CATEGORY + ", orderDate=" + orderDate + ", orderSalePrice=" + orderSalePrice
-				+ ", orderSavePoint=" + orderSavePoint + ", orderFinalSalePrice=" + orderFinalSalePrice + "]";
+				+ ", savePoint=" + savePoint + ", orderFinalSalePrice=" + orderFinalSalePrice + "]";
 	}
 
 	public void getOrderPriceInfo() {
 		for(OrderItemDTO order : orders) {
 			orderSalePrice += order.getTotalPrice();
-			orderSavePoint += order.getTotalSavePoint();
+			savePoint += order.getTotalSavePoint();
 		}
 		
 		if(orderSalePrice >= 30000) {

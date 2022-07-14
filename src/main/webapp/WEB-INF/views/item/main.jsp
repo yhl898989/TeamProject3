@@ -62,15 +62,21 @@
 <div class = "box">
 <div class="card">
  <a href = "/item/read/${list.iId}">
-    <div>
+   
+  <c:if test="${list.iCount==0 }">
+       <img src="/resources/img/soldout.png" width="100%"  height="200px">
+    </c:if>
+    
+    <c:if test="${list.iCount!=0 }">
   <img src="/displayfile?filename=${list.ifilename}"alt="..." width="100%" height="200px">
-     </div>
+  </c:if>
+     
   </a>
   <div class="card-body">
-    <p class="card-text"><span class = "iName">${list.iName}</span></p>
-    <p class="card-price"><div class = "${list.iDc > 0?'iPrice':'iPricehidden'}">${list.iPrice}원<span class = "${list.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${list.iDc}%</span></div>
-                     <div>${list.getIsaleiPrice()}원</div>
-    </p>
+    <div class="card-text">${list.iName}</div>
+    <div class="card-price"><div class = "iPrice"><span class = "${list.iDc > 0?'iDc':'iDchidden'}">sale&nbsp;${list.iDc}%</span></div>
+                     <div><span class ="${list.iDc > 0?'':'iPricehidden'}" style="text-decoration: line-through; color: gray; font-size: 12px;"><fmt:formatNumber value = "${list.iPrice}" var = "realiPrice" pattern="#,###"/>${realiPrice}원</span> <span style="font-size: 12px;"> <fmt:formatNumber value = "${list.getIsaleiPrice()}" var = "saleprice" pattern="#,###"/>${saleprice}원</span></div>
+    </div>
   </div>
 </div>
 </div>

@@ -124,7 +124,7 @@ function updateitem(adminlistiId,adminlistiName,adminlistiPrice,adminlistiDc,adm
 	
 	let str = `
 	 <span>
-  <img  id = "aaaaa" src="/displayfile?filename=${subphotoname}" alt="..." width="100px" height="100px">
+  <img  id = "aaaaa" src="/displayfile?filename=${subphotoname}" alt="..." width="125px" height="100px">
   </span>
 	
 	`;

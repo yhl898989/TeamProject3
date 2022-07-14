@@ -18,7 +18,7 @@
 
 
 	<select id="list" resultType="ReplyDTO">
-		SELECT* FROM tbl_reply WHERE qno=#{qno} ORDER BY rno ASC
+		SELECT* FROM tbl_reply WHERE qno=#{qno} ORDER BY rno DESC
 	</select>
 
 	<delete id="delete">

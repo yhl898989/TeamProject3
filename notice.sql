@@ -20,3 +20,6 @@ CREATE SEQUENCE seq_notice_nno
 
 delete from tbl_notice
 drop table tbl_notice
+
+
+drop table tbl_notice CASCADE CONSTRAINTS

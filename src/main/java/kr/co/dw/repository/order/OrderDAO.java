@@ -12,74 +12,73 @@ import kr.co.dw.domain.PageTO;
 import kr.co.dw.domain.SaleDTO;
 
 public interface OrderDAO {
-	
-	public OrderPageItemDTO getItemsInfo(int iId);
+   
+   public OrderPageItemDTO getItemsInfo(int iId);
 
-	public OrderItemDTO getOrderInfo(int iId);
-	
-	public int enrollOrder(OrderDTO ord);
-	
-	public int enrollOrderItem(OrderItemDTO orid);
-	
-	public int deductMoney(MemberDTO mdto);
-	
-	public int deductStock(ItemDTO idto);
+   public OrderItemDTO getOrderInfo(int iId);
+   
+   public int enrollOrder(OrderDTO ord);
+   
+   public int enrollOrderItem(OrderItemDTO orid);
+   
+   public int deductMoney(MemberDTO mdto);
+   
+   public int deductStock(ItemDTO idto);
 
-	public List<OrderDTO> orderList();
+   public List<OrderDTO> orderList();
 
-	public void orderUpdate(String orderId);
-	
-	/* 주문 취소 */
-	public int orderCancle(String orderId);
-	
-	/* 주문 상품 정보(주문취소) */
-	public List<OrderItemDTO> getOrderItemInfo(String orderId);
-	
-	/* 주문 정보(주문취소) */
-	public OrderDTO getOrder(String orderId);
+   public void orderUpdate(String orderId);
+   
+   /* 주문 취소 */
+   public int orderCancle(String orderId);
+   
+   /* 주문 상품 정보(주문취소) */
+   public List<OrderItemDTO> getOrderItemInfo(String orderId);
+   
+   /* 주문 정보(주문취소) */
+   public OrderDTO getOrder(String orderId);
 
-	public List<OrderDTO> orderMemberList(String mid);
+   public List<OrderDTO> orderMemberList(String mid);
 
-	public OrderDTO orderRead(String orderId);
+   public OrderDTO orderRead(String orderId);
 
-	public OrderItemDTO orderItemRead(String orderId);
+   public OrderItemDTO orderItemRead(String orderId);
 
-	public void orderAddUpdate(OrderDTO odto);
+   public void orderAddUpdate(OrderDTO odto);
 
-	public Integer getAmountOrder();
+   public Integer getAmountOrder();
 
-	public List<OrderDTO> OrderList(PageTO<OrderDTO> pt);
+   public List<OrderDTO> OrderList(PageTO<OrderDTO> pt);
 
-	public Integer getAmountmyOrder(String mid);
+   public Integer getAmountmyOrder(String mid);
 
-	public List<OrderDTO> myOrderList(PageTO<OrderDTO> pt, String mid);
-	
-	public Integer gettodayPrice();
-	
-	public Integer getAllPrice();
+   public List<OrderDTO> myOrderList(PageTO<OrderDTO> pt, String mid);
+   
+   public long gettodayPrice();
+   
+   public long getAllPrice();
 
-	public Integer getsale(SaleDTO sdto);
+   public long getsale(SaleDTO sdto);
 
-	public List<OrderDTO> checkOid(String mid);
+   public List<OrderDTO> checkOid(String mid);
 
-	public Integer count(Map<String, Object> map, String orderId);
+   public Integer count(Map<String, Object> map, String orderId);
 
-	public Integer weekSale(String lis);
+   public long weekSale(String lis);
 
-	public Integer monthSales(String sos);
+   public long monthSales(String sos);
 
-	public List<Integer> gettodaytotal();
+   public List<Integer> gettodaytotal();
 
-	public void orderItemUpdate(String orderId);
+   public void orderItemUpdate(String orderId);
 
-	public void orderItemCancle(String orderId);
+   public void orderItemCancle(String orderId);
 
-	public List<OrderItemDTO> getOrderItem();
+   public List<OrderItemDTO> getOrderItem();
 
-	public Integer pietotals(String string);
+   public long pietotals(String string);
 
-
-
+   public void deleteMid(MemberDTO dto);
 
 
 }

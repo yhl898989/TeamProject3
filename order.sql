@@ -8,6 +8,7 @@ create table tbl_order(
     orderState varchar2(30) not null,
     deliveryCost NUMBER not null,
     usePoint NUMBER not null,
+    savePoint NUMBER not null,
     i_CATEGORY VARCHAR2(100),
     orderDate DATE DEFAULT SYSDATE,
     orderFinalSalePrice NUMBER not null,
@@ -56,6 +57,7 @@ drop table tbl_orderItem
 
 SELECT COUNT(orderId) FROM tbl_order WHERE mid = '12'
 
+update tbl_order set mid = '(탈퇴한회원)' where mid = '1234(삭제)'
 
 
 select orderFinalSalePrice FROM tbl_order WHERE TO_CHAR(orderDate, 'yyyy-mm-dd') = TO_CHAR(sysdate,'yyyy-mm-dd')

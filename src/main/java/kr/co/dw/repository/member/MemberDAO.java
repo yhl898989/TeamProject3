@@ -42,5 +42,7 @@ public interface MemberDAO {
 
 	void charge(MemberDTO dto);
 
+	void pointGet(int savePoints, String mid);
+
 
 }

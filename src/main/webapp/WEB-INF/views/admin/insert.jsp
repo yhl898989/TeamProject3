@@ -29,7 +29,7 @@
 	<input type="submit" value="신청">
 </form>
 
-
+<jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 function formCheck() {
 	let apw = document.getElementById("apw");

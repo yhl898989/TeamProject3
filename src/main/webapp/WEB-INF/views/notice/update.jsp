@@ -13,6 +13,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/header.css" rel="stylesheet">
+<link href="/resources/css/noticeqa.css" rel="stylesheet">
+
 </head>
 
 
@@ -53,7 +55,7 @@
     <div class="form-group row" >
     <label for="content" class="col-sm-2 col-form-label col-form-label-lg">내용</label>
     <div class="col-sm-10">
-      <input name="ncontent" class="form-control form-control-lg" id="ncontent" value="${ndto.ncontent}">
+      <textarea name="ncontent" class="form-control" id="ncontent" value="${ndto.ncontent}" rows="3" style="width:1000px; resize: none;"></textarea>
     </div>
   </div>
 
@@ -96,7 +98,6 @@
               success : function(result){
                  if(result=="SUCCESS"){
                     location.assign("/notice/read/"+nno);
-                    alert("수정 성공")
                  } else {
                     alert("수정 실패");
                  }
