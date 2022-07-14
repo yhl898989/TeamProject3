@@ -6,13 +6,14 @@
 <head>
 <meta charset="UTF-8">
 
-<title>공지사항 수정 화면</title>
+<title>QnA 수정 화면</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/header.css" rel="stylesheet">
+<link href="/resources/css/noticeqa.css" rel="stylesheet">
 </head>
 
 
@@ -29,7 +30,7 @@
 </div>
 
 <form action="/notice/update" method="post">
-     <div class="form-group row">
+     <div class="form-group row" style="display:none">
        <label for="qno" class="col-sm-2 col-form-label col-form-label-lg">보드번호</label>
        <div class="col-sm-10">
          <input readonly class="form-control form-control-lg"  id="qno" value="${nQdto.qno}">
@@ -51,9 +52,9 @@
    </div>
    
     <div class="form-group row" >
-    <label for="content" class="col-sm-2 col-form-label col-form-label-lg">내용</label>
+    <label for="content" class="col-sm-3 col-form-label col-form-label-lg">내용</label>
     <div class="col-sm-10">
-      <input name="qcontent" class="form-control form-control-lg" id="qcontent" value="${nQdto.qcontent}">
+      <textarea name="qcontent" class="form-control " id="qcontent" value="${nQdto.qcontent}" rows="3" style="width:1185px; resize: none;" ></textarea>
     </div>
   </div>
 

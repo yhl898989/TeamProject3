@@ -11,47 +11,47 @@ import kr.co.dw.domain.PageTO;
 import kr.co.dw.domain.SaleDTO;
 
 public interface OrderService {
-	
-	public List<OrderPageItemDTO> getItemsInfo(List<OrderPageItemDTO> orders);
-	
-	public void order(OrderDTO oDto);
+   
+   public List<OrderPageItemDTO> getItemsInfo(List<OrderPageItemDTO> orders);
+   
+   public void order(OrderDTO oDto);
 
-	public List<OrderDTO> List();
+   public List<OrderDTO> List();
 
-	public void orderUpdate(String orderId);
-	
-	public void orderCancle(OrderCancelDTO dto);
+   public void orderUpdate(String orderId, int savePoint,String mid);
+   
+   public void orderCancle(OrderCancelDTO dto);
 
-	public List<OrderDTO> orderList(String mid);
+   public List<OrderDTO> orderList(String mid);
 
-	public OrderDTO orderRead(String orderId);
+   public OrderDTO orderRead(String orderId);
 
-	public OrderItemDTO orderItemRead(String orderId);
+   public OrderItemDTO orderItemRead(String orderId);
 
-	public void orderAddUpdate(OrderDTO odto);
+   public void orderAddUpdate(OrderDTO odto);
 
-	public PageTO<OrderDTO> list(Integer curpage);
+   public PageTO<OrderDTO> list(Integer curpage);
 
-	public PageTO<OrderDTO> myorderList(Integer curpage, String mid);
-	
-	public Integer gettodayPrice();
-	
-	public Integer getAllPrice();
+   public PageTO<OrderDTO> myorderList(Integer curpage, String mid);
+   
+   public long gettodayPrice();
+   
+   public long getAllPrice();
 
-	public Integer getsale(SaleDTO sdto);
+   public long getsale(SaleDTO sdto);
 
-	public java.util.List<OrderDTO> checkOid(String mid);
+   public java.util.List<OrderDTO> checkOid(String mid);
 
-	public Integer count(Map<String, Object> map, String orderId);
+   public Integer count(Map<String, Object> map, String orderId);
 
-	public List<Integer> weekSale(List<String> list);
+   public List<Long> weekSale(List<String> list);
 
-	public java.util.List<Integer> monthSale(java.util.List<String> month);
+   public java.util.List<Long> monthSale(java.util.List<String> month);
 
-	public List<Integer> gettodaytotal();
+   public List<Integer> gettodaytotal();
 
-	public java.util.List<OrderItemDTO> orderItem();
+   public java.util.List<OrderItemDTO> orderItem();
 
-	public List<Integer> pietotal(java.util.List<String> arr);
+   public List<Long> pietotal(java.util.List<String> arr);
 
 }

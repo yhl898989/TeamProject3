@@ -25,45 +25,84 @@
 <center>
 <h1>상품등록</h1>
 </center>
-<div class = "iteminsertform">
-<div class = "aaaaa">
+
+
+<center>
+<div class="wrap">
+<div class="user-info">
 <form action="" method="post">
-상품 이름 : <input id ="iName" name = "iName" required="required"><br>
-상품 가격 : <input id = "iPrice" name = "iPrice" type="number" ><br>
-상품 할인율 : <input id = "iDc" name = "iDc" type="number" ><span id = "iDccheck"></span><br>
-상품 수량 : <input id = "iCount" name = "iCount" type="number"><br>
-카테고리 : 
-<select id = "category" onchange = "changecategory()">
-<option value = "옷">옷</option>
-<option value = "신발">신발</option>
-<option value = "가방">가방</option>
-<option value = "모자">모자</option>
-<option value = "악세사리">악세사리</option>
-</select>
-</form>
-<input id = "cateogoryname" type = "hidden" value = "옷">
+ <div class="input-group" style="width: 700px;">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon2">상품이름:</div>
+                  </div>  
+						<input id ="iName" name = "iName" class="form-control" placeholder="" aria-label="Input group example"
+                       aria-describedby="btnGroupAddon2"><br>
+				
 </div>
+ <div class="input-group" style="width: 700px;">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon2">상품가격:</div>
+                </div>
+                 <input id = "iPrice" name = "iPrice" type="number" class="form-control" placeholder="" aria-label="Input group example"
+                       aria-describedby="btnGroupAddon2">
+ </div>
+<div class="input-group" style="width: 700px;">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon2">상품할인:</div>
+                </div>
+                 <input id = "iDc" name = "iDc" type="number" class="form-control" placeholder="" aria-label="Input group example"
+                       aria-describedby="btnGroupAddon2" >
+ </div>
+ <div class="input-group" style="width: 700px;">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon2">상품수량:</div>
+                </div>
+                 <input id = "iCount" name = "iCount" type="number" class="form-control" placeholder="" aria-label="Input group example"
+                       aria-describedby="btnGroupAddon2">
+ </div>
+  <div class="input-group" style="width: 700px;">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon2">카테고리:</div>
+                </div>
+                <select class="form-control" id = "category" onchange = "changecategory()">
+                    <option value = "옷">옷</option>
+                    <option value = "신발">신발</option>
+                    <option value = "가방">가방</option>
+                    <option value = "모자">모자</option>
+                    <option value = "악세사리">악세사리</option>
+                </select>
+            </div>
+
+</form>
+<input id = "cateogoryname" type="hidden" value = "옷">
+</div>
+</div>
+</center>
+<center>
+<div class = "iteminsertform">
+
 
 <div id = "itemimguploadFileform" class ="form-group">
-<div id = "itemimguploadFile" class ="form-control text-center">메인사진</div>
+<div id = "itemimguploadFile" class ="form-control text-center" style="display: flex; align-items: center; justify-content: center;">메인사진</div>
    </div>
+</center>  
 </div>   
-<center>
-<input id = "item_btn_submit" type="submit" value = "상품 등록">
-</center>
-<div id = "itemimg">
-<div id = "itemimguploadedItems"></div>   
+ <div id = "itemimg">
+<span id = "itemimguploadedItems"></span>   
 <div id = "itemsubimguploadedItems"></div>
 </div>
+
+
+
+<center>
+<input class = "btn btn-success" id = "item_btn_submit" type="submit" value = "상품 등록">
+</center>
 <script type="text/javascript" src ="/resources/js/item.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
    let formData = new FormData();
    let idx = 0;
    
-   if($("#iDc").val() > 100){
-	   $("#iDccheck").html("할인율은 100을 넘을 수 없습니다");
-   }
    
    $("#itemimguploadFile").on("dragenter dragover", function(event) {
       event.preventDefault();
@@ -87,7 +126,7 @@ $(document).ready(function() {
          
          $("#itemimguploadedItems").append(str);
          $("#itemimguploadFile").remove();
-         $("#itemimguploadFileform").append('<div id = "itemsubimguploadFile" class ="form-control text-center">서브 사진</div>')
+         $("#itemimguploadFileform").append('<div id = "itemsubimguploadFile" class ="form-control text-center" style="display: flex; align-items: center; justify-content: center;">서브 사진</div>')
          
       }
    });   
@@ -113,7 +152,7 @@ $(document).ready(function() {
          
          $("#itemimguploadedItems").append(str);
          $("#itemimguploadFile2").remove();
-         $("#itemimguploadFileform").append('<div id = "itemsubimguploadFile" class ="form-control text-center">서브 사진</div>')
+         $("#itemimguploadFileform").append('<div id = "itemsubimguploadFile" class ="form-control text-center" style="display: flex; align-items: center; justify-content: center;">서브 사진</div>')
       }
    })
       
@@ -122,7 +161,7 @@ $(document).ready(function() {
       let itemimgfilekey = $(this).attr("data-itemimgfilekey");
       formData.delete(itemimgfilekey);
       $(this).parent().parent().parent().remove();
-      $("#itemimguploadFileform").html('<div id = "itemimguploadFile2" class ="form-control text-center">메인사진</div>');
+      $("#itemimguploadFileform").html('<div id = "itemimguploadFile2" class ="form-control text-center" style="display: flex; align-items: center; justify-content: center;">메인사진</div>');
    })   
    
    $("#itemsubimguploadedItems").on("click",".btn_del_subitem", function() {
@@ -162,8 +201,11 @@ $(document).ready(function() {
 	   
       let iName = $("#iName").val();
       let iPrice = $("#iPrice").val();
+      iPrice = Number(iPrice);
+      console.log(typeof iPrice);
       let iDc = $("#iDc").val();
       let iCount = $("#iCount").val();
+      iCount = Number(iCount);
       let icategory = $("#cateogoryname").val();
       if(iName == ""){
          alert("상품이름을 등록해주세요");
@@ -184,9 +226,16 @@ $(document).ready(function() {
     	 alert("메인 사진을 넣어주세요");
     	 return
       }else if($("#iDc").val() > 100){
-    	  $("#iDccheck").html("할인율은 100을 넘을 수 없습니다.");
+    	  alert("할인율은 100을 넘을 수 없습니다.");
+    	  return
+      }else if(iPrice > 2100000000){
+    	  alert("상품 가격은 21억을 넘을 수 없습니다.");
+    	  return
+      }else if(iCount > 2100000000){
+    	  alert("수량은 21억을 넘을 수 없습니다.");
     	  return
       }
+      
       formData.append("iName", iName);
       formData.append("iPrice", iPrice);
       formData.append("iDc", iDc);

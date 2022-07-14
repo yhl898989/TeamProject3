@@ -9,15 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.dw.domain.MemberDTO;
 import kr.co.dw.repository.member.MemberDAO;
+import kr.co.dw.repository.order.OrderDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	private MemberDAO mDao;
+	
+	@Autowired
+	private OrderDAO oDao;
 	
 	@Override
 	public MemberDTO login(MemberDTO mDto) {
@@ -63,16 +68,19 @@ public class MemberServiceImpl implements MemberService{
 		mDao.update(dto);
 		
 	}
-
+	
+	@Transactional
 	@Override
 	public void delete(MemberDTO dto) {
 		mDao.delete(dto);
+		oDao.deleteMid(dto);
 		
 	}
 	
 	@Override
 	public void s_delete(MemberDTO mDto) {
 		mDao.s_delete(mDto);
+		oDao.deleteMid(mDto);
 		
 	}
 

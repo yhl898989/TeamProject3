@@ -43,6 +43,8 @@ public interface ItemDAO {
 
 	int deleteimgcount(String getmainimgfilename);
 
+	Integer ordercheck(int iId);
+
 	
 
 	

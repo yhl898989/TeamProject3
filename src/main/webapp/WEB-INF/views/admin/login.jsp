@@ -73,7 +73,11 @@ h1 {
 </style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
+ <header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 <div>
 <h1>관리자 로그인</h1>
 

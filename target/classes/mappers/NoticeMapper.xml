@@ -5,7 +5,7 @@
 <mapper namespace="kr.co.dw.notice">
 	<sql id="sql_where_part">
 		<if test="criteria != null">
-			<if test="criteria == 'mid'.toString()">
+			<if test="criteria == 'aid'.toString()">
 				WHERE UPPER(aid) LIKE '%'||UPPER(#{keyword})||'%'
 			</if>
 			

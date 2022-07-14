@@ -14,6 +14,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <link href = "/resources/css/header.css" rel="stylesheet">
 <link rel="stylesheet" href="/resources/css/noticesearch.css"> 
+<link href="/resources/css/noticeqa.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/noticelistpage.css">
+
 <style type="text/css">
 </style>
 </head>
@@ -21,7 +24,7 @@
 <body>
    <jsp:include page="../common/header.jsp" />
    <div class="jumbotron">
-      <h1 class="text-center">공지사항</h1>
+      <h1 class="text-center">공지사항 검색</h1>
    </div>
    <br>
    <br>
@@ -35,7 +38,14 @@
 <br>
 
 <table class="table">
-	<thread style="background:#eee">
+	<colgroup>	
+            <col width="12%" />
+            <col width="16%" />
+            <col width="42%" />
+            <col width="20%" />
+            <col width="10%" />
+         </colgroup>
+	<thead style="background:#eee">
       <tr>
          <th>번호</th>
          <th>작성자</th>
@@ -44,15 +54,9 @@
          <th>조회수</th>
 
       </tr>
-     </thread>
+     </thead>
       <c:forEach items="${pt.list}" var="blist">
-         <colgroup>	
-            <col width="12%" />
-            <col width="16%" />
-            <col width="42%" />
-            <col width="20%" />
-            <col width="10%" />
-         </colgroup>
+         
 
          <tr>
             <td>${blist.nno}</td>
@@ -64,19 +68,37 @@
          </tr>
       </c:forEach>
    </table>
+   <br>
+   <div class="text-right">
    		<c:if test="${(not empty alogin)}">
       <a class="btn btn-primary" href="/notice/insert"> 글 쓰 기 </a>
       	</c:if>
+    </div>
       <br>
-      <br>
-
+<form action="/notice/search" method="get">
+<div class="searchcsss">
+<div class="input-group mb-355">
+  <select name="criteria">
+  	<option selected>검색 조건</option>
+  	<option value="aid">작성자</option>
+  	<option value="ntitle">제목</option>
+  	<option value="ncontent">내용</option>
+  </select>
+  <input class="form-control" name="keyword">
+  <div class="input-group-append">
+    <button class="btn btn-info" type="submit">검색</button>
+  </div>
+</div>
+</div>
+</form>
+<br>
 
 
 <div class="pagecss">
       <nav aria-label="Page navigation example">
       <ul class="pagination">
        <li class="page-item disabled">
-		<a class="page-link" href = "/notice/list?curPage=${pt.curPage > 1? pt.curPage -1:1}">Previous</a>
+		<a class="page-link" href = "/notice/list?curPage=${pt.curPage > 1? pt.curPage -1:1}">&laquo;</a>
    	   </li>
    <c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum }">
     <li class="${i == pt.curPage?'page-item active':'page-item'}" aria-current = "${i == pt.curPage?'page':''}">
@@ -90,7 +112,7 @@
    
    </c:forEach>
    <li class="page-item">
-   <a class="page-link" href = "/notice/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">Next</a>
+   <a class="page-link" href = "/notice/list?curPage=${pt.curPage < pt.totalPage? pt.curPage + 1 : pt.totalPage}">&raquo;</a>
     </li>
     </ul>
     </nav>  

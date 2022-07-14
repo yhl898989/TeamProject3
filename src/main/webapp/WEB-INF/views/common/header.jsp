@@ -38,7 +38,7 @@
                            name="keyword">
                         <button class="button7" type="submit">
                            <img alt="" src="../../../resources/img/search.png"
-                              style="height: 25px; width: 25;"> &nbsp;
+                              style="height: 25px; width: 25px;">
                         </button>
                         </div>
                   </div>
@@ -49,7 +49,7 @@
                            class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                            role="button" data-toggle="dropdown" aria-expanded="false">
                               <img alt="" src="../../../resources/img/log_m.png"
-                              style="height: 20px; width: 20;">
+                              style="height: 20px; width: 20px;">
                         </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center;">
                            <p style="color: red;">${login.mid}님</p> 
@@ -65,7 +65,7 @@
                            class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                            role="button" data-toggle="dropdown" aria-expanded="false">
                               <img alt="" src="../../../resources/img/log_m.png"
-                              style="height: 20px; width: 20;">
+                              style="height: 20px; width: 20px;">
                         </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center;">
                             <p style="color: red;">${login.mid}님</p> 
@@ -95,7 +95,7 @@
                            name="keyword">
                         <button class="button7" type="submit">
                            <img alt="" src="../../../resources/img/search.png"
-                              style="height: 25px; width: 25;">
+                              style="height: 25px; width: 25px;">
                         </button>
                         </div>
                   </div>
@@ -105,7 +105,7 @@
                         class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                         role="button" data-toggle="dropdown" aria-expanded="false">
                            <img alt="" src="../../../resources/img/log_a.png"
-                           style="height: 20px; width: 20;">
+                           style="height: 20px; width: 20px;">
                      </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center;">
                          <p style="color: red;">${alogin.aid}님</p> 
@@ -128,7 +128,7 @@
                            name="keyword">
                         <button class="button7" type="submit">
                            <img alt="" src="../../../resources/img/search.png"
-                              style="height: 25px; width: 25;">
+                              style="height: 25px; width: 25px;">
                         </button>
                         </div>
                   </div>
@@ -138,7 +138,7 @@
                         class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                         role="button" data-toggle="dropdown" aria-expanded="false">
                            <img alt="" src="../../../resources/img/log.png"
-                           style="height: 20px; width: 20;">
+                           style="height: 20px; width: 20px;">
                      </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center;">
                            <a class="nav-link" href="/member/insert">회원가입</a> <a

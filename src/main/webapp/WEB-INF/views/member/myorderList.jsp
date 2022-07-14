@@ -15,8 +15,11 @@
 <link href = "/resources/css/header.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
-
+<header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
 
    <h2 align="center" style="margin-top: 5%;">내 주문 내역</h2>
 <div>

@@ -23,8 +23,12 @@
 
 </head>
 <body>
-   <jsp:include page="../common/header.jsp" />
-   <h5 style="text-align: center; margin-top: 1%">전체 주문 내역</h5>
+      <header style="position: fixed; z-index: 10;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+</header>
+<div style="height: 54.5px;">
+</div>
+   <h4 style="text-align: center; margin-top: 1%">전체 주문 내역</h4>
    <div>
    <table class="order_table">
       <colgroup>
@@ -43,8 +47,8 @@
       </thead>
       <tbody class="order_body">
          <tr>
-            <td class="th_column_1">${allprice}</td>
-            <td class="th_column_2">${toprice}</td>
+            <td class="th_column_1" id="td1"> </td>
+            <td class="th_column_2" id="td2"> </td>
             <td class="th_column_3">
                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 360px; float: left;">
                   <i class="fa fa-calendar"></i>&nbsp; <span id="span1"></span> <span></span>
@@ -135,7 +139,9 @@
          dataType : "text",
          success : function(sale) {
             console.log(sale)
-            $("#sale").val(sale);
+            let nu = parseInt(sale)
+            let sales = nu.toLocaleString('ko-KR');
+            $("#sale").val(sales+"원");
 
          }
 
@@ -336,6 +342,16 @@
                }
             }
          });
-   
+let allprice = ${allprice}
+let toprice = ${toprice}
+let LocaleAllPrice = allprice.toLocaleString('kr-KO');
+let LocaleToPrice = toprice.toLocaleString('kr-KO');
+$("#td1").text(LocaleAllPrice+"원");
+let donqwer = document.getElementById("td2");
+donqwer.innerText = LocaleToPrice+"원";
+
+console.log(LocaleAllPrice)
+console.log(LocaleToPrice)
+
 </script>
 </html>

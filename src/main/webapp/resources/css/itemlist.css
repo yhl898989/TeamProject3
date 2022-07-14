@@ -1,22 +1,5 @@
 @charset "UTF-8";
 *{padding:0;margin:0}
-li{list-style:none}
-.menu {
-  overflow: hidden;
-}
-.menu > li {
-  width: 20%; /*20*5=100%*/
-  float: left;
-  text-align: center;
-  line-height: 40px;
-  background-color: #5778ff;
-}
-
-.menu a {
-  color: #fff;
-  width: 100%;
-}
-
 #itemlist{
 	margin-top : 10px;
 	width : 1190px;
@@ -27,12 +10,16 @@ li{list-style:none}
 .box{
 	display: inline-block;
 	width: 290px;
+	height: 400px;
 } 
 .card{
 	display:inline-block;
 	margin : 20px;
 	border: 0px;
+	height: 368px;
+	width: 250px;
 }
+
 .flexitem{
 	display: flex;
 	width:1190px;
@@ -46,8 +33,13 @@ li{list-style:none}
 	color: red;
 }
 .card-text{
-	display: flex;
-	justify-content: space-between;
+	margin-bottom : 0px;
+	overflow : hidden;
+	white-space: nowrap;
+	text-overflow : ellipsis;
+	height: 24px;
+	font-size: 13px;
+	font-weight: bold;
 }
 .iDchidden{
 	display: none;
@@ -55,15 +47,18 @@ li{list-style:none}
 .iDc{
    font-size: 15px;
    color : red;
-   background-color: white;
+   
    
 }
 .iName{
 	font-size: 30px;
 }
 .iPrice{
-	color : gray;
-	text-decoration: line-through;
-	display: flex;
-	justify-content: space-between;
+   display: flex;
+   justify-content: flex-end;
+   height: 22.5px;
+}
+.iPricehidden{
+   display: none;
+   
 }

@@ -11,7 +11,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link href="/resources/css/noticeqa.css" rel="stylesheet">
+<link href="/resources/css/noticelistpage.css" rel="stylesheet">
+<link href="/resources/css/header.css" rel="stylesheet">
+
 <link href = "/resources/css/header.css" rel="stylesheet">
+<link href="/resources/css/noticeqa.css" rel="stylesheet">
+
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
@@ -19,51 +25,43 @@
    <h1 class="text-center">공지사항</h1>
 </div>
 
-  <div class="form-group row">
-    <label for="nno" class="col-sm-2 col-form-label col-form-label-lg">보드번호</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="nno" value="${ndto.nno}">
-    </div>
-  </div>
+	<form action="/notice/read" method="post">
+		<table width="100%" class="table02">
+			<colgroup>
+				<col width="20%">
+				<col width="*">
+			</colgroup>
+			<tbody id="tbody">
+				<tr>
+					<th>제목</th>
+					<td><input readonly class="form-control" id="ntitle" value="${ndto.ntitle}"></td>
+					<th>조회수</th>
+					<td><input readonly class="form-control" id="nreadcnt" value="${ndto.nreadcnt}"></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td><input readonly class="form-control form-control-lg" id="aid" value="${ndto.aid}"></td>
+					<th>작성일</th>
+					<td><input readonly class="form-control form-control-lg"  id="nupdateday" value="${ndto.nupdateday}"></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td colspan='3'><textarea readonly class="form-control" id="ncontent" rows="5" style="height:300px; resize: none;">${ndto.ncontent}</textarea></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 
-  
-  <div class="form-group row">
-    <label for="ndate" class="col-sm-2 col-form-label col-form-label-lg">작성 날짜 </label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="ndate" value="${ndto.ndate}">
-    </div>
-  </div>
-  
-  <div class="form-group row">
-    <label for="nupdateday" class="col-sm-2 col-form-label col-form-label-lg">수정 날짜</label>
-    <div class="col-sm-10">
-      <input readonly class="form-control form-control-lg"  id="nupdateday" value="${ndto.nupdateday}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="ntitle" class="col-sm-2 col-form-label col-form-label-lg">제목</label>
-     <div class="col-sm-10">
-       <textarea readonly class="form-control" id="ntitle" >${ndto.ntitle}</textarea>
-     </div>   
-  </div>
-
-  
-   <div class="form-group row">
-    <label for="content" class="col-sm-2 col-form-label col-form-label-lg">내용</label>
-     <div class="col-sm-10">
-       <textarea readonly class="form-control" id="ncontent" rows="5">${ndto.ncontent}</textarea>
-     </div>   
-  </div>
-
-
-
+<br>
+<br>
+<div class="text-right">
 <c:if test="${(not empty alogin)}">
 <a class="btn btn-warning" href="/notice/update/${ndto.nno}">수정</a> 
 
 <a class="btn btn-danger delete" href="/notice/delete/${ndto.nno}">삭제</a> 
 </c:if>
 <a class="btn btn-info" href="/notice/list">목록</a> 
-
+</div>
 
 
 

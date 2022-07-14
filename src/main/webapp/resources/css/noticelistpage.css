@@ -1,4 +1,5 @@
 @charset "UTF-8";
+*{padding:0;margin:0}
 body{
    width : 1190px;
 }
@@ -6,9 +7,15 @@ body{
 #btn_1{
       border-top-left-radius:5px;
       border-bottom-left-radius:5px;
-
+      margin-right: 5px;
+      margin-left:3px;
    }
    
+#btn_2{
+      margin-left: 4.7px;
+      margin-right: 4px;
+   
+}
 
 caption {
    padding-bottom: 30px;
@@ -34,16 +41,22 @@ caption {
    font-size : 20px;
    
 }
-
+.textchange{
+   padding-top: 20px;
+   margin-top: 50%;
+   display:flex;
+   justify-content:center;
+   align-items:center;
+}
 
 .text-center{
    font-size:40px;
 }
 .searchcsss{
-	align-items: center;
-	margin-left: 35%;
-	margin-right: 40%;
-	width:30%;
+   align-items: center;
+   margin-left: 35%;
+   margin-right: 40%;
+   width:30%;
 }
 
 .pagecss{
@@ -53,29 +66,17 @@ caption {
    
 }
 
-*{
-	margin: 0;
-	padding:0;
-}
-a{
-	text-decoration: none;
-}
-a:link {color: blue;}
-a:visited {color: blue;}
-a:active {color: blue;}
-a:hover {color: blue;}
-
 
 .table td{
-	padding: 10px 5px;
-	border : 1px solid #e9ebf0;
+   padding: 10px 5px;
+   border : 1px solid #e9ebf0;
 }
 .table thead{
-	background-color: #f8f9fd;	
-	font-weight: 600;
+   background-color: #f8f9fd;   
+   font-weight: 600;
 }
 .table{
-	margin: auto;
+   margin: auto;
     width : 1190px;
     border: 1px solid #d3d8e1;
     text-align: center;
@@ -84,8 +85,19 @@ a:hover {color: blue;}
 }
 
 .table_empty{
-	height: 50px;
+   height: 50px;
     text-align: center;
     margin: 200px 0 215px 0px;
     font-size: 25px;
+}
+
+.jumbotron{
+   background-size: 80em;
+   
+}
+.textchange{
+   display: flex;
+     flex-direction: row;
+     align-items: center
+    
 }
