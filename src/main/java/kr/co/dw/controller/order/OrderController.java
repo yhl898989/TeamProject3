@@ -44,6 +44,23 @@ public class OrderController {
    @Autowired
    private MemberService mService;
 
+   
+   
+   @RequestMapping(value = "/order/orderRead2/{orderId}", method = RequestMethod.GET)
+   public String orderRead2(@PathVariable("orderId") String orderId, Model model) {
+      // 그리고 정보를 가져오려면 get방식을 이용해서 가져와야함. return 쪽에는 파일을 가져와서 jsp 파일만 쓰면 된다ㅓ.
+
+      System.out.println(orderId);
+      OrderDTO ODto = oService.orderRead(orderId);
+
+      OrderItemDTO OIDto = oService.orderItemRead(orderId);
+
+      model.addAttribute("odto", ODto);
+      model.addAttribute("oidto", OIDto);
+
+      return "/order/orderRead2"; // jsp의 파일을 갖고오는 위치 (이름을 쓰면되고 servlet에서 prifix와 surfix 들어가는 값에서 나옴.)
+   }
+   
    // 여기는 url 값을 가져오는 값을 쓰면 된다. 주소창에서 가져옴.
    @RequestMapping(value = "/order/orderRead/{orderId}", method = RequestMethod.GET)
    public String orderRead(@PathVariable("orderId") String orderId, Model model) {
