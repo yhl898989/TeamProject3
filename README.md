@@ -51,7 +51,7 @@
 
 프레임워크 : Spring legacy project, bootstrap
 
-DMS : Oracle
+DBMS : Oracle
 
 Build Tools : maven
 
