@@ -42,3 +42,12 @@
 
 ![매출-관리](https://user-images.githubusercontent.com/105685013/181157214-0791664c-a96c-437f-9585-a5b2a6304640.gif)
 
+
+
+사용한 기술스택
+언어 : JAVA, Javascript, HTML, CSS, jsp, servlet
+프레임워크 : Spring legacy project, bootstrap
+DMS : Oracle
+Build Tools : maven
+
+팀원 소개 및 기타 문서 : https://github.com/yhl898989/TeamProject3/wiki
