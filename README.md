@@ -45,9 +45,15 @@
 
 
 사용한 기술스택
+
+
 언어 : JAVA, Javascript, HTML, CSS, jsp, servlet
+
 프레임워크 : Spring legacy project, bootstrap
+
 DMS : Oracle
+
 Build Tools : maven
+
 
 팀원 소개 및 기타 문서 : https://github.com/yhl898989/TeamProject3/wiki
