@@ -3,10 +3,8 @@
 
 메인페이지
 
-[준비중]
 
-
-https://user-images.githubusercontent.com/105685013/181200782-cce003d6-1a6e-4837-9faa-15cd5645a8ee.mp4
+![메인페이지](https://user-images.githubusercontent.com/105685013/181425078-98e44694-471d-4e34-a002-e214152b24cf.gif)
 
 
 
